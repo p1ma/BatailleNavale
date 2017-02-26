@@ -5,6 +5,7 @@ package monde;
 
 import factory.GrecFactory;
 import factory.ModerneFactory;
+import graphique.Game;
 
 /**
  * @author JUNGES Pierre-Marie - M1 Informatique 2016/2017
@@ -14,9 +15,10 @@ import factory.ModerneFactory;
 public class Launcher {
 
 	public static void main(String[] args) {
-		World world = new World(new GrecFactory());
+		//World world = new World(new GrecFactory());
 		//World world = new World(new ModerneFactory());
-		world.jouer();
+		//world.jouer();
+		Game game = (new Game());
 	}
 
 }

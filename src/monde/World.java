@@ -34,6 +34,13 @@ public class World {
 		quiJoue.add(new Ordinateur(this));
 	}
 	
+	public World() {
+		factory = null;
+		quiJoue = new LinkedList<Joueur>();
+		//quiJoue.add(new Humain(this));
+		//quiJoue.add(new Ordinateur(this));
+	}
+	
 	public int largeur() {
 		return LARGEUR;
 	}
