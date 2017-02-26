@@ -3,6 +3,7 @@
  */
 package joueur;
 
+import java.awt.Point;
 import java.util.Random;
 
 import monde.World;
@@ -28,9 +29,8 @@ public class Ordinateur extends Joueur{
 	}
 
 	@Override
-	public void jouer() {
-		flotte.remove( (new Random()).nextInt(flotte.size()));
-		strategie.executer();
+	public Point jouer() {
+		return strategie.executer(sonar);
 	}
 	
 	public String toString() {

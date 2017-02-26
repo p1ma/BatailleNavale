@@ -3,9 +3,12 @@
  */
 package joueur;
 
+import java.awt.Point;
 import java.util.Random;
 
 import monde.World;
+import strategie.IA;
+import strategie.Input;
 
 /**
  * @author JUNGES Pierre-Marie - M1 Informatique 2016/2017
@@ -14,13 +17,16 @@ import monde.World;
  */
 public class Humain extends Joueur{
 
+	private IA strategie;
+	
 	public Humain(World world) {
 		super(world);
+		strategie = new Input();
 	}
 	
 	@Override
-	public void jouer() {
-		flotte.remove( (new Random()).nextInt(flotte.size()));
+	public Point jouer() {
+		return strategie.executer(sonar);
 	}
 
 	public String toString() {

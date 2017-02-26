@@ -11,4 +11,5 @@ package bateaux;
 public interface Bateau {
 
 	public void tirer();
+	public int longueur();
 }

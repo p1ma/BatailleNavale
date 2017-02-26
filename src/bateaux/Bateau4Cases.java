@@ -10,5 +10,9 @@ package bateaux;
  */
 public abstract class Bateau4Cases implements Bateau  {
 	
-	public final int CASES = 4;
+	private final int CASES = 4;
+	
+	public int longueur() {
+		return CASES;
+	}
 }
