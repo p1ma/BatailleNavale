@@ -3,6 +3,9 @@
  */
 package joueur;
 
+import java.util.Random;
+
+import monde.World;
 import strategie.IA;
 import strategie.Rand;
 
@@ -15,7 +18,8 @@ public class Ordinateur extends Joueur{
 
 	private IA strategie;
 	
-	public Ordinateur() {
+	public Ordinateur(World world) {
+		super(world);
 		strategie = new Rand();
 	}
 	
@@ -25,6 +29,11 @@ public class Ordinateur extends Joueur{
 
 	@Override
 	public void jouer() {
+		flotte.remove( (new Random()).nextInt(flotte.size()));
 		strategie.executer();
+	}
+	
+	public String toString() {
+		return "Ordinateur";
 	}
 }

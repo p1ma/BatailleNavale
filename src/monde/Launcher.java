@@ -15,7 +15,8 @@ public class Launcher {
 
 	public static void main(String[] args) {
 		World world = new World(new GrecFactory());
-		System.out.println(world.afficherFlotte());
+		//World world = new World(new ModerneFactory());
+		world.jouer();
 	}
 
 }
