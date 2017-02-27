@@ -50,7 +50,7 @@ public class World {
 	}
 	
 	public List<Bateau> getFlotte(List<Bateau> flotte) {
-		flotte = factory.getFlotte(flotte);
+		//flotte = factory.getFlotte(flotte);
 		return flotte;
 	}
 	public String afficherFlotte() {

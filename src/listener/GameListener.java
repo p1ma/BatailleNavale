@@ -19,17 +19,21 @@ public class GameListener implements MouseListener {
 
 	/** SpaceShip to control **/
 	private World world;
-	private GameScreen gameScreen;
+	private int zoom;
+	private final Point axe;
 
-	public GameListener(GameScreen gscreen, World monde) {
-		this.gameScreen = gscreen;
+	public GameListener(World monde, int zoom, final Point start) {
 	    this.world = monde;
+	    this.zoom = zoom;
+	    this.axe = start;
 	}
 
 	@Override
 	public void mouseClicked(MouseEvent arg0) {
 		// TODO Auto-generated method stub
-		Point pos = new Point(arg0.getX(), arg0.getY());
+		int x = (arg0.getX());
+		int y = (arg0.getY());
+		Point pos = new Point(x, y);
 		System.out.println("Clic en " + pos);
 	}
 

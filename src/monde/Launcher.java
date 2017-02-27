@@ -3,8 +3,6 @@
  */
 package monde;
 
-import factory.GrecFactory;
-import factory.ModerneFactory;
 import graphique.Game;
 
 /**

@@ -4,6 +4,7 @@
 package graphique;
 
 import java.awt.Dimension;
+import java.awt.Point;
 
 import javax.swing.JFrame;
 
@@ -22,6 +23,7 @@ public class Game extends JFrame {
     private GameScreen gameScreen;
     
 	private int ZOOM = 60;
+	private final Point axePlateau = new Point(50,50);
     
 	private final static String TITLE = "Bataille Navale";
 	
@@ -32,13 +34,13 @@ public class Game extends JFrame {
         /**
          * Create and add the GameScreen
          */
-		this.gameScreen = new GameScreen(this.world, ZOOM);
+		this.gameScreen = new GameScreen(this.world, ZOOM, axePlateau);
 		this.add(gameScreen);
 		
 		/** 
 		 * Create and add the KeyListener
 		 **/
-		addMouseListener(new GameListener(gameScreen, world));
+		addKeyListener(gameScreen);
 		
 		initGraphics();
     }
