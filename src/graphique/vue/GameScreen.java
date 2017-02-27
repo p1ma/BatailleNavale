@@ -12,6 +12,8 @@ import java.awt.Image;
 import java.awt.Point;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 import java.awt.geom.AffineTransform;
 import java.awt.image.AffineTransformOp;
 import java.awt.image.BufferedImage;
@@ -32,7 +34,7 @@ import monde.World;
  *
  * Feb 26, 2017
  */
-public class GameScreen extends JPanel implements Observer, KeyListener{
+public class GameScreen extends JPanel implements Observer, KeyListener, MouseListener{
 
 	private World world;
 	private final Color defaut = Color.BLUE;
@@ -42,14 +44,8 @@ public class GameScreen extends JPanel implements Observer, KeyListener{
 			"H","I","J","K","L","M","N","O","P","Q","R","S","T","U",
 					"V","W","X","Y","Z"};
 	
-	private final Point posShip;
-	private BufferedImage ship = null; 
-	private int largeurShip = 1;
-	private int longeurShip = 5;
+	private Bateau ship = null;
 	
-	private AffineTransform identity = new AffineTransform();
-	private AffineTransform trans = new AffineTransform();
-	private int degree = 0;
 	private JButton boutons[][] ;
 	
 	private int facteur = 60;
@@ -57,22 +53,14 @@ public class GameScreen extends JPanel implements Observer, KeyListener{
 	public GameScreen(World monde, int zoom, final Point axeP) {
 		super();
 		
-		trans.setTransform(identity);
-		trans.rotate( Math.toRadians(degree) );
-		
 		facteur = zoom;
 		world = monde;
 		boutons = new JButton[world.longueur()][world.largeur()];
 		axePlateau = axeP;
-		posShip = new Point(axePlateau.x + facteur*4, axePlateau.y + facteur*5);
-		initDimensions();
-		//initBoutons(); 
-		
-		try {
-			ship = ImageIO.read(new File("textures/ship.png"));
-		} catch (IOException e) {
-			System.out.println(e.getMessage());
-		}		
+		ship = new Bateau(5,1, "textures/ship.png",
+				new Point(axePlateau.x + facteur*4, axePlateau.y + facteur*5));
+		ship.setZoom(facteur);
+		initDimensions();	
 	}
 	
 	public void initBoutons() {
@@ -123,7 +111,7 @@ public class GameScreen extends JPanel implements Observer, KeyListener{
 			g.drawString("" + (1+i), axe.x - (facteur/3), axe.y + (facteur/2));
 			axe.y = axe.y + facteur;
 		}
-		g.drawImage(ship, posShip.x, posShip.y, facteur * longeurShip, facteur * largeurShip, null);
+		g.drawImage(ship.getImage(),ship.getX() , ship.getY(), ship.longueur(), ship.largeur(), null);
 	}
 	
 	public void dessinerSonar(Graphics g) {
@@ -136,16 +124,6 @@ public class GameScreen extends JPanel implements Observer, KeyListener{
 
 	}
 
-	public BufferedImage rotate90DX(BufferedImage bi) {
-	    int width = bi.getWidth();
-	    int height = bi.getHeight();
-	    BufferedImage biFlip = new BufferedImage(height, width, bi.getType());
-	    for(int i=0; i<width; i++)
-	        for(int j=0; j<height; j++)
-	            biFlip.setRGB(height-1-j, width-1-i, bi.getRGB(i, j));
-	    return biFlip;
-	}
-	
 	/* (non-Javadoc)
 	 * @see java.awt.event.KeyListener#keyPressed(java.awt.event.KeyEvent)
 	 */
@@ -154,26 +132,23 @@ public class GameScreen extends JPanel implements Observer, KeyListener{
 		System.out.println("ok");
 		switch(arg0.getKeyCode()) {
 		case KeyEvent.VK_R :
-			ship = rotate90DX(ship);
-			int tmp = longeurShip;
-			longeurShip = largeurShip;
-			largeurShip = tmp;
+			ship.rotate();
 			repaint();
 			break;
 		case KeyEvent.VK_Z :
-			posShip.y -= facteur;
+			ship.monter(facteur);
 			repaint();
 			break;	
 		case KeyEvent.VK_S :
-			posShip.y += facteur;
+			ship.descendre(facteur);
 			repaint();
 			break;
 		case KeyEvent.VK_Q :
-			posShip.x -= facteur;
+			ship.gauche(facteur);
 			repaint();
 			break;
 		case KeyEvent.VK_D :
-			posShip.x += facteur;
+			ship.droite(facteur);
 			repaint();
 			break;
 		default :
@@ -195,6 +170,53 @@ public class GameScreen extends JPanel implements Observer, KeyListener{
 	 */
 	@Override
 	public void keyTyped(KeyEvent arg0) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	/* (non-Javadoc)
+	 * @see java.awt.event.MouseListener#mouseClicked(java.awt.event.MouseEvent)
+	 */
+	@Override
+	public void mouseClicked(MouseEvent arg0) {
+		boolean b = ship.intersect(arg0.getPoint());
+		if( b ) {
+			System.out.println("Clicked");
+		}
+	}
+
+	/* (non-Javadoc)
+	 * @see java.awt.event.MouseListener#mouseEntered(java.awt.event.MouseEvent)
+	 */
+	@Override
+	public void mouseEntered(MouseEvent arg0) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	/* (non-Javadoc)
+	 * @see java.awt.event.MouseListener#mouseExited(java.awt.event.MouseEvent)
+	 */
+	@Override
+	public void mouseExited(MouseEvent arg0) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	/* (non-Javadoc)
+	 * @see java.awt.event.MouseListener#mousePressed(java.awt.event.MouseEvent)
+	 */
+	@Override
+	public void mousePressed(MouseEvent arg0) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	/* (non-Javadoc)
+	 * @see java.awt.event.MouseListener#mouseReleased(java.awt.event.MouseEvent)
+	 */
+	@Override
+	public void mouseReleased(MouseEvent arg0) {
 		// TODO Auto-generated method stub
 		
 	}
