@@ -57,6 +57,10 @@ public class Bateau {
 		return position;
 	}
 	
+	public void setPosition(Point p) {
+		position.setLocation(p.getX(), p.getY());
+	}
+	
 	public int getX() {
 		return position.x;
 	}
@@ -108,5 +112,14 @@ public class Bateau {
 	
 	public int largeur() {
 		return zoom * largeur;
+	}
+
+	public void verifierPosition(Point p) {
+		if (position.x < p.getX()) {
+			position.setLocation(p.getX(), position.y);
+		}
+		if (position.y < p.getY()) {
+			position.setLocation(position.x, p.getY());
+		}
 	}
 }

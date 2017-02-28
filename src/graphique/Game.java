@@ -41,8 +41,8 @@ public class Game extends JFrame {
 		 * Create and add the KeyListener
 		 **/
 		addKeyListener(gameScreen);
+		addMouseMotionListener(gameScreen);
 		addMouseListener(gameScreen);
-		
 		initGraphics();
     }
     
@@ -56,7 +56,7 @@ public class Game extends JFrame {
     private void initGraphics() {
         this.setTitle(TITLE);
         this.setPreferredSize(new Dimension((2*world.longueur() + 1) * (ZOOM), (2*world.largeur() + 1) * (ZOOM)));
-        this.setResizable(false);
+        this.setResizable(true);
         
         this.pack();
         this.setVisible(true);
