@@ -37,8 +37,8 @@ public class World {
 	public World() {
 		factory = null;
 		quiJoue = new LinkedList<Joueur>();
-		//quiJoue.add(new Humain(this));
-		//quiJoue.add(new Ordinateur(this));
+		quiJoue.add(new Humain(this));
+		quiJoue.add(new Ordinateur(this));
 	}
 	
 	public int largeur() {
@@ -50,7 +50,7 @@ public class World {
 	}
 	
 	public List<Bateau> getFlotte(List<Bateau> flotte) {
-		//flotte = factory.getFlotte(flotte);
+		flotte = factory.getFlotte(flotte);
 		return flotte;
 	}
 	public String afficherFlotte() {
@@ -86,6 +86,15 @@ public class World {
 			joueur = quiJoue.poll();
 		}
 		System.out.println(joueur + " a perdu !");
+	}
+
+	public void tirer(Point point) {
+		// TODO Auto-generated method stub
+		Joueur joueur = quiJoue.poll();
+		Joueur adversaire = quiJoue.peek();
+		quiJoue.add(joueur);
+		boolean b = adversaire.toucher(point);
+		if ( b ) System.out.println("touché");
 	}
 
 }

@@ -16,7 +16,7 @@ import javax.imageio.ImageIO;
  *
  * Feb 24, 2017
  */
-public class Bateau {
+public abstract class Bateau {
 
 	private int longueur;
 	private int largeur;
@@ -59,6 +59,7 @@ public class Bateau {
 	
 	public void setPosition(Point p) {
 		position.setLocation(p.getX(), p.getY());
+		box.setBounds(position.x, position.y, zoom * longueur, zoom * largeur);
 	}
 	
 	public int getX() {
@@ -117,9 +118,18 @@ public class Bateau {
 	public void verifierPosition(Point p) {
 		if (position.x < p.getX()) {
 			position.setLocation(p.getX(), position.y);
+			box.setLocation(position.x, (int)p.getY());
 		}
 		if (position.y < p.getY()) {
 			position.setLocation(position.x, p.getY());
+			box.setLocation(position.x, (int)p.getY());
 		}
+		
+		int a = (int) ((position.x - p.x) / zoom);
+		int b = (int) ((position.y - p.y) / zoom);
+		
+		position.setLocation(a * zoom, b * zoom);
+		position.translate(+p.x, +p.y);
+		box.setLocation(position.x, position.y);
 	}
 }

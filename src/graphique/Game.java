@@ -4,10 +4,12 @@
 package graphique;
 
 import java.awt.Dimension;
+import java.awt.GridLayout;
 import java.awt.Point;
 
 import javax.swing.JFrame;
 
+import factory.GrecFactory;
 import graphique.vue.GameScreen;
 import listener.GameListener;
 import monde.World;
@@ -29,7 +31,7 @@ public class Game extends JFrame {
 	
     public Game() {
     	super();
-        this.world = new World();
+        this.world = new World(new GrecFactory());
         
         /**
          * Create and add the GameScreen
@@ -55,9 +57,10 @@ public class Game extends JFrame {
      */
     private void initGraphics() {
         this.setTitle(TITLE);
-        this.setPreferredSize(new Dimension((2*world.longueur() + 1) * (ZOOM), (2*world.largeur() + 1) * (ZOOM)));
-        this.setResizable(true);
-        
+        this.setMinimumSize(new Dimension((2*world.longueur() + 2) * (ZOOM), (1*world.largeur() + 2) * (ZOOM)));
+        this.setMaximumSize(new Dimension((2*world.longueur() + 2) * (ZOOM), (1*world.largeur() + 2) * (ZOOM)));
+        this.setResizable(false);
+        this.setLayout(new GridLayout(1,1));
         this.pack();
         this.setVisible(true);
         this.setLocationRelativeTo(null); // display window in the middle of the screen
