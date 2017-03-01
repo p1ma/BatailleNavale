@@ -3,8 +3,10 @@
  */
 package graphique.vue;
 
+import java.awt.BasicStroke;
 import java.awt.Color;
 import java.awt.Dimension;
+import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.GridLayout;
@@ -207,7 +209,10 @@ public class GameScreen extends JPanel implements Observer, KeyListener, MouseMo
 
 		if( ship.intersect(e.getPoint())) {
 			select = ship;
+		} else {
+			select = null;
 		}
+		repaint();
 	}
 
 	/* (non-Javadoc)
@@ -238,6 +243,7 @@ public class GameScreen extends JPanel implements Observer, KeyListener, MouseMo
 		// TODO Auto-generated method stub
 		if( ship.intersect(e.getPoint())) {
 			select = ship;
+			repaint();
 		}
 	}
 
@@ -274,6 +280,14 @@ public class GameScreen extends JPanel implements Observer, KeyListener, MouseMo
 				}
 				g.drawString("" + (1+i), axe.x - (facteur/3), axe.y + (facteur/2));
 				axe.y = axe.y + facteur;
+			}
+			if ( select != null ) {
+				Graphics2D g2 = (Graphics2D) g;
+				g2.setStroke(new BasicStroke(10));
+				g2.setColor(Color.RED);
+				g2.drawRect(select.getX(), select.getY(), ship.longueur(), ship.largeur());
+				g2.setColor(defaut);
+				System.out.println("draw");
 			}
 			g.drawImage(ship.getImage(),ship.getX() , ship.getY(), ship.longueur(), ship.largeur(), null);
 		}

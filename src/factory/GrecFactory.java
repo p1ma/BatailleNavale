@@ -18,6 +18,7 @@ public class GrecFactory implements Factory{
 	@Override
 	public List<Bateau> getFlotte(List<Bateau> liste) {
 		liste.add(new BateauGrec(5,5,"textures/ship.png", new Point(5,5)));
+		liste.add(new BateauGrec(3,2,"textures/war.png", new Point(0,0)));
 		return liste;
 	}
 

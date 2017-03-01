@@ -124,7 +124,7 @@ public abstract class Bateau {
 			position.setLocation(position.x, p.getY());
 			box.setLocation(position.x, (int)p.getY());
 		}
-		
+
 		int a = (int) ((position.x - p.x) / zoom);
 		int b = (int) ((position.y - p.y) / zoom);
 		
