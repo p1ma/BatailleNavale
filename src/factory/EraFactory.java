@@ -12,6 +12,6 @@ import bateaux.Bateau;
  *
  * Feb 24, 2017
  */
-public interface Factory {
-	public List<Bateau> getFlotte(List<Bateau> liste);
+public interface EraFactory {
+	public List<Ship> getFlotte(List<Ship> liste);
 }

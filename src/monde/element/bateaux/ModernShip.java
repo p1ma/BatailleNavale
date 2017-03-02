@@ -1,7 +1,7 @@
 /**
  * 
  */
-package bateaux;
+package monde.element.bateaux;
 
 import java.awt.Point;
 
@@ -10,16 +10,16 @@ import java.awt.Point;
  *
  * Feb 28, 2017
  */
-public class BateauGrec extends Bateau{
+public class ModernShip extends Ship{
 
 	/**
-	 * Constructs a BateauGrec.java with the given parameter(s)
+	 * Constructs a BateauModerne.java with the given parameter(s)
 	 * @param nbCase
 	 * @param lrgr
 	 * @param path
 	 * @param pos
 	 */
-	public BateauGrec(int nbCase, int lrgr, String path, Point pos) {
+	public ModernShip(int nbCase, int lrgr, String path, Point pos) {
 		super(nbCase, lrgr, path, pos);
 		// TODO Auto-generated constructor stub
 	}

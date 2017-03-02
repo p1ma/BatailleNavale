@@ -12,10 +12,10 @@ import bateaux.Bateau;
  *
  * Feb 28, 2017
  */
-public class ModerneFactory implements Factory{
+public class ModernFactory implements EraFactory{
 	
 	@Override
-	public List<Bateau> getFlotte(List<Bateau> liste) {
+	public List<Ship> getFlotte(List<Ship> liste) {
 		// TODO Auto-generated method stub
 		return liste;
 	}

@@ -3,13 +3,9 @@
  */
 package monde;
 
-import java.awt.Point;
 import java.util.LinkedList;
-import java.util.List;
 import java.util.Queue;
 
-import bateaux.Bateau;
-import factory.Factory;
 import joueur.Humain;
 import joueur.Joueur;
 import joueur.Ordinateur;
@@ -21,80 +17,29 @@ import joueur.Ordinateur;
  */
 public class World {
 
-	private final int LONGUEUR = 10;
-	private final int LARGEUR = 10;
-	
-	private Factory factory;
 	private Queue<Joueur> quiJoue;
-	
-	public World(Factory fact) {
-		factory = fact;
-		quiJoue = new LinkedList<Joueur>();
-		quiJoue.add(new Humain(this));
-		quiJoue.add(new Ordinateur(this));
-	}
+	private Configuration config;
+	private boolean WARM_UP = true;
 	
 	public World() {
-		factory = null;
 		quiJoue = new LinkedList<Joueur>();
-		quiJoue.add(new Humain(this));
-		quiJoue.add(new Ordinateur(this));
-	}
-	
-	public int largeur() {
-		return LARGEUR;
-	}
-	
-	public int longueur() {
-		return LONGUEUR;
-	}
-	
-	public List<Bateau> getFlotte(List<Bateau> flotte) {
-		flotte = factory.getFlotte(flotte);
-		return flotte;
-	}
-	public String afficherFlotte() {
-		StringBuilder sb = new StringBuilder("");
-		for(Joueur j : quiJoue) {
-			sb.append(j.toString() + " \n");
-			sb.append(j.afficherFlotte() + "\n");
-			sb.append("---- \n");
-		}
-		return sb.toString();
-	}
-	
-	public void jouer() {
-		Joueur joueur = quiJoue.poll();
-		Joueur adversaire = null;
-		Point pos = null;
-		boolean touche = false;
+		Humain humain = new Humain(this);
+		Ordinateur ordinateur = new Ordinateur(this);
 		
-		while (!joueur.estPerdant()) {
-			pos = joueur.jouer();
-			System.out.println(joueur.toString() + " Tire en (" + pos.x + "," + pos.y + ")");
-			adversaire = quiJoue.peek();
-			System.out.println(adversaire + " est touché ?");
-			touche = adversaire.toucher(pos);
-
-			if (touche) {
-				System.out.println("Touché !");
-			} else {
-				System.out.println("Raté !");
-			}
-			joueur.actualiserSonar(touche,pos);
-			quiJoue.add(joueur);
-			joueur = quiJoue.poll();
-		}
-		System.out.println(joueur + " a perdu !");
+		config = new Configuration();
+		
+		ordinateur.setDifficulty();
+		
+		quiJoue.add(humain);
+		quiJoue.add(ordinateur);
+		
 	}
-
-	public void tirer(Point point) {
-		// TODO Auto-generated method stub
-		Joueur joueur = quiJoue.poll();
-		Joueur adversaire = quiJoue.peek();
-		quiJoue.add(joueur);
-		boolean b = adversaire.toucher(point);
-		if ( b ) System.out.println("touché");
+	
+	public int width() {
+		return config.width();
 	}
-
+	
+	public int height() {
+		return config.height();
+	}
 }

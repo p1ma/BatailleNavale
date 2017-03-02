@@ -4,6 +4,7 @@
 package joueur;
 
 import java.awt.Point;
+import java.util.List;
 import java.util.Random;
 
 import monde.World;
@@ -17,23 +18,23 @@ import strategie.Rand;
  */
 public class Ordinateur extends Joueur{
 
-	private IA strategie;
+	private IA strategy;
 	
 	public Ordinateur(World world) {
 		super(world);
-		strategie = new Rand();
-	}
-	
-	public void setStrategie(IA strat) {
-		strategie = strat;
 	}
 
+	/* (non-Javadoc)
+	 * @see joueur.Joueur#jouer()
+	 */
 	@Override
-	public Point jouer() {
-		return strategie.executer(sonar);
+	public List<Point> jouer() {
+		// TODO Auto-generated method stub
+		return null;
 	}
-	
-	public String toString() {
-		return "Ordinateur";
+
+	public void setDifficulty() {
+		strategy = new Rand();
+		
 	}
 }

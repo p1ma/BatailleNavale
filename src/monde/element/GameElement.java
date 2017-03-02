@@ -1,7 +1,7 @@
 /**
  * 
  */
-package bateaux;
+package monde.element;
 
 import java.awt.Point;
 import java.awt.Rectangle;
@@ -14,9 +14,9 @@ import javax.imageio.ImageIO;
 /**
  * @author JUNGES Pierre-Marie - M1 Informatique 2016/2017
  *
- * Feb 24, 2017
+ * Mar 2, 2017
  */
-public abstract class Bateau {
+public abstract class GameElement {
 
 	private int longueur;
 	private int largeur;
@@ -25,7 +25,7 @@ public abstract class Bateau {
 	private Rectangle box;
 	private int zoom;
 	
-	public Bateau(int nbCase, int lrgr, String path, Point pos) {
+	public GameElement(int nbCase, int lrgr, String path, Point pos) {
 		longueur = nbCase;
 		largeur = lrgr; 
 		zoom = 1;
@@ -39,7 +39,6 @@ public abstract class Bateau {
 		position = new Point(pos);
 		box = new Rectangle(position.x, position.y, zoom * longueur,  zoom * largeur);
 	}
-	
 	public void setZoom(int zm) {
 		zoom = zm;
 		box = new Rectangle(position.x, position.y, zoom * longueur,  zoom * largeur);
@@ -102,9 +101,6 @@ public abstract class Bateau {
 	public void droite(int x) {
 		position.x += x;
 		box.setLocation(position.x, position.y);
-	}
-	public void tirer() {
-		
 	}
 	
 	public int longueur() {

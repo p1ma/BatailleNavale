@@ -4,14 +4,14 @@
 package joueur;
 
 import java.awt.Point;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.LinkedList;
+import java.util.Collection;
 import java.util.List;
 import java.util.Map;
 
-import bateaux.Bateau;
 import monde.World;
+import monde.element.GameElement;
+import monde.element.bateaux.Ship;
+import monde.element.cases.Case;
 
 /**
  * @author JUNGES Pierre-Marie - M1 Informatique 2016/2017
@@ -20,57 +20,25 @@ import monde.World;
  */
 public abstract class Joueur {
 
-	protected Map<Point, Bateau> plateau;
-	protected boolean[][] sonar;
-	protected List<Bateau> flotte;
-	private World monde;
+	private World world;
+	private Map<Point, GameElement> sonar;
+	private Map<Point, Ship> ships;
 	
 	public Joueur(World world) {
-		monde = world;
-		flotte = monde.getFlotte(new LinkedList<Bateau>());
+		this.world = world;
+	}
 
-		sonar = new boolean[monde.longueur()][monde.largeur()];
-		plateau = new HashMap<Point, Bateau>(flotte.size());
-		positionner();
+	public abstract List<Point> jouer();
+
+	public Collection<GameElement> sonarElements() {
+		return sonar.values();
 	}
 	
-	public boolean estPerdant() {
-		return (plateau.keySet().size() == 0);
-	}
-
-	public String afficherFlotte() {
-		StringBuilder sb = new StringBuilder("");
-		for(Bateau b : flotte) {
-			sb.append(b.toString() + "\n");
-		}
-		return sb.toString();
+	public Collection<Ship> shipElements() {
+		return ships.values();
 	}
 	
-	public abstract Point jouer();
-	
-	// Version test
-	public void positionner() {
-		System.out.println("Bateaux de " + toString());
-		Bateau b  = null;
-		for (int i = 0 ; i < flotte.size() ; i++) {
-			b = flotte.get(i);
-			System.out.println("Position de " + b );
-			for(int j = 0 ; j < b.longueur() ; j++) {
-				plateau.put(new Point(i,j), b);
-				System.out.println(new Point(i,j));
-			}
-		}
-	}
-
-	public boolean toucher(Point pos) {
-		boolean touche = plateau.containsKey(pos);
-		plateau.remove(pos);
-		Bateau bateau = plateau.get(pos);
-		plateau.remove( bateau );
-		return touche;
-	}
-
-	public void actualiserSonar(boolean touche, Point pos) {
-		sonar[pos.x][pos.y] = touche;
+	public void confirmPlacement() {
+		world.confirmPlacement();
 	}
 }
