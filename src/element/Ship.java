@@ -16,7 +16,7 @@ public class Ship extends Drawable{
 	private int life;
 	private int damage;
 	private int range;
-	private String imagePath;
+	private Image image;
 	private int orientation;
 	
 	/**
@@ -30,9 +30,48 @@ public class Ship extends Drawable{
 		
 	}
 
-	@Override
+	/*
+	 * 	METHODS
+	 */
+	
+	public void damage(Ship s) {
+		life -= s.getDamage();
+	}
+	
+	public boolean isDead() {
+		return (life <= 0);
+	}
+	
+	/*
+	 *			SETTERS
+	 */
+	
+	public void setOrientation(int o) {
+		orientation = o;
+	}
+	
+	/*
+	 *			GETTERS
+	 */
+	
 	public Image getImage() {
-		return null;
+		return image;
+	}
+	
+	public int getLife() {
+		return life;
+	}
+	
+	public int getDamage() {
+		return damage;
+	}
+	
+	public int getRange() {
+		return range;
+	}
+	
+	public int getOrientation() {
+		return orientation;
 	}
 
 }
