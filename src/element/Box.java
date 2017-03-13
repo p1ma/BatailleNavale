@@ -8,6 +8,6 @@ package element;
  *
  * Mar 13, 2017
  */
-public abstract class Box implements Drawable{
+public abstract class Box extends Drawable{
 
 }
