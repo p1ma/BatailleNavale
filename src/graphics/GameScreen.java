@@ -3,10 +3,16 @@
  */
 package graphics;
 
+import java.awt.Dimension;
+import java.awt.Graphics;
+import java.awt.GridLayout;
 import java.util.Observable;
 import java.util.Observer;
 
 import javax.swing.JFrame;
+import javax.swing.JPanel;
+
+import game.Game;
 
 /**
  * @author JUNGES Pierre-Marie - M1 Informatique 2016/2017
@@ -15,10 +21,58 @@ import javax.swing.JFrame;
  */
 public class GameScreen extends JFrame implements Observer {
 
+	private Game game;
+	
+	private JPanel radarScreen;
+	private JPanel boardScreen;
+	
+	private final static String TITLE = "Bataille Navale";
+	private final Dimension dimension = new Dimension(800,600);
+	
+	public GameScreen() {
+		super(TITLE);
+		game = new Game();
+		game.addObserver(this);
+		
+		radarScreen = new RadarScreen(game);
+		boardScreen = new BoardScreen(game);
+		
+		initGameScreen();
+		
+		add(boardScreen, JPanel.LEFT_ALIGNMENT);
+		
+		add(radarScreen, JPanel.RIGHT_ALIGNMENT);
+	}
+	
+	private void initGameScreen() {
+		// SIZE
+		this.setMinimumSize(dimension);
+		this.setMaximumSize(dimension);
+		this.setPreferredSize(dimension);
+		
+		// RESIZABLE
+		this.setResizable(false);
+		
+		// LAYOUT
+		this.setLayout(new GridLayout(1, 2, 20, 5));
+		
+		// DEFAULT OPERATIONS
+        this.pack();
+        this.setVisible(true);
+        this.setLocationRelativeTo(null); // display window in the middle of the screen
+        this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+	}
+	
 	@Override
 	public void update(Observable arg0, Object arg1) {
-		// TODO Auto-generated method stub
-		
+		String input = (String) arg1;
+		switch(input) {
+		case "RADAR" :
+			radarScreen.repaint();
+			break;
+		case "BOARD" :
+			boardScreen.repaint();
+			break;
+		}	
 	}
-
 }
