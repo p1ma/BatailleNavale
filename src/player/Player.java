@@ -9,7 +9,9 @@ import java.util.HashMap;
 import java.util.Map;
 
 import element.Box;
+import element.Drawable;
 import element.Ship;
+import game.Game;
 
 /**
  * @author JUNGES Pierre-Marie - M1 Informatique 2016/2017
@@ -44,9 +46,22 @@ public abstract class Player {
 		return (fleet.containsKey(p));
 	}
 	
+	public boolean checkRadar(Point p) {
+		return (radar.containsKey(p));
+	}
+	
 	public void damage(Ship s, Point p) {
 		Ship touched = fleet.get(p);
 		touched.damage(s);
+	}
+
+	/**
+	 * @param pos
+	 * @param dAMAGED
+	 */
+	public void updateRadar(Point pos, Box box) {
+		/* Pourrait etre fait plus simplement... */
+		radar.put(pos, box);
 	}
 	
 	public abstract void play(Ship s, Point p);

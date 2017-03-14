@@ -3,6 +3,8 @@
  */
 package game;
 
+import java.awt.Dimension;
+
 /**
  * @author JUNGES Pierre-Marie - M1 Informatique 2016/2017
  *
@@ -10,4 +12,26 @@ package game;
  */
 public class Configuration {
 
+	private Era era;
+	private Dimension size;
+	
+	public Configuration() {
+		
+	}
+	
+	public Era getEra() {
+		return era;
+	}
+	
+	public Dimension getSize() {
+		return size;
+	}
+	
+	public int getWidth() {
+		return (int)size.getWidth();
+	}
+	
+	public int getHeight() {
+		return (int)size.getHeight();
+	}
 }

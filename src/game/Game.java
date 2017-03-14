@@ -3,8 +3,12 @@
  */
 package game;
 
+import java.awt.Point;
 import java.util.Observable;
 
+import element.HitBox;
+import element.MissedBox;
+import element.Ship;
 import player.Computer;
 import player.Human;
 
@@ -17,26 +21,37 @@ public class Game extends Observable {
 
 	private Human human;
 	private Computer computer;
-	private final int WIDTH = 10;
-	private final int HEIGHT = 10;
+	private Configuration configuration;
+	
 	
 	public Game() {
-		human = new Human();
+		human = new Human(this);
 		computer = new Computer(this);
 	}
 	
 	public int getWidth() {
-		return WIDTH;
+		return configuration.getWidth();
 	}
 	
 	public int getHeight() {
-		return HEIGHT;
+		return configuration.getHeight();
 	}
 	
 	@Override
 	public void notifyObservers() {
 		// TODO Auto-generated method stub
 		super.notifyObservers();
+	}
+	
+	public void shootAt(Point pos, Ship ship) {
+		boolean touched = computer.isTouched(pos);
+		
+		if ( touched ) {
+			computer.damage(ship, pos);
+			human.updateRadar(pos, new HitBox(pos));
+		} else {
+			human.updateRadar(pos, new MissedBox(pos));
+		}
 	}
 
 }

@@ -4,6 +4,7 @@
 package element;
 
 import java.awt.Image;
+import java.awt.Point;
 
 import graphics.TextureFactory;
 
@@ -14,6 +15,10 @@ import graphics.TextureFactory;
  */
 public class HitBox extends Box{
 
+	public HitBox(Point p) {
+		super(p);
+	}
+	
 	@Override
 	public Image getImage() {
 		return TextureFactory.getInstance().getMissedBoxImage();

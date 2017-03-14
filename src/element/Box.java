@@ -12,14 +12,16 @@ import java.awt.Point;
  */
 public abstract class Box extends Drawable{
 
+	private final static int WIDTH = 1;
+	private final static int HEIGHT = 1;
 	/**
 	 * Constructor of Box 
 	 * @param p
 	 * @param w
 	 * @param h
 	 */
-	public Box(Point p, int w, int h) {
-		super(p, w, h);
+	public Box(Point p) {
+		super(p, WIDTH, HEIGHT);
 		// TODO Auto-generated constructor stub
 	}
 
