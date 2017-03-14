@@ -27,6 +27,7 @@ public class Game extends Observable {
 	public Game() {
 		human = new Human(this);
 		computer = new Computer(this);
+		configuration = new Configuration();
 	}
 	
 	public int getWidth() {

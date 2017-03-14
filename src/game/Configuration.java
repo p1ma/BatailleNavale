@@ -16,7 +16,7 @@ public class Configuration {
 	private Dimension size;
 	
 	public Configuration() {
-		
+		size = new Dimension(10,10);
 	}
 	
 	public Era getEra() {

@@ -6,6 +6,7 @@ package graphics;
 import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.GridLayout;
+import java.awt.Image;
 import java.util.Observable;
 import java.util.Observer;
 
@@ -26,16 +27,28 @@ public class GameScreen extends JFrame implements Observer {
 	private JPanel radarScreen;
 	private JPanel boardScreen;
 	
+	private Image background;
+	
 	private final static String TITLE = "Bataille Navale";
-	private final Dimension dimension = new Dimension(800,600);
+	private final Dimension dimension = new Dimension(1024,768);
+	
+	private final static int G_UNIT = 50;
+	
+	// TESTS
+	private int width, height;
 	
 	public GameScreen() {
 		super(TITLE);
 		game = new Game();
 		game.addObserver(this);
 		
-		radarScreen = new RadarScreen(game);
-		boardScreen = new BoardScreen(game);
+		// TESTS
+		width = game.getWidth();
+		height = game.getHeight();
+		// END TESTS
+		
+		radarScreen = new RadarScreen(game, G_UNIT);
+		boardScreen = new BoardScreen(game, G_UNIT);
 		
 		initGameScreen();
 		
@@ -54,7 +67,7 @@ public class GameScreen extends JFrame implements Observer {
 		this.setResizable(false);
 		
 		// LAYOUT
-		this.setLayout(new GridLayout(1, 2, 20, 5));
+		this.setLayout(new GridLayout(1, 2, 10, 5));
 		
 		// DEFAULT OPERATIONS
         this.pack();
