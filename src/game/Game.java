@@ -77,4 +77,8 @@ public class Game extends Observable {
 		return result;
 	}
 
+	public boolean checkRadar(Point clicked) {
+		return (human.checkRadar(clicked));
+	}
+
 }

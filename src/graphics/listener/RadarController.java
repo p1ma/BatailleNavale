@@ -18,12 +18,12 @@ public class RadarController implements MouseListener{
 
 	private final int g_unit;
 	private final Game game;
-	
+
 	public RadarController(final int unit, final Game g) {
 		g_unit = unit;
 		game = g;
 	}
-	
+
 	/* (non-Javadoc)
 	 * @see java.awt.event.MouseListener#mouseClicked(java.awt.event.MouseEvent)
 	 */
@@ -32,10 +32,13 @@ public class RadarController implements MouseListener{
 		int xClicked = (e.getX() / g_unit);
 		int yClicked = (e.getY() / g_unit);
 		Point clicked = new Point(xClicked, yClicked);
-		System.out.println("(RADAR) clicked at " + clicked);
-		
-		// TEST
-		game.shootAt(clicked, null);
+
+		if ( !game.checkRadar(clicked) ) {
+			// TEST
+			game.shootAt(clicked, null);
+		} else {
+			System.err.println("(RDRCONTROLLER) ALREADY PLAYER");
+		}
 	}
 
 	/* (non-Javadoc)
@@ -44,7 +47,7 @@ public class RadarController implements MouseListener{
 	@Override
 	public void mouseEntered(MouseEvent arg0) {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 	/* (non-Javadoc)
@@ -53,7 +56,7 @@ public class RadarController implements MouseListener{
 	@Override
 	public void mouseExited(MouseEvent arg0) {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 	/* (non-Javadoc)
@@ -62,7 +65,7 @@ public class RadarController implements MouseListener{
 	@Override
 	public void mousePressed(MouseEvent arg0) {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 	/* (non-Javadoc)
@@ -71,7 +74,7 @@ public class RadarController implements MouseListener{
 	@Override
 	public void mouseReleased(MouseEvent arg0) {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 }

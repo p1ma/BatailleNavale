@@ -47,7 +47,6 @@ public class BoardController implements MouseListener, MouseMotionListener{
 		int xClicked = (int)(e.getX() / g_unit);
 		int yClicked = (int)(e.getY() / g_unit);
 		Point clicked = new Point(xClicked, yClicked);
-		System.out.println("(BOARD) clicked at " + clicked);
 	}
 
 	/* (non-Javadoc)
