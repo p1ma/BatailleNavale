@@ -7,9 +7,12 @@ import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.GridLayout;
 import java.awt.Image;
+import java.io.File;
+import java.io.IOException;
 import java.util.Observable;
 import java.util.Observer;
 
+import javax.imageio.ImageIO;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 
@@ -27,7 +30,7 @@ public class GameScreen extends JFrame implements Observer {
 	private JPanel radarScreen;
 	private JPanel boardScreen;
 	
-	private Image background;
+	
 	
 	private final static String TITLE = "Bataille Navale";
 	private final Dimension dimension = new Dimension(1024,768);
@@ -45,10 +48,18 @@ public class GameScreen extends JFrame implements Observer {
 		// TESTS
 		width = game.getWidth();
 		height = game.getHeight();
+		
+		Image background = null;
+		try {
+			background = ImageIO.read(new File("textures/ocean.jpg"));
+		} catch (IOException e) {
+			System.out.println(e.getMessage());
+		}
+		
 		// END TESTS
 		
-		radarScreen = new RadarScreen(game, G_UNIT);
-		boardScreen = new BoardScreen(game, G_UNIT);
+		radarScreen = new RadarScreen(game, G_UNIT, background);
+		boardScreen = new BoardScreen(game, G_UNIT, background);
 		
 		initGameScreen();
 		

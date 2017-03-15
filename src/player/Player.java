@@ -60,7 +60,6 @@ public abstract class Player {
 	 * @param dAMAGED
 	 */
 	public void updateRadar(Point pos, Box box) {
-		/* Pourrait etre fait plus simplement... */
 		radar.put(pos, box);
 	}
 	

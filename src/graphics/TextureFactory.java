@@ -4,6 +4,7 @@
 package graphics;
 
 import java.awt.Image;
+import java.io.File;
 import java.io.IOException;
 import java.net.URL;
 
@@ -27,10 +28,10 @@ public class TextureFactory {
 	private TextureFactory() {
 		try {
 			/* examples */
-		    URL url = new URL("textures/missedBox.png");
+		    File url = new File("textures/missedBox.png");
 		    missedBoxImage = ImageIO.read(url);
 		    
-		    url = new URL("textures/hitBox.png");
+		    url = new File("textures/hitBox.png");
 		    hitBoxImage = ImageIO.read(url);;
 		} catch (IOException e) {
 		}

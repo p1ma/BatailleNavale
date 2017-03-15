@@ -5,10 +5,13 @@ package graphics;
 
 import java.awt.Color;
 import java.awt.Graphics;
+import java.awt.Image;
 import java.awt.Point;
+import java.util.List;
 
 import javax.swing.JPanel;
 
+import element.Drawable;
 import game.Game;
 import graphics.listener.RadarController;
 
@@ -21,19 +24,41 @@ public class RadarScreen extends JPanel {
 
 	private Game game; // <- pas necessaire imho
 	private final int g_unit;
+	private final Image background;
 
-	public RadarScreen(Game g, final int unit) {
+	public RadarScreen(Game g, final int unit, Image back) {
 		super();
 		game = g;
 		g_unit = unit;
+		background = back;
 		
-		addMouseListener(new RadarController(g_unit));
+		addMouseListener(new RadarController(g_unit, game));
 	}
 
 	@Override
 	public void paint(Graphics g) {
 		super.paintComponent(g);
+		System.out.println("(RADAR) REPAINTING...");
+		drawBackground(g);
 		drawRadar(g);
+		drawElements(g);
+	}
+	
+	private void drawElements(Graphics g) {
+		List<Drawable> elements = game.getRadarElements();
+
+		for( Drawable d : elements ) {
+			g.drawImage(d.getImage(), 
+					d.getX() * g_unit,
+					d.getY() * g_unit,
+					d.getHeight() * g_unit,
+					d.getWidth() * g_unit,
+					null);
+		}
+	}
+	
+	private void drawBackground(Graphics g) {
+		g.drawImage(background, 0, 0, game.getWidth() * g_unit, game.getHeight() * g_unit, null);
 	}
 
 	private void drawRadar(Graphics g) {

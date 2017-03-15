@@ -7,6 +7,8 @@ import java.awt.Point;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 
+import game.Game;
+
 /**
  * @author JUNGES Pierre-Marie - M1 Informatique 2016/2017
  *
@@ -15,9 +17,11 @@ import java.awt.event.MouseListener;
 public class RadarController implements MouseListener{
 
 	private final int g_unit;
+	private final Game game;
 	
-	public RadarController(final int unit) {
+	public RadarController(final int unit, final Game g) {
 		g_unit = unit;
+		game = g;
 	}
 	
 	/* (non-Javadoc)
@@ -29,6 +33,9 @@ public class RadarController implements MouseListener{
 		int yClicked = (e.getY() / g_unit);
 		Point clicked = new Point(xClicked, yClicked);
 		System.out.println("(RADAR) clicked at " + clicked);
+		
+		// TEST
+		game.shootAt(clicked, null);
 	}
 
 	/* (non-Javadoc)

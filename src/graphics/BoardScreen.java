@@ -5,10 +5,14 @@ package graphics;
 
 import java.awt.Color;
 import java.awt.Graphics;
+import java.awt.Image;
 import java.awt.Point;
+import java.util.Collection;
+import java.util.List;
 
 import javax.swing.JPanel;
 
+import element.Drawable;
 import game.Game;
 import graphics.listener.BoardController;
 
@@ -21,11 +25,13 @@ public class BoardScreen extends JPanel {
 
 	private Game game; // <- pas necessaire imho
 	private final int g_unit;
+	private final Image background;
 	
-	public BoardScreen(Game g, final int unit) {
+	public BoardScreen(Game g, final int unit, Image back) {
 		super();
 		game = g;
 		g_unit = unit;
+		background = back;
 		
 		addMouseListener(new BoardController(g_unit));
 	}
@@ -33,7 +39,27 @@ public class BoardScreen extends JPanel {
 	@Override
 	public void paint(Graphics g) {
 		super.paintComponent(g);
+		System.out.println("(BOARD) REPAINTING...");
+		drawBackground(g);
 		drawBoard(g);
+		drawElements(g);
+	}
+	
+	private void drawElements(Graphics g) {
+		List<Drawable> elements = game.getBoardElements();
+
+		for( Drawable d : elements ) {
+			g.drawImage(d.getImage(), 
+					d.getX(),
+					d.getY(),
+					d.getHeight(),
+					d.getWidth(),
+					null);
+		}
+	}
+	
+	private void drawBackground(Graphics g) {
+		g.drawImage(background, 0, 0, game.getWidth() * g_unit, game.getHeight() * g_unit, null);
 	}
 	
 	private void drawBoard(Graphics g) {
@@ -41,7 +67,7 @@ public class BoardScreen extends JPanel {
 		int lrg = game.getHeight() * g_unit;
 		Point axe = new Point(0,0);
 		
-		g.setColor(Color.BLUE);
+		g.setColor(Color.WHITE);
 		g.drawRect(0, 0, lgr, lrg);
 		for(int i = 0 ; i < game.getWidth() ; i++) {
 			for(int j = 0 ; j < game.getHeight() ; j++) {

@@ -4,8 +4,14 @@
 package game;
 
 import java.awt.Point;
+import java.util.Collection;
+import java.util.Iterator;
+import java.util.LinkedList;
+import java.util.List;
 import java.util.Observable;
 
+import element.Box;
+import element.Drawable;
 import element.HitBox;
 import element.MissedBox;
 import element.Ship;
@@ -25,6 +31,7 @@ public class Game extends Observable {
 	
 	
 	public Game() {
+		super();
 		human = new Human(this);
 		computer = new Computer(this);
 		configuration = new Configuration();
@@ -48,11 +55,26 @@ public class Game extends Observable {
 		boolean touched = computer.isTouched(pos);
 		
 		if ( touched ) {
-			computer.damage(ship, pos);
+			// TEST
+			//computer.damage(ship, pos);
 			human.updateRadar(pos, new HitBox(pos));
 		} else {
 			human.updateRadar(pos, new MissedBox(pos));
 		}
+		
+		this.setChanged();
+		this.notifyObservers("RADAR");
+	}
+
+	public List<Drawable> getRadarElements() {
+		return new LinkedList<Drawable>(human.getRadar());
+	}
+	
+	public List<Drawable> getBoardElements() {
+		List<Drawable> result = new LinkedList<Drawable>();
+		result.addAll(computer.getRadar());
+		result.addAll(human.getFleet());
+		return result;
 	}
 
 }
