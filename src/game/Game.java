@@ -35,6 +35,11 @@ public class Game extends Observable {
 		human = new Human(this);
 		computer = new Computer(this);
 		configuration = new Configuration();
+		
+		// TEST
+		computer.setShipPosition(new Ship(new Point(0,0),1,5), new Point(0,0));
+		
+		// FIN TEST
 	}
 	
 	public int getWidth() {
@@ -47,7 +52,6 @@ public class Game extends Observable {
 	
 	@Override
 	public void notifyObservers() {
-		// TODO Auto-generated method stub
 		super.notifyObservers();
 	}
 	

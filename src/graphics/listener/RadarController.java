@@ -37,7 +37,7 @@ public class RadarController implements MouseListener{
 			// TEST
 			game.shootAt(clicked, null);
 		} else {
-			System.err.println("(RDRCONTROLLER) ALREADY PLAYER");
+			System.err.println("(RDRCONTROLLER) ALREADY PLAYED");
 		}
 	}
 

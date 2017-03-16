@@ -21,7 +21,7 @@ public class HitBox extends Box{
 	
 	@Override
 	public Image getImage() {
-		return TextureFactory.getInstance().getMissedBoxImage();
+		return TextureFactory.getInstance().getHitBoxImage();
 	}
 
 }

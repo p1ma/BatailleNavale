@@ -63,6 +63,12 @@ public abstract class Player {
 		radar.put(pos, box);
 	}
 	
-	public abstract void play(Ship s, Point p);
+	public void setShipPosition(Ship ship, Point pos) {
+		// TEST
+		for(int i = 0 ; i < ship.getHeight() ; i++) {
+			fleet.put(new Point((int)pos.getX() + i, (int)pos.getY()), ship);
+		}
+	}
 	
+	public abstract void play(Ship s, Point p);
 }
