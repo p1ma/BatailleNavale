@@ -29,6 +29,15 @@ public class Ship extends Drawable{
 		super(p, w, h);
 		
 	}
+	
+	public Ship(Point p, int w, int h, Image img) {
+		super(p, w, h);
+		image = img;
+		orientation = 0;
+		range = 0; // à voir
+		damage = 10; // à voir
+		life = 10; // à voir
+	}
 
 	/*
 	 * 	METHODS

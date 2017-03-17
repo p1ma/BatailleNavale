@@ -25,4 +25,8 @@ public class Era {
 	public List<Ship> getFleet() {
 		return fleet;
 	}
+	
+	public String getIdentifiant() {
+		return identifiant;
+	}
 }

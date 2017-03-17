@@ -7,8 +7,11 @@ import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.GridLayout;
 import java.awt.Image;
+import java.awt.Point;
 import java.io.File;
 import java.io.IOException;
+import java.util.LinkedList;
+import java.util.List;
 import java.util.Observable;
 import java.util.Observer;
 
@@ -16,6 +19,7 @@ import javax.imageio.ImageIO;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 
+import element.Ship;
 import game.Game;
 
 /**
@@ -49,12 +53,7 @@ public class GameScreen extends JFrame implements Observer {
 		width = game.getWidth();
 		height = game.getHeight();
 		
-		Image background = null;
-		try {
-			background = ImageIO.read(new File("textures/ocean.jpg"));
-		} catch (IOException e) {
-			System.out.println(e.getMessage());
-		}
+		Image background = TextureFactory.getInstance().getBoardBackground();
 		
 		// END TESTS
 		

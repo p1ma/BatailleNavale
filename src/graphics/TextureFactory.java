@@ -22,6 +22,8 @@ public class TextureFactory {
 	private Image missedBoxImage;
 	private Image hitBoxImage;
 	
+	private Image background;
+	
 	/**
 	 * Constructor of TextureFactory
 	 */
@@ -32,8 +34,13 @@ public class TextureFactory {
 		    missedBoxImage = ImageIO.read(url);
 		    
 		    url = new File("textures/hitBox.png");
-		    hitBoxImage = ImageIO.read(url);;
+		    hitBoxImage = ImageIO.read(url);
+		    
+		    url = new File("textures/ocean.jpg");
+		    background = ImageIO.read(url);
+		   
 		} catch (IOException e) {
+			System.err.println(e.getMessage());
 		}
 	}
 	
@@ -53,6 +60,10 @@ public class TextureFactory {
 	
 	public Image getHitBoxImage() {
 		return hitBoxImage;
+	}
+	
+	public Image getBoardBackground() {
+		return background;
 	}
 
 }
