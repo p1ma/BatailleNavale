@@ -46,6 +46,10 @@ public class RandomStrategy implements Strategy {
 								return point2;
 							}
 						}
+					} else {
+						// on tape une case aleatoire autour du bateau touche
+						l = this.getListFreeCases(radar, p);
+						return l.get(this.random.nextInt(l.size()));
 					}
 				}
 			}
@@ -54,6 +58,32 @@ public class RandomStrategy implements Strategy {
 		// sinon on tape au hasard sur la map
 		l = this.getListFreeCases(radar);
 		return l.get(this.random.nextInt(l.size()));
+	}
+
+	/**
+	 * retourne une liste de Point etant possibles a cibler, le tout autour de p
+	 * @param radar
+	 * @param p
+	 * @return
+	 */
+	private List<Point> getListFreeCases(Map<Point, Box> radar, Point point) {
+		List<Point> res = new ArrayList<Point>();
+		Point p;
+
+		if (!radar.containsKey(p = new Point((int)point.getX()-1, (int)point.getY()))) {
+			res.add(p);
+		}
+		if (!radar.containsKey(p = new Point((int)point.getX(), (int)point.getY()-1))) {
+			res.add(p);
+		}
+		if (!radar.containsKey(p = new Point((int)point.getX()+1, (int)point.getY()))) {
+			res.add(p);
+		}
+		if (!radar.containsKey(p = new Point((int)point.getX(), (int)point.getY()+1))) {
+			res.add(p);
+		}
+
+		return res;
 	}
 
 	/**

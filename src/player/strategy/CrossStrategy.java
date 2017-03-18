@@ -44,6 +44,11 @@ public class CrossStrategy implements Strategy {
 								return point2;
 							}
 						}
+					} else {
+						// on tape une case aleatoire autour du bateau touche
+						l = this.getListFreeCases(radar, p);
+						Random random = new Random();
+						return l.get(random.nextInt(l.size()));
 					}
 				}
 			}
@@ -51,6 +56,32 @@ public class CrossStrategy implements Strategy {
 
 		// sinon on tape en croix sur la map
 		return this.getCrossCase(radar);
+	}
+	
+	/**
+	 * retourne une liste de Point etant possibles a cibler, le tout autour de p
+	 * @param radar
+	 * @param p
+	 * @return
+	 */
+	private List<Point> getListFreeCases(Map<Point, Box> radar, Point point) {
+		List<Point> res = new ArrayList<Point>();
+		Point p;
+
+		if (!radar.containsKey(p = new Point((int)point.getX()-1, (int)point.getY()))) {
+			res.add(p);
+		}
+		if (!radar.containsKey(p = new Point((int)point.getX(), (int)point.getY()-1))) {
+			res.add(p);
+		}
+		if (!radar.containsKey(p = new Point((int)point.getX()+1, (int)point.getY()))) {
+			res.add(p);
+		}
+		if (!radar.containsKey(p = new Point((int)point.getX(), (int)point.getY()+1))) {
+			res.add(p);
+		}
+
+		return res;
 	}
 
 	/**
