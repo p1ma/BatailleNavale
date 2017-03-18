@@ -76,7 +76,11 @@ public abstract class Drawable {
 	}
 	
 	public boolean intersect(Point point) {
-		return (boundingBox.contains(point));
+		return (boundingBox.contains( point ));
+	}
+	
+	public boolean intersect(Drawable d) {
+		return (boundingBox.intersects( d.getBoundingBox() ));
 	}
 	
 	public void setPosition(Point point) {
