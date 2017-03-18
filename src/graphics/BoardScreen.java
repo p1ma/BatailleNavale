@@ -41,7 +41,7 @@ public class BoardScreen extends JPanel {
 	@Override
 	public void paint(Graphics g) {
 		super.paintComponent(g);
-		System.out.println("(BOARD) REPAINTING...");
+		
 		drawBackground(g);
 		drawBoard(g);
 		drawElements(g);

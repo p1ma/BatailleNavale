@@ -38,7 +38,7 @@ public class RadarScreen extends JPanel {
 	@Override
 	public void paint(Graphics g) {
 		super.paintComponent(g);
-		System.out.println("(RADAR) REPAINTING...");
+		
 		drawBackground(g);
 		drawRadar(g);
 		drawElements(g);
