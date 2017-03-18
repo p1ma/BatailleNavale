@@ -67,6 +67,14 @@ public abstract class Drawable {
 		return height;
 	}
 	
+	public Rectangle getBoundingBox() {
+		return boundingBox;
+	}
+	
+	public Point getPosition() {
+		return position;
+	}
+	
 	public boolean intersect(Point point) {
 		return (boundingBox.contains(point));
 	}

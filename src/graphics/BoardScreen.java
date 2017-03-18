@@ -33,7 +33,7 @@ public class BoardScreen extends JPanel {
 		g_unit = unit;
 		background = back;
 
-		BoardController controller = new BoardController(game);
+		BoardController controller = new BoardController(game, g_unit);
 		addMouseListener(controller);
 		addMouseMotionListener(controller);
 	}
