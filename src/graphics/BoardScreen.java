@@ -4,6 +4,7 @@
 package graphics;
 
 import java.awt.Color;
+import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.Image;
 import java.awt.Point;
@@ -13,6 +14,7 @@ import javax.swing.JPanel;
 
 import element.Drawable;
 import element.Ship;
+import game.Configuration;
 import game.Game;
 import graphics.listener.BoardController;
 
@@ -27,21 +29,24 @@ public class BoardScreen extends JPanel {
 	private final int g_unit;
 	private final Image background;
 
-	public BoardScreen(Game g, final int unit, Image back) {
+	public BoardScreen(Game g, final int unit) {
 		super();
 		game = g;
 		g_unit = unit;
-		background = back;
+		background = TextureFactory.getInstance().getBoardBackground();
 
 		BoardController controller = new BoardController(game, g_unit);
 		addMouseListener(controller);
 		addMouseMotionListener(controller);
+
+		// SIZE
+		this.setPreferredSize(new Dimension(this.g_unit * game.getWidth(), this.g_unit * game.getHeight()));	
 	}
 
 	@Override
 	public void paintComponent(Graphics g) {
 		super.paintComponent(g);
-		System.out.println("(BOARD) REPAINTING...");
+
 		drawBackground(g);
 		drawBoard(g);
 		drawElements(g);

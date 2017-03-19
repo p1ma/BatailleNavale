@@ -13,25 +13,15 @@ import java.awt.Dimension;
 public class Configuration {
 
 	private Era era;
-	private Dimension size;
+	
+	public final static int WIDTH = 10;
+	public final static int HEIGHT = 10;
 	
 	public Configuration() {
-		size = new Dimension(10,10);
+
 	}
 	
 	public Era getEra() {
 		return era;
-	}
-	
-	public Dimension getSize() {
-		return size;
-	}
-	
-	public int getWidth() {
-		return (int)size.getWidth();
-	}
-	
-	public int getHeight() {
-		return (int)size.getHeight();
 	}
 }

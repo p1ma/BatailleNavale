@@ -3,23 +3,16 @@
  */
 package graphics;
 
+import java.awt.BorderLayout;
 import java.awt.Dimension;
-import java.awt.Graphics;
-import java.awt.GridLayout;
-import java.awt.Image;
-import java.awt.Point;
-import java.io.File;
-import java.io.IOException;
-import java.util.LinkedList;
-import java.util.List;
+import java.awt.FlowLayout;
 import java.util.Observable;
 import java.util.Observer;
 
-import javax.imageio.ImageIO;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 
-import element.Ship;
+import game.Configuration;
 import game.Game;
 
 /**
@@ -34,10 +27,11 @@ public class GameScreen extends JFrame implements Observer {
 	private JPanel radarScreen;
 	private JPanel boardScreen;
 
-
-
 	private final static String TITLE = "Bataille Navale";
-	private final Dimension dimension = new Dimension(1024,768);
+	// pour la largeur : (nbCasesLargeur * tailleD'uneCase) *2 + colonneDeSeparation
+	// 					 le *2 est la pour dire qu'il y a 2 grilles différentes
+	private final Dimension dimension = 
+			new Dimension((Configuration.WIDTH * G_UNIT) *2 + G_UNIT, Configuration.HEIGHT * G_UNIT + G_UNIT);
 
 	private final static int G_UNIT = 50;
 
@@ -49,36 +43,27 @@ public class GameScreen extends JFrame implements Observer {
 		game = new Game();
 		game.addObserver(this);
 
-		// TESTS
-		width = game.getWidth();
-		height = game.getHeight();
-
-		Image background = TextureFactory.getInstance().getBoardBackground();
-
-		// END TESTS
-
-		radarScreen = new RadarScreen(game, G_UNIT, background);
-		boardScreen = new BoardScreen(game, G_UNIT, background);
+		radarScreen = new RadarScreen(game, G_UNIT);
+		boardScreen = new BoardScreen(game, G_UNIT);
 
 		initGameScreen();
 
-		add(boardScreen, JPanel.LEFT_ALIGNMENT);
-		add(radarScreen, JPanel.RIGHT_ALIGNMENT);
+		add(boardScreen);
+		add(new SeparationScreen(G_UNIT));
+		add(radarScreen);
 
 		this.initGameScreen2();
 	}
 
 	private void initGameScreen() {
 		// SIZE
-		this.setMinimumSize(dimension);
-		this.setMaximumSize(dimension);
 		this.setPreferredSize(dimension);
 
 		// RESIZABLE
 		this.setResizable(false);
 
 		// LAYOUT
-		this.setLayout(new GridLayout(1, 2, 10, 5));
+		this.setLayout(new FlowLayout(FlowLayout.LEFT, 0, 0));
 	}
 
 	private void initGameScreen2() {

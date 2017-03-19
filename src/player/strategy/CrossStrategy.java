@@ -12,6 +12,7 @@ import java.util.Map.Entry;
 
 import element.Box;
 import element.HitBox;
+import game.Configuration;
 
 /**
  * @author JUNGES Pierre-Marie - M1 Informatique 2016/2017
@@ -89,9 +90,8 @@ public class CrossStrategy implements Strategy {
 	 * @return
 	 */
 	private Point getCrossCase(Map<Point, Box> radar) {
-		System.err.println("CrossStrategy.execute() : changer le 10 avec un attribut global");
-		for (int x = 0; x < 10; x++) {
-			for (int y = 0; y < 10; y++) {
+		for (int x = 0; x < Configuration.WIDTH; x++) {
+			for (int y = 0; y < Configuration.HEIGHT; y++) {
 				if ((x%2 == 0 && y%2 == 0) || (x%2 == 1 && y%2 == 1)) {
 					Point p = new Point(x, y);
 

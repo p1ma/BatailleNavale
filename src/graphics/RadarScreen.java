@@ -4,6 +4,7 @@
 package graphics;
 
 import java.awt.Color;
+import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.Image;
 import java.awt.Point;
@@ -12,6 +13,7 @@ import java.util.List;
 import javax.swing.JPanel;
 
 import element.Drawable;
+import game.Configuration;
 import game.Game;
 import graphics.listener.RadarController;
 
@@ -26,24 +28,27 @@ public class RadarScreen extends JPanel {
 	private final int g_unit;
 	private final Image background;
 
-	public RadarScreen(Game g, final int unit, Image back) {
+	public RadarScreen(Game g, final int unit) {
 		super();
 		game = g;
 		g_unit = unit;
-		background = back;
-		
+		background = TextureFactory.getInstance().getBoardBackground();
+
 		addMouseListener(new RadarController(g_unit, game));
+
+		// SIZE
+		this.setPreferredSize(new Dimension(this.g_unit * game.getWidth(), this.g_unit * game.getHeight()));
 	}
 
 	@Override
 	public void paintComponent(Graphics g) {
 		super.paintComponent(g);
-		System.out.println("(RADAR) REPAINTING...");
+
 		drawBackground(g);
 		drawRadar(g);
 		drawElements(g);
 	}
-	
+
 	private void drawElements(Graphics g) {
 		List<Drawable> elements = game.getRadarElements();
 
@@ -56,7 +61,7 @@ public class RadarScreen extends JPanel {
 					null);
 		}
 	}
-	
+
 	private void drawBackground(Graphics g) {
 		g.drawImage(background, 0, 0, game.getWidth() * g_unit, game.getHeight() * g_unit, null);
 	}
@@ -65,7 +70,7 @@ public class RadarScreen extends JPanel {
 		int lgr = game.getWidth() * g_unit;
 		int lrg = game.getHeight() * g_unit;
 		Point axe = new Point(0,0);
-		
+
 		g.setColor(Color.GREEN);
 		g.drawRect(0, 0, lgr, lrg);
 		for(int i = 0 ; i < game.getWidth() ; i++) {

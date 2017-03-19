@@ -71,11 +71,11 @@ public class Game extends Observable {
 	}
 
 	public int getWidth() {
-		return configuration.getWidth();
+		return Configuration.WIDTH;
 	}
 
 	public int getHeight() {
-		return configuration.getHeight();
+		return Configuration.HEIGHT;
 	}
 
 	public List<Ship> getFleet() {

@@ -12,6 +12,7 @@ import java.util.Random;
 
 import element.Box;
 import element.HitBox;
+import game.Configuration;
 
 /**
  * @author JUNGES Pierre-Marie - M1 Informatique 2016/2017
@@ -114,9 +115,8 @@ public class RandomStrategy implements Strategy {
 	private List<Point> getListFreeCases(Map<Point, Box> radar) {
 		List<Point> res = new ArrayList<Point>();
 
-		System.err.println("RandomStrategy.execute() : changer le 10 avec un attribut global");
-		for (int x = 0; x < 10; x++) {
-			for (int y = 0; y < 10; y++) {
+		for (int x = 0; x < Configuration.WIDTH; x++) {
+			for (int y = 0; y < Configuration.HEIGHT; y++) {
 				Point p = new Point(x, y);
 
 				if (!radar.containsKey(p)) { 
