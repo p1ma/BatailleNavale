@@ -41,10 +41,11 @@ public class Game extends Observable {
 		computer = new Computer(this);
 		configuration = new Configuration();
 		warmup = true;
-		temporaryFleet = new LinkedList<Ship>();
 
 		// TESTS
 		// on simule notre liste de Ship
+
+		temporaryFleet = new LinkedList<Ship>();
 
 		Point point = new Point(0,0);
 		Image img = null;

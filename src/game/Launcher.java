@@ -16,6 +16,8 @@ public class Launcher {
 	 * @param args
 	 */
 	public static void main(String[] args) {
+		
+		
 		GameScreen gameScreen = new GameScreen();
 	}
 

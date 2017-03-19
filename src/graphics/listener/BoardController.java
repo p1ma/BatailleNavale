@@ -38,8 +38,8 @@ public class BoardController implements MouseListener, MouseMotionListener{
 	public void mouseDragged(MouseEvent arg) {
 		if ( selected != null) {
 			if (!game.intersectOtherShips(selected, arg.getPoint())) {
-			game.setShipPosition(selected, arg.getPoint());
-			checkCoordinates( selected );
+				game.setShipPosition(selected, arg.getPoint());
+				checkCoordinates( selected );
 			}
 		}
 	}
@@ -113,13 +113,13 @@ public class BoardController implements MouseListener, MouseMotionListener{
 		int yClicked = (int)(e.getY());
 		Point clicked = new Point(xClicked, yClicked);
 
-		// TEST
+		// on enregistre le bateau sur lequel on maintient le click gauche
 		selected = game.selectShip(clicked);
-		// END TEST
 	}
 
 	@Override
 	public void mouseReleased(MouseEvent e) {
+		// on relache le bateau
 		selected = null;
 	}
 
