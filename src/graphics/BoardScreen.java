@@ -38,7 +38,7 @@ public class BoardScreen extends JPanel {
 		BoardController controller = new BoardController(game, g_unit);
 		addMouseListener(controller);
 		addMouseMotionListener(controller);
-
+		
 		// SIZE
 		this.setPreferredSize(new Dimension(this.g_unit * game.getWidth(), this.g_unit * game.getHeight()));	
 	}

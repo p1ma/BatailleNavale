@@ -35,7 +35,7 @@ public class RadarScreen extends JPanel {
 		background = TextureFactory.getInstance().getBoardBackground();
 
 		addMouseListener(new RadarController(g_unit, game));
-
+		
 		// SIZE
 		this.setPreferredSize(new Dimension(this.g_unit * game.getWidth(), this.g_unit * game.getHeight()));
 	}

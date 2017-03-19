@@ -4,6 +4,7 @@
 package graphics;
 
 import java.awt.BorderLayout;
+import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.util.Observable;
@@ -64,6 +65,9 @@ public class GameScreen extends JFrame implements Observer {
 
 		// LAYOUT
 		this.setLayout(new FlowLayout(FlowLayout.LEFT, 0, 0));
+		
+		// COLOR
+		this.getContentPane().setBackground(Color.WHITE);
 	}
 
 	private void initGameScreen2() {
