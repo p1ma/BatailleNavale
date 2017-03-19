@@ -3,6 +3,7 @@
  */
 package element;
 
+import java.awt.Image;
 import java.awt.Point;
 
 /**
@@ -24,5 +25,10 @@ public abstract class Box extends Drawable{
 		super(p, WIDTH, HEIGHT);
 		// TODO Auto-generated constructor stub
 	}
+	
+	public void rotate() {
+		// later ...
+	}
 
+	
 }

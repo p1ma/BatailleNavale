@@ -10,6 +10,7 @@ import java.awt.FlowLayout;
 import java.util.Observable;
 import java.util.Observer;
 
+import javax.swing.Box;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 
@@ -46,11 +47,14 @@ public class GameScreen extends JFrame implements Observer {
 
 		radarScreen = new RadarScreen(game, G_UNIT);
 		boardScreen = new BoardScreen(game, G_UNIT);
+		
+		// to use keyListener
+		boardScreen.setFocusable(true);
 
 		initGameScreen();
 
 		add(boardScreen);
-		add(new SeparationScreen(G_UNIT));
+		add( Box.createRigidArea( new Dimension(G_UNIT, 0) ) );
 		add(radarScreen);
 
 		this.initGameScreen2();

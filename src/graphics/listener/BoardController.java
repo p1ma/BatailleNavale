@@ -4,6 +4,8 @@
 package graphics.listener;
 
 import java.awt.Point;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
@@ -16,16 +18,20 @@ import game.Game;
  *
  * Mar 14, 2017
  */
-public class BoardController implements MouseListener, MouseMotionListener{
+public class BoardController implements MouseListener, MouseMotionListener, KeyListener{
 
 	private final Game game;
 	private Ship selected;
 	private final int g_unit;
 
+	// key 'r' used to rotate a ship
+	private int rotate;
+
 	public BoardController(final Game g, final int unit) {
 		game = g;
 		selected = null;
 		g_unit = unit;
+		rotate = KeyEvent.VK_R;
 	}
 
 	/**
@@ -121,6 +127,23 @@ public class BoardController implements MouseListener, MouseMotionListener{
 	public void mouseReleased(MouseEvent e) {
 		// on relache le bateau
 		selected = null;
+	}
+
+	@Override
+	public void keyPressed(KeyEvent e) {
+		int code = e.getKeyCode();
+		// ca deconne mais je sais pq
+		if ( (code == rotate) && (selected != null) ) {
+				game.rotate(selected);
+		}
+	}
+
+	@Override
+	public void keyReleased(KeyEvent e) {
+	}
+
+	@Override
+	public void keyTyped(KeyEvent e) {
 	}
 
 }
