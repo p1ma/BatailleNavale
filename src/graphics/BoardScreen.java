@@ -6,6 +6,7 @@ package graphics;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics;
+import java.awt.Graphics2D;
 import java.awt.Image;
 import java.awt.Point;
 import java.util.List;
@@ -36,8 +37,9 @@ public class BoardScreen extends JPanel {
 		background = TextureFactory.getInstance().getBoardBackground();
 
 		BoardController controller = new BoardController(game, g_unit);
-		addMouseListener(controller);
-		addMouseMotionListener(controller);
+		this.addKeyListener(controller);
+		this.addMouseListener(controller);
+		this.addMouseMotionListener(controller);
 		
 		// SIZE
 		this.setPreferredSize(new Dimension(this.g_unit * game.getWidth(), this.g_unit * game.getHeight()));	
@@ -55,14 +57,23 @@ public class BoardScreen extends JPanel {
 
 	private void drawElements(Graphics g) {
 		List<Drawable> elements = game.getBoardElements();
-
+		
+		Graphics2D g2d = (Graphics2D)g;
 		for( Drawable d : elements ) {
-			g.drawImage(d.getImage(), 
+			/*g2d.rotate(d.getOrientation(),
+					(int)d.getX() * g_unit,
+					(int)d.getY() * g_unit);*/
+			g2d.drawImage(d.getImage(), 
 					(int)d.getX() * g_unit,
 					(int)d.getY() * g_unit,
 					d.getHeight() * g_unit,
 					d.getWidth() * g_unit,
-					null);
+					this);
+			/*g2d.rotate(-d.getOrientation(),
+					(int)d.getX() * g_unit,
+					(int)d.getY() * g_unit);*/
+			System.out.println("X : " + (int)d.getX() * g_unit);
+			System.out.println("Y : " + (int)d.getY() * g_unit);
 		}
 	}
 
@@ -88,16 +99,24 @@ public class BoardScreen extends JPanel {
 	/*
 	 * PAS SUR DE CETTE SOLUTION, A DISCUTER
 	 * NECESSITE PAS MAL DE BIDOUILLAGE IMHO
+	 * + DUPLICATION DE CODE AVEC DRAW ELEMENTS
 	 */
 	private void drawShipStarterPosition(Graphics g) {
 		List<Ship> fleet = game.getFleet();
+		Graphics2D g2d = (Graphics2D)g;
 		for( Ship s : fleet ) {
-			g.drawImage(s.getImage(), 
+			/*g2d.rotate(s.getOrientation(),
+					(int)s.getX(),
+					(int)s.getY());*/
+			g2d.drawImage(s.getImage(), 
 					(int)s.getX(),
 					(int)s.getY(),
 					s.getHeight(),
 					s.getWidth(),
-					null);
+					this);
+			/*g2d.rotate(-s.getOrientation(),
+					(int)s.getX(),
+					(int)s.getY());*/
 		}
 	}
 }

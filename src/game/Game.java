@@ -31,6 +31,11 @@ public class Game extends Observable {
 	private Computer computer;
 	private Configuration configuration;
 
+	/*
+	 *  On pourrait directement travailler avec la liste 
+	 *  de bateaux du Joueur
+	 *  ( à discuter )
+	 */
 	private List<Ship> temporaryFleet;
 
 	private boolean warmup;
@@ -154,7 +159,6 @@ public class Game extends Observable {
 		while( num < temporaryFleet.size() && !intersect ) {
 			s = temporaryFleet.get(num);
 			if ( num != index && s.intersect(ship) ) {
-				System.out.println("intersected");
 				intersect = true;
 			}
 			num++;
@@ -167,6 +171,13 @@ public class Game extends Observable {
 	public void setShipPosition(Ship selected, Point point) {
 		selected.setPosition(point);
 
+		this.setChanged();
+		this.notifyObservers("BOARD");
+	}
+
+	public void rotate(Drawable element) {
+		element.rotate();
+		
 		this.setChanged();
 		this.notifyObservers("BOARD");
 	}

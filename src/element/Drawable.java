@@ -18,6 +18,7 @@ public abstract class Drawable {
 	protected int width;
 	protected int height;
 	protected Rectangle boundingBox;
+	protected double orientation;
 	
 	/**
 	 * Constructor
@@ -31,9 +32,20 @@ public abstract class Drawable {
 		this.height = h;
 		this.boundingBox = new Rectangle(h, w);
 		this.boundingBox.setLocation(position);
+		this.orientation = 0.;
 	}
 	
 	public abstract Image getImage();
+	
+	/*
+	 * J'ai commencé le code de la rotation, 
+	 * je prefere le push tout de suite
+	 * mais 
+	 */
+	public void rotate() {
+		this.orientation += (Math.PI / 2);
+		this.orientation = orientation % (Math.PI);
+	}
 	
 	/**
 	 * Returns x coordinate of the Drawable
@@ -73,6 +85,10 @@ public abstract class Drawable {
 	
 	public Point getPosition() {
 		return position;
+	}
+	
+	public double getOrientation() {
+		return orientation;
 	}
 	
 	public boolean intersect(Point point) {

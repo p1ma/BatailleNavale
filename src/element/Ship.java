@@ -5,6 +5,7 @@ package element;
 
 import java.awt.Image;
 import java.awt.Point;
+import java.awt.image.BufferedImage;
 
 /**
  * @author JUNGES Pierre-Marie - M1 Informatique 2016/2017
@@ -17,8 +18,7 @@ public class Ship extends Drawable{
 	private int damage;
 	private int range;
 	private Image image;
-	private int orientation;
-	
+
 	/**
 	 * Constructor of Ship
 	 * @param p Position
@@ -27,13 +27,12 @@ public class Ship extends Drawable{
 	 */
 	public Ship(Point p, int w, int h) {
 		super(p, w, h);
-		
+
 	}
-	
+
 	public Ship(Point p, int w, int h, Image img) {
 		super(p, w, h);
 		image = img;
-		orientation = 0;
 		range = 0; // à voir
 		damage = 10; // à voir
 		life = 10; // à voir
@@ -42,45 +41,37 @@ public class Ship extends Drawable{
 	/*
 	 * 	METHODS
 	 */
-	
+
 	public void damage(Ship s) {
 		life -= s.getDamage();
 	}
-	
+
 	public boolean isDead() {
 		return (life <= 0);
 	}
-	
+
 	/*
 	 *			SETTERS
 	 */
-	
-	public void setOrientation(int o) {
-		orientation = o;
-	}
-	
+
+
 	/*
 	 *			GETTERS
 	 */
-	
+
 	public Image getImage() {
 		return image;
 	}
-	
+
 	public int getLife() {
 		return life;
 	}
-	
+
 	public int getDamage() {
 		return damage;
 	}
-	
+
 	public int getRange() {
 		return range;
 	}
-	
-	public int getOrientation() {
-		return orientation;
-	}
-
 }

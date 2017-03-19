@@ -47,6 +47,9 @@ public class GameScreen extends JFrame implements Observer {
 
 		radarScreen = new RadarScreen(game, G_UNIT);
 		boardScreen = new BoardScreen(game, G_UNIT);
+		
+		// to use keyListener
+		boardScreen.setFocusable(true);
 
 		initGameScreen();
 
