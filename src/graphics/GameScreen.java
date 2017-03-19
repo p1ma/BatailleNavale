@@ -10,6 +10,7 @@ import java.awt.FlowLayout;
 import java.util.Observable;
 import java.util.Observer;
 
+import javax.swing.Box;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 
@@ -50,7 +51,7 @@ public class GameScreen extends JFrame implements Observer {
 		initGameScreen();
 
 		add(boardScreen);
-		add(new SeparationScreen(G_UNIT));
+		add( Box.createRigidArea( new Dimension(G_UNIT, 0) ) );
 		add(radarScreen);
 
 		this.initGameScreen2();

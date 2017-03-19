@@ -14,6 +14,9 @@ public class Configuration {
 
 	private Era era;
 	
+	/*
+	 *	Techniquement d'apres notre diagramme de sequence c'est faux 
+	 */
 	public final static int WIDTH = 10;
 	public final static int HEIGHT = 10;
 	
