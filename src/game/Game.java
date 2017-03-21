@@ -58,16 +58,15 @@ public class Game extends Observable {
 			img = ImageIO.read(new File("textures/ship.png"));
 		} catch (IOException e) {}
 
-		// bidouillage des 50 et 250, normalement c'est 1 et 5
-		temporaryFleet.add(new Ship(point,50,250, img));
-
+		temporaryFleet.add(new Ship(point, 5, 1, img));
+/*
 		try {
 			img = ImageIO.read(new File("textures/war.png"));
 		} catch (IOException e) {}
 		point = new Point(point.x,  point.y + 50);
 		temporaryFleet.add(new Ship(point,50,200, img));
-
-		computer.setShipPosition(new Ship(new Point(0,0),1,5), new Point(0,0));
+*/
+//		computer.setShipPosition(new Ship(new Point(0,0),1,5), new Point(0,0));
 
 		// FIN TEST
 	}
@@ -131,7 +130,7 @@ public class Game extends Observable {
 	public Ship selectShip(Point clicked) {
 		Ship res = null;
 		if ( warmup ) {
-			for( Ship s : temporaryFleet) {
+			for (Ship s : temporaryFleet) {
 				if (s.intersect(clicked)) {
 					return s;
 				}

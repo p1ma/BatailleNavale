@@ -35,7 +35,7 @@ public class GameScreen extends JFrame implements Observer {
 	private final Dimension dimension = 
 			new Dimension((Configuration.WIDTH * G_UNIT) *2 + G_UNIT, Configuration.HEIGHT * G_UNIT + G_UNIT);
 
-	private final static int G_UNIT = 50;
+	public final static int G_UNIT = 50;
 
 	// TESTS
 	private int width, height;
@@ -45,8 +45,8 @@ public class GameScreen extends JFrame implements Observer {
 		game = new Game();
 		game.addObserver(this);
 
-		radarScreen = new RadarScreen(game, G_UNIT);
-		boardScreen = new BoardScreen(game, G_UNIT);
+		radarScreen = new RadarScreen(game);
+		boardScreen = new BoardScreen(game);
 		
 		// to use keyListener
 		boardScreen.setFocusable(true);

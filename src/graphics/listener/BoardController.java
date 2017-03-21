@@ -12,6 +12,7 @@ import java.awt.event.MouseMotionListener;
 
 import element.Ship;
 import game.Game;
+import graphics.GameScreen;
 
 /**
  * @author JUNGES Pierre-Marie - M1 Informatique 2016/2017
@@ -22,16 +23,10 @@ public class BoardController implements MouseListener, MouseMotionListener, KeyL
 
 	private final Game game;
 	private Ship selected;
-	private final int g_unit;
 
-	// key 'r' used to rotate a ship
-	private int rotate;
-
-	public BoardController(final Game g, final int unit) {
+	public BoardController(final Game g) {
 		game = g;
 		selected = null;
-		g_unit = unit;
-		rotate = KeyEvent.VK_R;
 	}
 
 	/**
@@ -41,10 +36,11 @@ public class BoardController implements MouseListener, MouseMotionListener, KeyL
 	 * function checkCoordinates is called
 	 */
 	@Override
-	public void mouseDragged(MouseEvent arg) {
+	public void mouseDragged(MouseEvent e) {
 		if ( selected != null) {
-			if (!game.intersectOtherShips(selected, arg.getPoint())) {
-				game.setShipPosition(selected, arg.getPoint());
+			Point p = new Point(e.getX()/GameScreen.G_UNIT, e.getY()/GameScreen.G_UNIT);
+			if (!game.intersectOtherShips(selected, p)) {
+				game.setShipPosition(selected, p);
 				checkCoordinates( selected );
 			}
 		}
@@ -57,14 +53,6 @@ public class BoardController implements MouseListener, MouseMotionListener, KeyL
 	private void checkCoordinates(Ship s) {
 		Point position = s.getPosition();
 
-		// calc coordinates
-		int x = 0, y = 0;
-		x = (int)(position.x / g_unit);
-		y = (int)(position.y / g_unit);
-		x *= g_unit;
-		y *= g_unit;
-		position = new Point(x,y);
-
 		// checks if the x positions exceed (left border)
 		if (position.x < 0) {
 			position.x = 0;
@@ -76,14 +64,14 @@ public class BoardController implements MouseListener, MouseMotionListener, KeyL
 		}
 
 		// checks if the x positions exceed (right border)
-		int exceedBy = (game.getHeight() * g_unit) - (position.x + s.getHeight());
+		int exceedBy = game.getWidth() - (position.x + s.getWidth());
 		if ( exceedBy < 0) {
 			// + because exceedBy is negative at this moment
 			position.x += exceedBy;
 		}
 
 		// checks if the y positions exceed (bottom border)
-		exceedBy = (game.getWidth() * g_unit) - (position.y + s.getWidth());
+		exceedBy = game.getHeight() - (position.y + s.getHeight());
 		if ( exceedBy < 0) {
 			// + because exceedBy is negative at this moment
 			position.y += exceedBy;
@@ -95,28 +83,28 @@ public class BoardController implements MouseListener, MouseMotionListener, KeyL
 
 	@Override
 	public void mouseMoved(MouseEvent arg0) {
-		// see function mouseDragged
+
 	}
 
 	@Override
 	public void mouseClicked(MouseEvent e) {
-		// see function mousePressed
+
 	}
 
 	@Override
 	public void mouseEntered(MouseEvent e) {
-		// see function mousePressed
+
 	}
 
 	@Override
 	public void mouseExited(MouseEvent e) {
-		// see function mouseReleased
+
 	}
 
 	@Override
 	public void mousePressed(MouseEvent e) {
-		int xClicked = (int)(e.getX());
-		int yClicked = (int)(e.getY());
+		int xClicked = (int)(e.getX() / GameScreen.G_UNIT);
+		int yClicked = (int)(e.getY() / GameScreen.G_UNIT);
 		Point clicked = new Point(xClicked, yClicked);
 
 		// on enregistre le bateau sur lequel on maintient le click gauche
@@ -129,12 +117,14 @@ public class BoardController implements MouseListener, MouseMotionListener, KeyL
 		selected = null;
 	}
 
+
+
+
+
 	@Override
 	public void keyPressed(KeyEvent e) {
-		int code = e.getKeyCode();
-		// ca deconne mais je sais pq
-		if ( (code == rotate) && (selected != null) ) {
-				game.rotate(selected);
+		if ((selected != null) && (e.getKeyCode() == KeyEvent.VK_R)) {
+			game.rotate(selected);
 		}
 	}
 

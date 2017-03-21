@@ -33,6 +33,7 @@ public class Ship extends Drawable{
 	public Ship(Point p, int w, int h, Image img) {
 		super(p, w, h);
 		image = img;
+		
 		range = 0; // à voir
 		damage = 10; // à voir
 		life = 10; // à voir
@@ -74,4 +75,5 @@ public class Ship extends Drawable{
 	public int getRange() {
 		return range;
 	}
+
 }

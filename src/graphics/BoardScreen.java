@@ -9,13 +9,15 @@ import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Image;
 import java.awt.Point;
+import java.awt.geom.AffineTransform;
+import java.awt.image.AffineTransformOp;
+import java.awt.image.BufferedImage;
 import java.util.List;
 
 import javax.swing.JPanel;
 
 import element.Drawable;
 import element.Ship;
-import game.Configuration;
 import game.Game;
 import graphics.listener.BoardController;
 
@@ -27,22 +29,21 @@ import graphics.listener.BoardController;
 public class BoardScreen extends JPanel {
 
 	private Game game; 
-	private final int g_unit;
 	private final Image background;
 
-	public BoardScreen(Game g, final int unit) {
+	public BoardScreen(Game g) {
 		super();
 		game = g;
-		g_unit = unit;
 		background = TextureFactory.getInstance().getBoardBackground();
 
-		BoardController controller = new BoardController(game, g_unit);
+		BoardController controller = new BoardController(game);
 		this.addKeyListener(controller);
 		this.addMouseListener(controller);
 		this.addMouseMotionListener(controller);
-		
+
 		// SIZE
-		this.setPreferredSize(new Dimension(this.g_unit * game.getWidth(), this.g_unit * game.getHeight()));	
+		this.setPreferredSize(
+				new Dimension(GameScreen.G_UNIT * game.getWidth(), GameScreen.G_UNIT * game.getHeight()));	
 	}
 
 	@Override
@@ -57,42 +58,42 @@ public class BoardScreen extends JPanel {
 
 	private void drawElements(Graphics g) {
 		List<Drawable> elements = game.getBoardElements();
-		
+
 		Graphics2D g2d = (Graphics2D)g;
 		for( Drawable d : elements ) {
 			/*g2d.rotate(d.getOrientation(),
 					(int)d.getX() * g_unit,
 					(int)d.getY() * g_unit);*/
 			g2d.drawImage(d.getImage(), 
-					(int)d.getX() * g_unit,
-					(int)d.getY() * g_unit,
-					d.getHeight() * g_unit,
-					d.getWidth() * g_unit,
+					d.getX() * GameScreen.G_UNIT,
+					d.getY() * GameScreen.G_UNIT,
+					d.getHeight() * GameScreen.G_UNIT,
+					d.getWidth() * GameScreen.G_UNIT,
 					this);
 			/*g2d.rotate(-d.getOrientation(),
 					(int)d.getX() * g_unit,
 					(int)d.getY() * g_unit);*/
-			System.out.println("X : " + (int)d.getX() * g_unit);
-			System.out.println("Y : " + (int)d.getY() * g_unit);
+			System.out.println("X : " + d.getX() * GameScreen.G_UNIT);
+			System.out.println("Y : " + d.getY() * GameScreen.G_UNIT);
 		}
 	}
 
 	private void drawBackground(Graphics g) {
-		g.drawImage(background, 0, 0, game.getWidth() * g_unit, game.getHeight() * g_unit, null);
+		g.drawImage(background, 0, 0, game.getWidth() * GameScreen.G_UNIT, game.getHeight() * GameScreen.G_UNIT, null);
 	}
 
 	private void drawBoard(Graphics g) {
-		int lgr = game.getWidth() * g_unit;
-		int lrg = game.getHeight() * g_unit;
+		int lgr = game.getWidth() * GameScreen.G_UNIT;
+		int lrg = game.getHeight() * GameScreen.G_UNIT;
 		Point axe = new Point(0,0);
 
 		g.setColor(Color.WHITE);
 		g.drawRect(0, 0, lgr, lrg);
 		for(int i = 0 ; i < game.getWidth() ; i++) {
 			for(int j = 0 ; j < game.getHeight() ; j++) {
-				g.drawRect(axe.x + (j * g_unit), axe.y, g_unit, g_unit);
+				g.drawRect(axe.x + (j * GameScreen.G_UNIT), axe.y, GameScreen.G_UNIT, GameScreen.G_UNIT);
 			}
-			axe.y = axe.y + g_unit;
+			axe.y = axe.y + GameScreen.G_UNIT;
 		}
 	}
 
@@ -104,19 +105,41 @@ public class BoardScreen extends JPanel {
 	private void drawShipStarterPosition(Graphics g) {
 		List<Ship> fleet = game.getFleet();
 		Graphics2D g2d = (Graphics2D)g;
+		/*
+		private Image image;
+		AffineTransform identity = new AffineTransform();
+
+		Graphics2D g2d = (Graphics2D)g;
+		AffineTransform trans = new AffineTransform();
+		trans.setTransform(identity);
+		trans.rotate( Math.toRadians(45) );
+		g2d.drawImage(image, trans, this);
+		 */
+
 		for( Ship s : fleet ) {
-			/*g2d.rotate(s.getOrientation(),
-					(int)s.getX(),
-					(int)s.getY());*/
-			g2d.drawImage(s.getImage(), 
-					(int)s.getX(),
-					(int)s.getY(),
-					s.getHeight(),
-					s.getWidth(),
-					this);
-			/*g2d.rotate(-s.getOrientation(),
-					(int)s.getX(),
-					(int)s.getY());*/
+			if (s.getOrientation() == 0) {
+				g2d.drawImage(s.getImage(), 
+						s.getX() * GameScreen.G_UNIT,
+						s.getY() * GameScreen.G_UNIT,
+						s.getWidth() * GameScreen.G_UNIT,
+						s.getHeight() * GameScreen.G_UNIT,
+						this);
+			} else {
+				// Rotation information
+				double rotationRequired = Math.toRadians (90);
+				double locationY = GameScreen.G_UNIT;
+				double locationX = GameScreen.G_UNIT;
+				AffineTransform tx = AffineTransform.getRotateInstance(rotationRequired, locationX, locationY);
+				AffineTransformOp op = new AffineTransformOp(tx, AffineTransformOp.TYPE_BILINEAR);
+
+				// Drawing the rotated image at the required drawing locations
+				g2d.drawImage(op.filter((BufferedImage) s.getImage(), null), 
+						s.getX() * GameScreen.G_UNIT,
+						s.getY() * GameScreen.G_UNIT,
+						s.getWidth() * GameScreen.G_UNIT,
+						s.getHeight() * GameScreen.G_UNIT,
+						this);
+			}
 		}
 	}
 }

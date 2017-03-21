@@ -25,19 +25,18 @@ import graphics.listener.RadarController;
 public class RadarScreen extends JPanel {
 
 	private Game game; // <- pas necessaire imho
-	private final int g_unit;
 	private final Image background;
 
-	public RadarScreen(Game g, final int unit) {
+	public RadarScreen(Game g) {
 		super();
 		game = g;
-		g_unit = unit;
 		background = TextureFactory.getInstance().getBoardBackground();
 
-		addMouseListener(new RadarController(g_unit, game));
+		addMouseListener(new RadarController(game));
 		
 		// SIZE
-		this.setPreferredSize(new Dimension(this.g_unit * game.getWidth(), this.g_unit * game.getHeight()));
+		this.setPreferredSize(
+				new Dimension(GameScreen.G_UNIT * game.getWidth(), GameScreen.G_UNIT * game.getHeight()));
 	}
 
 	@Override
@@ -54,21 +53,21 @@ public class RadarScreen extends JPanel {
 
 		for( Drawable d : elements ) {
 			g.drawImage(d.getImage(), 
-					d.getX() * g_unit,
-					d.getY() * g_unit,
-					d.getHeight() * g_unit,
-					d.getWidth() * g_unit,
+					d.getX() * GameScreen.G_UNIT,
+					d.getY() * GameScreen.G_UNIT,
+					d.getHeight() * GameScreen.G_UNIT,
+					d.getWidth() * GameScreen.G_UNIT,
 					null);
 		}
 	}
 
 	private void drawBackground(Graphics g) {
-		g.drawImage(background, 0, 0, game.getWidth() * g_unit, game.getHeight() * g_unit, null);
+		g.drawImage(background, 0, 0, game.getWidth() * GameScreen.G_UNIT, game.getHeight() * GameScreen.G_UNIT, null);
 	}
 
 	private void drawRadar(Graphics g) {
-		int lgr = game.getWidth() * g_unit;
-		int lrg = game.getHeight() * g_unit;
+		int lgr = game.getWidth() * GameScreen.G_UNIT;
+		int lrg = game.getHeight() * GameScreen.G_UNIT;
 		Point axe = new Point(0,0);
 
 		g.setColor(Color.GREEN);
@@ -76,10 +75,10 @@ public class RadarScreen extends JPanel {
 		for(int i = 0 ; i < game.getWidth() ; i++) {
 			//g.drawString(alphabet[i], axePlateau.x + i*facteur + (facteur/2), axePlateau.y - (facteur/10));
 			for(int j = 0 ; j < game.getHeight() ; j++) {
-				g.drawRect(axe.x + (j * g_unit), axe.y, g_unit, g_unit);
+				g.drawRect(axe.x + (j * GameScreen.G_UNIT), axe.y, GameScreen.G_UNIT, GameScreen.G_UNIT);
 			}
 			//g.drawString("" + (1+i), axe.x - (facteur/3), axe.y + (facteur/2));
-			axe.y = axe.y + g_unit;
+			axe.y = axe.y + GameScreen.G_UNIT;
 		}
 	}
 }
