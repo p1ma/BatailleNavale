@@ -125,20 +125,22 @@ public class BoardScreen extends JPanel {
 						s.getHeight() * GameScreen.G_UNIT,
 						this);
 			} else {
-				// Rotation information
-				double rotationRequired = Math.toRadians (90);
-				double locationY = GameScreen.G_UNIT;
-				double locationX = GameScreen.G_UNIT;
-				AffineTransform tx = AffineTransform.getRotateInstance(rotationRequired, locationX, locationY);
+				
+				BufferedImage bi = s.getImage();
+				AffineTransform tx = new AffineTransform();
+				tx.rotate(Math.toRadians(90), 
+						bi.getWidth()/13, 
+						bi.getHeight()/2
+						);
 				AffineTransformOp op = new AffineTransformOp(tx, AffineTransformOp.TYPE_BILINEAR);
-
-				// Drawing the rotated image at the required drawing locations
-				g2d.drawImage(op.filter((BufferedImage) s.getImage(), null), 
+				bi = op.filter(bi, null);
+				g2d.drawImage(bi, 
 						s.getX() * GameScreen.G_UNIT,
 						s.getY() * GameScreen.G_UNIT,
 						s.getWidth() * GameScreen.G_UNIT,
 						s.getHeight() * GameScreen.G_UNIT,
 						this);
+				
 			}
 		}
 	}

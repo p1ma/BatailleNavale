@@ -3,8 +3,8 @@
  */
 package game;
 
-import java.awt.Image;
 import java.awt.Point;
+import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 import java.util.LinkedList;
@@ -53,7 +53,7 @@ public class Game extends Observable {
 		temporaryFleet = new LinkedList<Ship>();
 
 		Point point = new Point(0,0);
-		Image img = null;
+		BufferedImage img = null;
 		try {
 			img = ImageIO.read(new File("textures/ship.png"));
 		} catch (IOException e) {}

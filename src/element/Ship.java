@@ -17,7 +17,7 @@ public class Ship extends Drawable{
 	private int life;
 	private int damage;
 	private int range;
-	private Image image;
+	private BufferedImage image;
 
 	/**
 	 * Constructor of Ship
@@ -30,7 +30,7 @@ public class Ship extends Drawable{
 
 	}
 
-	public Ship(Point p, int w, int h, Image img) {
+	public Ship(Point p, int w, int h, BufferedImage img) {
 		super(p, w, h);
 		image = img;
 		
@@ -60,7 +60,7 @@ public class Ship extends Drawable{
 	 *			GETTERS
 	 */
 
-	public Image getImage() {
+	public BufferedImage getImage() {
 		return image;
 	}
 
