@@ -23,22 +23,23 @@ public class TextureFactory {
 	private Image hitBoxImage;
 	
 	private Image background;
+	private Image battleshipBackground;
+	private Image battleshipTitle;
 	
 	/**
 	 * Constructor of TextureFactory
 	 */
 	private TextureFactory() {
 		try {
-			/* examples */
-		    File url = new File("textures/missedBox.png");
-		    missedBoxImage = ImageIO.read(url);
+		    missedBoxImage = ImageIO.read(new File("textures/missedBox.png"));
 		    
-		    url = new File("textures/hitBox.png");
-		    hitBoxImage = ImageIO.read(url);
+		    hitBoxImage = ImageIO.read(new File("textures/hitBox.png"));
 		    
-		    url = new File("textures/ocean.jpg");
-		    background = ImageIO.read(url);
-		   
+		    background = ImageIO.read(new File("textures/ocean.jpg"));
+		    
+		    this.battleshipBackground = ImageIO.read(new File("textures/fondBattleShip.jpg"));
+
+		    this.battleshipTitle = ImageIO.read(new File("textures/BattleshipTitle.png"));
 		} catch (IOException e) {
 			System.err.println(e.getMessage());
 		}
@@ -65,5 +66,12 @@ public class TextureFactory {
 	public Image getBoardBackground() {
 		return background;
 	}
-
+	
+	public Image getBattleshipBackground() {
+		return this.battleshipBackground;
+	}
+	
+	public Image getBattleshipTitle() {
+		return this.battleshipTitle;
+	}
 }

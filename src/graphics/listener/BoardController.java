@@ -130,10 +130,12 @@ public class BoardController implements MouseListener, MouseMotionListener, KeyL
 
 	@Override
 	public void keyReleased(KeyEvent e) {
+		
 	}
 
 	@Override
 	public void keyTyped(KeyEvent e) {
+		
 	}
 
 }

@@ -31,13 +31,11 @@ public class BoardScreen extends JPanel {
 	private Game game; 
 	private final Image background;
 
-	public BoardScreen(Game g) {
+	public BoardScreen(Game g, BoardController controller) {
 		super();
 		game = g;
 		background = TextureFactory.getInstance().getBoardBackground();
-
-		BoardController controller = new BoardController(game);
-		this.addKeyListener(controller);
+		
 		this.addMouseListener(controller);
 		this.addMouseMotionListener(controller);
 
@@ -61,18 +59,12 @@ public class BoardScreen extends JPanel {
 
 		Graphics2D g2d = (Graphics2D)g;
 		for( Drawable d : elements ) {
-			/*g2d.rotate(d.getOrientation(),
-					(int)d.getX() * g_unit,
-					(int)d.getY() * g_unit);*/
 			g2d.drawImage(d.getImage(), 
 					d.getX() * GameScreen.G_UNIT,
 					d.getY() * GameScreen.G_UNIT,
 					d.getHeight() * GameScreen.G_UNIT,
 					d.getWidth() * GameScreen.G_UNIT,
 					this);
-			/*g2d.rotate(-d.getOrientation(),
-					(int)d.getX() * g_unit,
-					(int)d.getY() * g_unit);*/
 			System.out.println("X : " + d.getX() * GameScreen.G_UNIT);
 			System.out.println("Y : " + d.getY() * GameScreen.G_UNIT);
 		}
@@ -105,16 +97,6 @@ public class BoardScreen extends JPanel {
 	private void drawShipStarterPosition(Graphics g) {
 		List<Ship> fleet = game.getFleet();
 		Graphics2D g2d = (Graphics2D)g;
-		/*
-		private Image image;
-		AffineTransform identity = new AffineTransform();
-
-		Graphics2D g2d = (Graphics2D)g;
-		AffineTransform trans = new AffineTransform();
-		trans.setTransform(identity);
-		trans.rotate( Math.toRadians(45) );
-		g2d.drawImage(image, trans, this);
-		 */
 
 		for( Ship s : fleet ) {
 			if (s.getOrientation() == 0) {
@@ -126,7 +108,7 @@ public class BoardScreen extends JPanel {
 						this);
 			} else {
 				
-				BufferedImage bi = s.getImage();
+				BufferedImage bi = (BufferedImage) s.getImage();
 				AffineTransform tx = new AffineTransform();
 				tx.rotate(Math.toRadians(90), 
 						bi.getWidth()/13, 

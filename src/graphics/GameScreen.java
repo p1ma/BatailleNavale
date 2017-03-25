@@ -7,6 +7,7 @@ import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
+import java.awt.event.ComponentListener;
 import java.util.Observable;
 import java.util.Observer;
 
@@ -16,6 +17,7 @@ import javax.swing.JPanel;
 
 import game.Configuration;
 import game.Game;
+import graphics.listener.BoardController;
 
 /**
  * @author JUNGES Pierre-Marie - M1 Informatique 2016/2017
@@ -26,6 +28,7 @@ public class GameScreen extends JFrame implements Observer {
 
 	private Game game;
 
+	private JPanel startScreen;
 	private JPanel radarScreen;
 	private JPanel boardScreen;
 
@@ -37,27 +40,51 @@ public class GameScreen extends JFrame implements Observer {
 
 	public final static int G_UNIT = 50;
 
-	// TESTS
-	private int width, height;
-
 	public GameScreen() {
 		super(TITLE);
+
 		game = new Game();
 		game.addObserver(this);
 
-		radarScreen = new RadarScreen(game);
-		boardScreen = new BoardScreen(game);
+		BoardController controller = new BoardController(game);
+		this.addKeyListener(controller);
+		
+		this.startScreen = new StartScreen(game);
+		this.radarScreen = new RadarScreen(game);
+		this.boardScreen = new BoardScreen(game, controller);
 		
 		// to use keyListener
-		boardScreen.setFocusable(true);
+		this.setFocusable(true);
 
 		initGameScreen();
+
+		this.initStartScreen();
+		//this.initPartyScreen();
+
+		this.initGameScreen2();
+	}
+
+	private void initStartScreen() {
+		if (this.radarScreen != null) {
+			this.getContentPane().remove(this.radarScreen);
+			this.getContentPane().remove(this.boardScreen);
+		}
+
+		this.add(this.startScreen);
+		this.validate();
+	}
+
+	private void initPartyScreen() {
+		if (this.startScreen != null) 
+			this.getContentPane().remove(this.startScreen);
+
+		// LAYOUT
+		this.setLayout(new FlowLayout(FlowLayout.LEFT, 0, 0));
 
 		add(boardScreen);
 		add( Box.createRigidArea( new Dimension(G_UNIT, 0) ) );
 		add(radarScreen);
-
-		this.initGameScreen2();
+		this.validate();
 	}
 
 	private void initGameScreen() {
@@ -67,9 +94,6 @@ public class GameScreen extends JFrame implements Observer {
 		// RESIZABLE
 		this.setResizable(false);
 
-		// LAYOUT
-		this.setLayout(new FlowLayout(FlowLayout.LEFT, 0, 0));
-		
 		// COLOR
 		this.getContentPane().setBackground(Color.WHITE);
 	}
@@ -91,6 +115,15 @@ public class GameScreen extends JFrame implements Observer {
 			break;
 		case "BOARD" :
 			boardScreen.repaint();
+			break;
+
+		case "setStartScreen" :
+			this.initStartScreen();
+			this.repaint();
+			break;
+		case "setPartyScreen" :
+			this.initPartyScreen();
+			this.repaint();
 			break;
 		}	
 	}

@@ -60,7 +60,7 @@ public class Ship extends Drawable{
 	 *			GETTERS
 	 */
 
-	public BufferedImage getImage() {
+	public Image getImage() {
 		return image;
 	}
 

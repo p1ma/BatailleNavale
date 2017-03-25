@@ -182,4 +182,14 @@ public class Game extends Observable {
 		this.notifyObservers("BOARD");
 	}
 
+	public void setStartScreen() {
+		this.setChanged();
+		this.notifyObservers("setStartScreen");
+	}
+	
+	public void setPartyScreen() {
+		this.setChanged();
+		this.notifyObservers("setPartyScreen");
+	}
+
 }
