@@ -29,6 +29,7 @@ public class GameScreen extends JFrame implements Observer {
 	private Game game;
 
 	private JPanel startScreen;
+	private JPanel configPartyScreen;
 	private JPanel radarScreen;
 	private JPanel boardScreen;
 
@@ -48,11 +49,12 @@ public class GameScreen extends JFrame implements Observer {
 
 		BoardController controller = new BoardController(game);
 		this.addKeyListener(controller);
-		
+
 		this.startScreen = new StartScreen(game);
+		this.configPartyScreen = new ConfigPartyScreen(game, controller);
 		this.radarScreen = new RadarScreen(game);
 		this.boardScreen = new BoardScreen(game, controller);
-		
+
 		// to use keyListener
 		this.setFocusable(true);
 
@@ -65,18 +67,21 @@ public class GameScreen extends JFrame implements Observer {
 	}
 
 	private void initStartScreen() {
-		if (this.radarScreen != null) {
-			this.getContentPane().remove(this.radarScreen);
-			this.getContentPane().remove(this.boardScreen);
-		}
+		this.removeAllContentScreen();
 
 		this.add(this.startScreen);
 		this.validate();
 	}
 
+	private void initConfigPartyScreen() {
+		this.removeAllContentScreen();
+
+		this.add(this.configPartyScreen);
+		this.validate();
+	}
+
 	private void initPartyScreen() {
-		if (this.startScreen != null) 
-			this.getContentPane().remove(this.startScreen);
+		this.removeAllContentScreen();
 
 		// LAYOUT
 		this.setLayout(new FlowLayout(FlowLayout.LEFT, 0, 0));
@@ -85,6 +90,15 @@ public class GameScreen extends JFrame implements Observer {
 		add( Box.createRigidArea( new Dimension(G_UNIT, 0) ) );
 		add(radarScreen);
 		this.validate();
+	}
+
+	private void removeAllContentScreen() {
+		this.getContentPane().remove(this.startScreen);
+
+		this.getContentPane().remove(this.configPartyScreen);
+
+		this.getContentPane().remove(this.radarScreen);
+		this.getContentPane().remove(this.boardScreen);
 	}
 
 	private void initGameScreen() {
@@ -119,6 +133,10 @@ public class GameScreen extends JFrame implements Observer {
 
 		case "setStartScreen" :
 			this.initStartScreen();
+			this.repaint();
+			break;
+		case "setConfigPartyScreen" :
+			this.initConfigPartyScreen();
 			this.repaint();
 			break;
 		case "setPartyScreen" :

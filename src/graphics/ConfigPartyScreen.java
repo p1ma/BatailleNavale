@@ -1,0 +1,162 @@
+package graphics;
+
+import java.awt.Color;
+import java.awt.Dimension;
+import java.awt.FlowLayout;
+import java.awt.Graphics;
+import java.awt.Image;
+import java.awt.Point;
+
+import javax.swing.Box;
+import javax.swing.JButton;
+import javax.swing.JComboBox;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+
+import game.Configuration;
+import game.Game;
+import graphics.listener.BoardController;
+
+public class ConfigPartyScreen extends JPanel {
+
+	private Game game;
+	private final Image background = TextureFactory.getInstance().getBattleshipBackground();;
+
+	public ConfigPartyScreen(Game g, BoardController controller) {
+		super();
+		game = g;
+
+		// LAYOUT
+		this.setLayout(new FlowLayout(FlowLayout.LEFT, 0, 0));
+
+		this.initLeftPart();
+		this.add( Box.createRigidArea( new Dimension(GameScreen.G_UNIT, 0) ) );
+		this.initRightPart(controller);
+
+		// SIZE
+		this.setPreferredSize(
+				new Dimension((Configuration.WIDTH * GameScreen.G_UNIT) *2 + GameScreen.G_UNIT, 
+						Configuration.HEIGHT * GameScreen.G_UNIT + GameScreen.G_UNIT));
+	}
+
+	/**
+	 * part who contain some parametres of the party
+	 */
+	private void initLeftPart() {
+		JPanel leftPanel = new JPanel();
+		int width = GameScreen.G_UNIT * game.getWidth();
+		int height = GameScreen.G_UNIT * game.getHeight();
+		leftPanel.setPreferredSize(new Dimension(width, height));
+		leftPanel.setBackground(Color.WHITE);
+
+		// title
+		JPanel p1 = new JPanel();
+		p1.setPreferredSize(new Dimension(width, 50));
+		p1.setLayout(new FlowLayout(FlowLayout.LEFT));
+		p1.setBackground(Color.WHITE);
+
+		JLabel title = new JLabel("Configuration new party : ");
+		title.setFont(title.getFont().deriveFont(20f));
+
+		p1.add(title);
+
+		// era
+		JPanel p2 = new JPanel();
+		p2.setPreferredSize(new Dimension(width, 30));
+		p2.setBackground(Color.WHITE);
+
+		JLabel labelEra = new JLabel("Era : ");
+		Object[] elements = new Object[]{"Element 1", "Element 2", "Element 3", "Element 4", "Element 5"};
+		JComboBox comboBoxEra = new JComboBox(elements);
+
+		p2.add(labelEra);
+		p2.add(comboBoxEra);
+
+		// config ok
+		JPanel p3 = new JPanel();
+		p3.setPreferredSize(new Dimension(width, 30));
+		p3.setLayout(new FlowLayout(FlowLayout.RIGHT));
+		p3.setBackground(Color.WHITE);
+
+		JButton buttonOk = new JButton("Validate configuration");
+		buttonOk.addActionListener(e -> {
+			this.game.setPartyScreen();
+		});
+
+		p3.add(buttonOk);
+
+
+
+		leftPanel.add(p1);
+		leftPanel.add(p2);
+		leftPanel.add(p3);
+
+		this.add(leftPanel);
+	}
+
+	/**
+	 * part who contain the grid for positionning the ships
+	 * @param controller 
+	 */
+	private void initRightPart(BoardController controller) {
+		JPanel rightPanel = new rightPanel(game, controller);
+
+		this.add(rightPanel);
+	}
+
+	private class rightPanel extends JPanel {
+		
+		private Game game;
+		private final Image background = TextureFactory.getInstance().getBoardBackground();
+		
+		//on met ici une liste de bateau de base pour pouvoir les placer sur le tableau
+		//c'est quand on valide la config qu'on fait les vrais
+		
+		public rightPanel(Game g, BoardController controller) {
+			super();
+			game = g;
+			
+			this.addMouseListener(controller);
+			this.addMouseMotionListener(controller);
+
+			// SIZE
+			this.setPreferredSize(
+					new Dimension(GameScreen.G_UNIT * game.getWidth(), GameScreen.G_UNIT * game.getHeight()));	
+		}
+		
+		@Override
+		public void paintComponent(Graphics g) {
+			super.paintComponent(g);
+
+			g.drawImage(background, 0, 0, 
+					game.getWidth() * GameScreen.G_UNIT, game.getHeight() * GameScreen.G_UNIT, null);
+
+			this.drawBoard(g);
+		}
+		
+		private void drawBoard(Graphics g) {
+			int lgr = game.getWidth() * GameScreen.G_UNIT;
+			int lrg = game.getHeight() * GameScreen.G_UNIT;
+			Point axe = new Point(0,0);
+
+			g.setColor(Color.WHITE);
+			g.drawRect(0, 0, lgr, lrg);
+			for(int i = 0 ; i < game.getWidth() ; i++) {
+				for(int j = 0 ; j < game.getHeight() ; j++) {
+					g.drawRect(axe.x + (j * GameScreen.G_UNIT), axe.y, GameScreen.G_UNIT, GameScreen.G_UNIT);
+				}
+				axe.y = axe.y + GameScreen.G_UNIT;
+			}
+		}
+	}
+
+	@Override
+	public void paintComponent(Graphics g) {
+		super.paintComponent(g);
+
+		g.drawImage(this.background, 
+				0, 0, 
+				(int)(this.background.getWidth(null)/1.5), (int)(this.background.getHeight(null)/2), 
+				null);
+	}
+}

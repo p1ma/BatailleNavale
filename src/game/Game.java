@@ -70,6 +70,13 @@ public class Game extends Observable {
 
 		// FIN TEST
 	}
+	
+	/**
+	 * called when a new party is started
+	 */
+	public void newParty() {
+		
+	}
 
 	public boolean getWarmup() {
 		return warmup;
@@ -187,7 +194,15 @@ public class Game extends Observable {
 		this.notifyObservers("setStartScreen");
 	}
 	
+	public void setConfigPartyScreen() {
+		this.setChanged();
+		this.notifyObservers("setConfigPartyScreen");
+	}
+	
 	public void setPartyScreen() {
+		System.err.println("Game.setConfigPartyScreen() : a completer");
+		System.exit(0);
+		
 		this.setChanged();
 		this.notifyObservers("setPartyScreen");
 	}

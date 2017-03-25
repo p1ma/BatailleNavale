@@ -14,19 +14,16 @@ import game.Game;
 public class StartScreen extends JPanel {
 
 	private Game game;
-	private final Image background;
-	private final Image title;
+	private final Image background = TextureFactory.getInstance().getBattleshipBackground();;
+	private final Image title = TextureFactory.getInstance().getBattleshipTitle();;
 
 	public StartScreen(Game g) {
 		super();
 		game = g;
-
-		this.background = TextureFactory.getInstance().getBattleshipBackground();
-		this.title = TextureFactory.getInstance().getBattleshipTitle();
 		
 		JButton buttonNewGame = new JButton("New Game");
 		buttonNewGame.addActionListener(e -> {
-			this.game.setPartyScreen();
+			this.game.setConfigPartyScreen();
 		});
 		
 		// je fais une bos parce que j'arrive pas a mettre le bouton ou je veux
