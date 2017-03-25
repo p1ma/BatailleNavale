@@ -4,15 +4,25 @@ import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.Graphics;
+import java.awt.Graphics2D;
 import java.awt.Image;
 import java.awt.Point;
+import java.awt.geom.AffineTransform;
+import java.awt.image.AffineTransformOp;
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
+import java.util.LinkedList;
+import java.util.List;
 
+import javax.imageio.ImageIO;
 import javax.swing.Box;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
+import element.Ship;
 import game.Configuration;
 import game.Game;
 import graphics.listener.BoardController;
@@ -109,16 +119,29 @@ public class ConfigPartyScreen extends JPanel {
 		private Game game;
 		private final Image background = TextureFactory.getInstance().getBoardBackground();
 		
-		//on met ici une liste de bateau de base pour pouvoir les placer sur le tableau
-		//c'est quand on valide la config qu'on fait les vrais
-		
 		public rightPanel(Game g, BoardController controller) {
 			super();
 			game = g;
 			
+			List<Ship> ships = new LinkedList<Ship>();
+			Image img = null;
+			try {
+				img = ImageIO.read(new File("textures/ship.png"));
+			} catch (IOException e) {
+				System.err.println("Error loading image");
+				System.exit(0);
+			}
+			ships.add(new Ship(new Point(0,0), 5, 1, img));
+			ships.add(new Ship(new Point(0,1), 4, 1, img));
+			ships.add(new Ship(new Point(0,2), 3, 1, img));
+			ships.add(new Ship(new Point(0,3), 3, 1, img));
+			ships.add(new Ship(new Point(0,4), 2, 1, img));
+			
+			this.game.setFleet(ships);
+			
 			this.addMouseListener(controller);
 			this.addMouseMotionListener(controller);
-
+			
 			// SIZE
 			this.setPreferredSize(
 					new Dimension(GameScreen.G_UNIT * game.getWidth(), GameScreen.G_UNIT * game.getHeight()));	
@@ -132,6 +155,7 @@ public class ConfigPartyScreen extends JPanel {
 					game.getWidth() * GameScreen.G_UNIT, game.getHeight() * GameScreen.G_UNIT, null);
 
 			this.drawBoard(g);
+			this.drawShips(g);
 		}
 		
 		private void drawBoard(Graphics g) {
@@ -146,6 +170,39 @@ public class ConfigPartyScreen extends JPanel {
 					g.drawRect(axe.x + (j * GameScreen.G_UNIT), axe.y, GameScreen.G_UNIT, GameScreen.G_UNIT);
 				}
 				axe.y = axe.y + GameScreen.G_UNIT;
+			}
+		}
+		
+		private void drawShips(Graphics g) {
+			List<Ship> fleet = game.getFleet();
+			Graphics2D g2d = (Graphics2D)g;
+
+			for( Ship s : fleet ) {
+				if (s.getOrientation() == 0) {
+					g2d.drawImage(s.getImage(), 
+							s.getX() * GameScreen.G_UNIT,
+							s.getY() * GameScreen.G_UNIT,
+							s.getWidth() * GameScreen.G_UNIT,
+							s.getHeight() * GameScreen.G_UNIT,
+							this);
+				} else {
+					
+					BufferedImage bi = (BufferedImage) s.getImage();
+					AffineTransform tx = new AffineTransform();
+					tx.rotate(Math.toRadians(90), 
+							bi.getWidth()/13, 
+							bi.getHeight()/2
+							);
+					AffineTransformOp op = new AffineTransformOp(tx, AffineTransformOp.TYPE_BILINEAR);
+					bi = op.filter(bi, null);
+					g2d.drawImage(bi, 
+							s.getX() * GameScreen.G_UNIT,
+							s.getY() * GameScreen.G_UNIT,
+							s.getWidth() * GameScreen.G_UNIT,
+							s.getHeight() * GameScreen.G_UNIT,
+							this);
+					
+				}
 			}
 		}
 	}

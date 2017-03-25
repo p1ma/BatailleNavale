@@ -93,6 +93,10 @@ public class Game extends Observable {
 	public List<Ship> getFleet() {
 		return temporaryFleet;
 	}
+	
+	public void setFleet(List<Ship> l) {
+		this.temporaryFleet = l;
+	}
 
 	@Override
 	public void notifyObservers() {

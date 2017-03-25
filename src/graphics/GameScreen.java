@@ -129,6 +129,7 @@ public class GameScreen extends JFrame implements Observer {
 			break;
 		case "BOARD" :
 			boardScreen.repaint();
+			this.configPartyScreen.repaint();
 			break;
 
 		case "setStartScreen" :
