@@ -31,14 +31,11 @@ public class BoardScreen extends JPanel {
 	private Game game; 
 	private final Image background;
 
-	public BoardScreen(Game g, BoardController controller) {
+	public BoardScreen(Game g) {
 		super();
 		game = g;
 		background = TextureFactory.getInstance().getBoardBackground();
 		
-		this.addMouseListener(controller);
-		this.addMouseMotionListener(controller);
-
 		// SIZE
 		this.setPreferredSize(
 				new Dimension(GameScreen.G_UNIT * game.getWidth(), GameScreen.G_UNIT * game.getHeight()));	

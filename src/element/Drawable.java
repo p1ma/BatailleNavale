@@ -47,12 +47,16 @@ public abstract class Drawable {
 	 * je prefere le push tout de suite
 	 * mais 
 	 */
-	public void rotate() {
+	public void rotate(Point p) {
 		int lastWidth = this.boundingBox.width, lastHeight = this.boundingBox.height;
 		this.boundingBox.height = lastWidth;
 		this.boundingBox.width = lastHeight;
+		this.setRotation();
+		this.setPosition(p);
+	}
+	
+	public void setRotation() {
 		this.orientation = 1 - this.orientation;
-		// change the image
 	}
 
 	/**

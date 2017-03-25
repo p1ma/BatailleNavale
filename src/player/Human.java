@@ -24,5 +24,6 @@ public class Human extends Player {
 	
 	@Override
 	public void play(Ship s, Point p) {
+		
 	}
 }

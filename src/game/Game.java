@@ -7,6 +7,7 @@ import java.awt.Point;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Observable;
@@ -59,23 +60,23 @@ public class Game extends Observable {
 		} catch (IOException e) {}
 
 		temporaryFleet.add(new Ship(point, 5, 1, img));
-/*
+		/*
 		try {
 			img = ImageIO.read(new File("textures/war.png"));
 		} catch (IOException e) {}
 		point = new Point(point.x,  point.y + 50);
 		temporaryFleet.add(new Ship(point,50,200, img));
-*/
-//		computer.setShipPosition(new Ship(new Point(0,0),1,5), new Point(0,0));
+		 */
+		//		computer.setShipPosition(new Ship(new Point(0,0),1,5), new Point(0,0));
 
 		// FIN TEST
 	}
-	
+
 	/**
 	 * called when a new party is started
 	 */
 	public void newParty() {
-		
+
 	}
 
 	public boolean getWarmup() {
@@ -93,7 +94,7 @@ public class Game extends Observable {
 	public List<Ship> getFleet() {
 		return temporaryFleet;
 	}
-	
+
 	public void setFleet(List<Ship> l) {
 		this.temporaryFleet = l;
 	}
@@ -151,7 +152,7 @@ public class Game extends Observable {
 		}
 		return res;
 	}
-	
+
 	/**
 	 * Returns true if the Ship given in parameter has
 	 * a collision with at least one other ship
@@ -160,23 +161,19 @@ public class Game extends Observable {
 	 * @return if there is collision or not
 	 */
 	public boolean intersectOtherShips(Ship ship, Point pt) {
-		int num = 0;
-		int index = temporaryFleet.indexOf(ship);
-		Point old = ship.getPosition();
+		Point lastPoint = ship.getPosition();
+		int id = this.temporaryFleet.indexOf(ship);
 		ship.setPosition(pt);
-		boolean intersect = false;
-		Ship s = null;
 		
-		while( num < temporaryFleet.size() && !intersect ) {
-			s = temporaryFleet.get(num);
-			if ( num != index && s.intersect(ship) ) {
-				intersect = true;
+		for (Ship s : this.temporaryFleet) {
+			if (this.temporaryFleet.indexOf(s) != id && s.intersect(ship)) {
+				ship.setPosition(lastPoint);
+				return true;
 			}
-			num++;
 		}
-		
-		ship.setPosition(old);
-		return intersect;
+
+		ship.setPosition(lastPoint);
+		return false;
 	}
 
 	public void setShipPosition(Ship selected, Point point) {
@@ -187,26 +184,77 @@ public class Game extends Observable {
 	}
 
 	public void rotate(Drawable element) {
-		element.rotate();
-		
+		// recherche la pos dispo la plus proche
+		Point p = this.getClosestPosition(element);
+
+		if (p != null)
+			element.rotate(p);
+		else
+			System.err.println("Aucune position permettant une rotation");
+
 		this.setChanged();
 		this.notifyObservers("BOARD");
 	}
+
+	/**
+	 * recupere la position disponible la plus proche de la position actuelle
+	 * @return
+	 */
+	private Point getClosestPosition(Drawable element) {
+		element.rotate(element.getPosition());
+
+		// on recupere la liste des points possibles
+		List<Point> lp = new ArrayList<Point>();
+		for (int x = 0; x < this.getWidth(); x++) {
+			for (int y = 0; y < this.getHeight(); y++) {
+				Point p = new Point(x, y);
+				// on regarde si ya pas d'intersection avec un autre bateau ou si il depasse pas le bord de la map
+				if ( (!this.intersectOtherShips((Ship) element, p) 
+						|| (p.equals(element.getPosition()) && !this.intersectOtherShips((Ship) element, p)))
+						&& element.getX()+element.getWidth() <= this.getWidth()
+						&& element.getY()+element.getHeight() <= this.getHeight() ) {
+					lp.add(p);
+				}
+			}
+		}
+
+		element.rotate(element.getPosition());
+
+		// on trouve le point le plus proche de la position d'element
+		Point p = new Point (element.getPosition().x, element.getPosition().y);
+		Point res = null;
+		for (Point point : lp) {
+			if (res == null) {
+				res = point;
+			} else {
+				if (this.getDistance(p, res) > this.getDistance(p, point)) {
+					res = point;
+				}
+			}
+		}
+
+		return res;
+	}
+
+	public double getDistance(Point p1, Point p2) {
+		return Math.sqrt(Math.pow((p2.y - p1.y),2) + Math.pow((p2.x - p1.x),2));
+	}
+
 
 	public void setStartScreen() {
 		this.setChanged();
 		this.notifyObservers("setStartScreen");
 	}
-	
+
 	public void setConfigPartyScreen() {
 		this.setChanged();
 		this.notifyObservers("setConfigPartyScreen");
 	}
-	
+
 	public void setPartyScreen() {
 		System.err.println("Game.setConfigPartyScreen() : a completer");
 		System.exit(0);
-		
+
 		this.setChanged();
 		this.notifyObservers("setPartyScreen");
 	}
