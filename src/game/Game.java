@@ -211,8 +211,8 @@ public class Game extends Observable {
 				// on regarde si ya pas d'intersection avec un autre bateau ou si il depasse pas le bord de la map
 				if ( (!this.intersectOtherShips((Ship) element, p) 
 						|| (p.equals(element.getPosition()) && !this.intersectOtherShips((Ship) element, p)))
-						&& element.getX()+element.getWidth() <= this.getWidth()
-						&& element.getY()+element.getHeight() <= this.getHeight() ) {
+						&& x+element.getWidth() <= this.getWidth()
+						&& y+element.getHeight() <= this.getHeight() ) {
 					lp.add(p);
 				}
 			}
