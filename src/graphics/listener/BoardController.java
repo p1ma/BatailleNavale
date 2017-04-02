@@ -1,6 +1,3 @@
-/**
- * 
- */
 package graphics.listener;
 
 import java.awt.Point;
@@ -19,16 +16,39 @@ import graphics.GameScreen;
  *
  * Mar 14, 2017
  */
-public class BoardController implements MouseListener, MouseMotionListener, KeyListener{
+public class BoardController implements MouseListener, MouseMotionListener, KeyListener {
 
+	/**
+	 * Current Game
+	 */
 	private final Game game;
+	
+	/**
+	 * Ship selected
+	 */
 	private Ship selected;
+	
+	/**
+	 * Key to rotate a ship
+	 */
+	private int rotateKey = KeyEvent.VK_R;
 
+	
+	
+	
+	/**
+	 * Constructor
+	 * @param g : Game
+	 */
 	public BoardController(final Game g) {
 		game = g;
 		selected = null;
 	}
 
+	
+	
+	
+	
 	/**
 	 * Used to move the Ship when the player
 	 * dragged his mouse, then check if the 
@@ -82,24 +102,16 @@ public class BoardController implements MouseListener, MouseMotionListener, KeyL
 	}
 
 	@Override
-	public void mouseMoved(MouseEvent arg0) {
-
-	}
+	public void mouseMoved(MouseEvent arg0) {  }
 
 	@Override
-	public void mouseClicked(MouseEvent e) {
-
-	}
+	public void mouseClicked(MouseEvent e) {  }
 
 	@Override
-	public void mouseEntered(MouseEvent e) {
-
-	}
+	public void mouseEntered(MouseEvent e) {  }
 
 	@Override
-	public void mouseExited(MouseEvent e) {
-
-	}
+	public void mouseExited(MouseEvent e) {  }
 
 	@Override
 	public void mousePressed(MouseEvent e) {
@@ -107,35 +119,26 @@ public class BoardController implements MouseListener, MouseMotionListener, KeyL
 		int yClicked = (int)(e.getY() / GameScreen.G_UNIT);
 		Point clicked = new Point(xClicked, yClicked);
 
-		// on enregistre le bateau sur lequel on maintient le click gauche
+		// We record the ship on which we keep the left click
 		selected = game.selectShip(clicked);
 	}
 
 	@Override
 	public void mouseReleased(MouseEvent e) {
-		// on relache le bateau
+		// We release the ship
 		selected = null;
 	}
 
-
-
-
-
 	@Override
 	public void keyPressed(KeyEvent e) {
-		if ((selected != null) && (e.getKeyCode() == KeyEvent.VK_R)) {
+		if ((selected != null) && (e.getKeyCode() == this.rotateKey))
 			game.rotate(selected);
-		}
 	}
 
 	@Override
-	public void keyReleased(KeyEvent e) {
-		
-	}
+	public void keyReleased(KeyEvent e) {  }
 
 	@Override
-	public void keyTyped(KeyEvent e) {
-		
-	}
+	public void keyTyped(KeyEvent e) {  }
 
 }

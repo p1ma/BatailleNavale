@@ -1,6 +1,3 @@
-/**
- * 
- */
 package player.strategy;
 
 import java.awt.Point;
@@ -15,5 +12,10 @@ import element.Box;
  */
 public interface Strategy {
 	
+	/**
+	 * Chosen a point on the radar where a shot must be made
+	 * @param radar : Map<Point, Box>
+	 * @return Point
+	 */
 	public Point execute(Map<Point, Box> radar);
 }

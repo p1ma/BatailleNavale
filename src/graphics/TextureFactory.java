@@ -1,12 +1,8 @@
-/**
- * 
- */
 package graphics;
 
 import java.awt.Image;
 import java.io.File;
 import java.io.IOException;
-import java.net.URL;
 
 import javax.imageio.ImageIO;
 
@@ -17,14 +13,39 @@ import javax.imageio.ImageIO;
  */
 public class TextureFactory {
 
+	/**
+	 * Singleton
+	 */
 	private static TextureFactory INSTANCE;
 	
+	/**
+	 * Image of the missed box
+	 */
 	private Image missedBoxImage;
+	
+	/**
+	 * Image of the hitted box
+	 */
 	private Image hitBoxImage;
 	
+	/**
+	 * Background for the boards
+	 */
 	private Image background;
+	
+	/**
+	 * background for the app
+	 */
 	private Image battleshipBackground;
+	
+	/**
+	 * App title image
+	 */
 	private Image battleshipTitle;
+	
+	
+	
+	
 	
 	/**
 	 * Constructor of TextureFactory
@@ -45,6 +66,10 @@ public class TextureFactory {
 		}
 	}
 	
+	
+	
+	
+	
 	/**
 	 * @return instance
 	 */
@@ -55,22 +80,42 @@ public class TextureFactory {
 		return INSTANCE;
 	}
 	
+	/**
+	 * Returns the missed box image
+	 * @return Image
+	 */
 	public Image getMissedBoxImage() {
 		return missedBoxImage;
 	}
 	
+	/**
+	 * Returns the hitted box image
+	 * @return Image
+	 */
 	public Image getHitBoxImage() {
 		return hitBoxImage;
 	}
 	
+	/**
+	 * Returns the board background
+	 * @return Image
+	 */
 	public Image getBoardBackground() {
 		return background;
 	}
 	
+	/**
+	 * Returns ths background of the app
+	 * @return Image
+	 */
 	public Image getBattleshipBackground() {
 		return this.battleshipBackground;
 	}
 	
+	/**
+	 * Returns the title app
+	 * @return Image
+	 */
 	public Image getBattleshipTitle() {
 		return this.battleshipTitle;
 	}

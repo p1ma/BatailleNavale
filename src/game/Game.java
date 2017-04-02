@@ -1,18 +1,10 @@
-/**
- * 
- */
 package game;
 
 import java.awt.Point;
-import java.awt.image.BufferedImage;
-import java.io.File;
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Observable;
-
-import javax.imageio.ImageIO;
 
 import element.Drawable;
 import element.HitBox;
@@ -28,29 +20,37 @@ import player.Human;
  */
 public class Game extends Observable {
 
+	/**
+	 * Human player of the Game
+	 */
 	private Human human;
+	
+	/**
+	 * Computer player of the Game
+	 */
 	private Computer computer;
+	
+	/**
+	 * Configuration of the Game
+	 */
 	private Configuration configuration;
 
-	/*
-	 *  On pourrait directement travailler avec la liste 
-	 *  de bateaux du Joueur
-	 *  ( à discuter )
+	
+	
+	
+	
+	/**
+	 * Constructor
 	 */
-	private List<Ship> temporaryFleet;
-
-	private boolean warmup;
-
 	public Game() {
 		super();
 		human = new Human(this);
-		computer = new Computer(this);
+		computer = new Computer(null, this);
 		configuration = new Configuration();
-		warmup = true;
 
 		// TESTS
 		// on simule notre liste de Ship
-
+		/*
 		temporaryFleet = new LinkedList<Ship>();
 
 		Point point = new Point(0,0);
@@ -72,49 +72,26 @@ public class Game extends Observable {
 		// FIN TEST
 	}
 
+	
+	
+	
+	
 	/**
-	 * called when a new party is started
+	 * Called when a new party is started
 	 */
 	public void newParty() {
 
 	}
 
-	public boolean getWarmup() {
-		return warmup;
-	}
-
-	public int getWidth() {
-		return Configuration.WIDTH;
-	}
-
-	public int getHeight() {
-		return Configuration.HEIGHT;
-	}
-
-	public List<Ship> getFleet() {
-		return temporaryFleet;
-	}
-
-	public void setFleet(List<Ship> l) {
-		this.temporaryFleet = l;
-	}
-
-	@Override
-	public void notifyObservers() {
-		super.notifyObservers();
-	}
-
-	public void confirmShipsPosition() {
-		warmup = false;
-		temporaryFleet.clear();
-	}
-
+	/**
+	 * ... a completer ...
+	 * @param pos : Point
+	 * @param ship : Ship
+	 */
 	public void shootAt(Point pos, Ship ship) {
 		boolean touched = computer.isTouched(pos);
 
 		if ( touched ) {
-			// TEST
-			//computer.damage(ship, pos);
 			human.updateRadar(pos, new HitBox(pos));
 		} else {
 			human.updateRadar(pos, new MissedBox(pos));
@@ -124,31 +101,26 @@ public class Game extends Observable {
 		this.notifyObservers("RADAR");
 	}
 
-	public List<Drawable> getRadarElements() {
-		return new LinkedList<Drawable>(human.getRadar());
-	}
-
-	public List<Drawable> getBoardElements() {
-		List<Drawable> result = new LinkedList<Drawable>();
-		result.addAll(computer.getRadar());
-		result.addAll(human.getFleet());
-		return result;
-	}
-
+	/**
+	 * ... a completer ...
+	 * @param clicked : Point
+	 * @return boolean
+	 */
 	public boolean checkRadar(Point clicked) {
 		return (human.checkRadar(clicked));
 	}
 
+	/**
+	 * ... a completer ...
+	 * @param clicked : Point
+	 * @return Ship
+	 */
 	public Ship selectShip(Point clicked) {
 		Ship res = null;
-		if ( warmup ) {
-			for (Ship s : temporaryFleet) {
-				if (s.intersect(clicked)) {
-					return s;
-				}
+		for (Ship s : this.human.getFleet()) {
+			if (s.intersect(clicked)) {
+				return s;
 			}
-		} else {
-			return null;
 		}
 		return res;
 	}
@@ -156,17 +128,17 @@ public class Game extends Observable {
 	/**
 	 * Returns true if the Ship given in parameter has
 	 * a collision with at least one other ship
-	 * @param ship the Ship to test
-	 * @param pt the coordinates to validate or not
-	 * @return if there is collision or not
+	 * @param ship : Ship, the Ship to test
+	 * @param pt : Point, the coordinates to validate or not
+	 * @return boolean
 	 */
 	public boolean intersectOtherShips(Ship ship, Point pt) {
 		Point lastPoint = ship.getPosition();
-		int id = this.temporaryFleet.indexOf(ship);
+		int id = this.human.getFleet().indexOf(ship);
 		ship.setPosition(pt);
-		
-		for (Ship s : this.temporaryFleet) {
-			if (this.temporaryFleet.indexOf(s) != id && s.intersect(ship)) {
+
+		for (Ship s : this.human.getFleet()) {
+			if (this.human.getFleet().indexOf(s) != id && s.intersect(ship)) {
 				ship.setPosition(lastPoint);
 				return true;
 			}
@@ -176,12 +148,11 @@ public class Game extends Observable {
 		return false;
 	}
 
-	public void setShipPosition(Ship selected, Point point) {
-		selected.setPosition(point);
-
-		this.setChanged();
-		this.notifyObservers("BOARD");
-	}
+	
+	
+	
+	
+	
 
 	public void rotate(Drawable element) {
 		// recherche la pos dispo la plus proche
@@ -236,27 +207,113 @@ public class Game extends Observable {
 		return res;
 	}
 
+	
+	
+	
+	
+	/**
+	 * Returns the width of the Game
+	 * @return int
+	 */
+	public int getWidth() {
+		return Configuration.WIDTH;
+	}
+
+	/**
+	 * Returns the height of the world
+	 * @return int
+	 */
+	public int getHeight() {
+		return Configuration.HEIGHT;
+	}
+
+	/**
+	 * Returns the list of human ship
+	 * @return List<Ship>
+	 */
+	public List<Ship> getHumanFleet() {
+		return this.human.getFleet();
+	}
+
+	/**
+	 * Returns the list of human radar
+	 * @return List<Drawable>
+	 */
+	public List<Drawable> getHumanRadar() {
+		return new LinkedList<Drawable>(human.getRadar());
+	}
+
+	/**
+	 * Returns the list of computer radar
+	 * @return List<Drawable>
+	 */
+	public List<Drawable> getComputerRadar() {
+		List<Drawable> result = new LinkedList<Drawable>();
+		result.addAll(computer.getRadar());
+		return result;
+	}
+	
+	/**
+	 * Returns the distance between the points p1 and p2
+	 * @param p1 : Point
+	 * @param p2 : Point
+	 * @return double
+	 */
 	public double getDistance(Point p1, Point p2) {
 		return Math.sqrt(Math.pow((p2.y - p1.y),2) + Math.pow((p2.x - p1.x),2));
 	}
-
-
+	
+	/**
+	 * Replaces the list of human ship by the list l
+	 * @param l : List<Ship>
+	 */
+	public void setHumanFleet(List<Ship> l) {
+		this.human.setFleet(l);
+	}
+	
+	/**
+	 * Displays the game's welcome screen
+	 */
 	public void setStartScreen() {
 		this.setChanged();
 		this.notifyObservers("setStartScreen");
 	}
 
+	/**
+	 * Displays the configuration screen of a game
+	 */
 	public void setConfigPartyScreen() {
 		this.setChanged();
 		this.notifyObservers("setConfigPartyScreen");
 	}
 
+	/**
+	 * Displays a current game
+	 */
 	public void setPartyScreen() {
-		System.err.println("Game.setConfigPartyScreen() : a completer");
-		System.exit(0);
-
 		this.setChanged();
 		this.notifyObservers("setPartyScreen");
+	}
+
+	/**
+	 * Changes the ship position
+	 * @param selected : Ship
+	 * @param point : Point
+	 */
+	public void setShipPosition(Ship selected, Point point) {
+		selected.setPosition(point);
+
+		this.setChanged();
+		this.notifyObservers("BOARD");
+	}
+
+	
+	
+	
+	
+	@Override
+	public void notifyObservers() {
+		super.notifyObservers();
 	}
 
 }

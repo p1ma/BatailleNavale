@@ -1,13 +1,8 @@
-/**
- * 
- */
 package graphics;
 
-import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
-import java.awt.event.ComponentListener;
 import java.util.Observable;
 import java.util.Observer;
 
@@ -26,21 +21,55 @@ import graphics.listener.BoardController;
  */
 public class GameScreen extends JFrame implements Observer {
 
+	/**
+	 * Current Game
+	 */
 	private Game game;
 
+	/**
+	 * Start Screen
+	 */
 	private JPanel startScreen;
+	
+	/**
+	 * Configuration Game Screen
+	 */
 	private JPanel configPartyScreen;
-	private JPanel radarScreen;
+	
+	/**
+	 * Board Screen (for a game)
+	 */
 	private JPanel boardScreen;
+	
+	/**
+	 * Radar Screen (for a game)
+	 */
+	private JPanel radarScreen;
 
+	/**
+	 * Title of the window app
+	 */
 	private final static String TITLE = "Bataille Navale";
-	// pour la largeur : (nbCasesLargeur * tailleD'uneCase) *2 + colonneDeSeparation
-	// 					 le *2 est la pour dire qu'il y a 2 grilles différentes
+	
+	/**
+	 * Size of the window
+	 */
 	private final Dimension dimension = 
 			new Dimension((Configuration.WIDTH * G_UNIT) *2 + G_UNIT, Configuration.HEIGHT * G_UNIT + G_UNIT);
 
+	/**
+	 * Size unit
+	 */
 	public final static int G_UNIT = 50;
 
+	
+	
+	
+	
+	
+	/**
+	 * Constructor
+	 */
 	public GameScreen() {
 		super(TITLE);
 
@@ -66,6 +95,9 @@ public class GameScreen extends JFrame implements Observer {
 		this.initGameScreen2();
 	}
 
+	/**
+	 * Show the start screen
+	 */
 	private void initStartScreen() {
 		this.removeAllContentScreen();
 
@@ -73,6 +105,9 @@ public class GameScreen extends JFrame implements Observer {
 		this.validate();
 	}
 
+	/**
+	 * Show the configuration game screen
+	 */
 	private void initConfigPartyScreen() {
 		this.removeAllContentScreen();
 
@@ -80,10 +115,13 @@ public class GameScreen extends JFrame implements Observer {
 		this.validate();
 	}
 
+	/**
+	 * Show the game screen
+	 */
 	private void initPartyScreen() {
 		this.removeAllContentScreen();
 
-		// LAYOUT
+		// Layout
 		this.setLayout(new FlowLayout(FlowLayout.LEFT, 0, 0));
 
 		add(boardScreen);
@@ -92,6 +130,9 @@ public class GameScreen extends JFrame implements Observer {
 		this.validate();
 	}
 
+	/**
+	 * Hidden all screens
+	 */
 	private void removeAllContentScreen() {
 		this.getContentPane().remove(this.startScreen);
 
@@ -101,19 +142,26 @@ public class GameScreen extends JFrame implements Observer {
 		this.getContentPane().remove(this.boardScreen);
 	}
 
+	/**
+	 * Initializes several attributes of the screen
+	 */
 	private void initGameScreen() {
-		// SIZE
+		// Size
 		this.setPreferredSize(dimension);
 
-		// RESIZABLE
+		// Resizable
 		this.setResizable(false);
 
-		// COLOR
+		// Color
 		this.getContentPane().setBackground(Color.WHITE);
 	}
 
+	/**
+	 * Initializes several attributes of the screen
+	 * Needs to be called at the end of the display
+	 */
 	private void initGameScreen2() {
-		// DEFAULT OPERATIONS
+		// Default operations
 		this.pack();
 		this.setVisible(true);
 		this.setLocationRelativeTo(null); // display window in the middle of the screen

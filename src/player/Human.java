@@ -1,6 +1,3 @@
-/**
- * 
- */
 package player;
 
 import java.awt.Point;
@@ -15,12 +12,26 @@ import game.Game;
  */
 public class Human extends Player {
 
-	/* SOLUTION TEMPORAIRE **/
+	/**
+	 * Current Game
+	 */
 	private Game game;
 	
+	
+	
+	
+	
+	/**
+	 * Constructor
+	 * @param g : Game
+	 */
 	public Human(Game g) {
 		game = g;
 	}
+	
+	
+	
+	
 	
 	@Override
 	public void play(Ship s, Point p) {

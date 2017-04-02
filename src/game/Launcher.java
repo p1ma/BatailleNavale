@@ -1,6 +1,3 @@
-/**
- * 
- */
 package game;
 
 import graphics.GameScreen;
@@ -13,12 +10,11 @@ import graphics.GameScreen;
 public class Launcher {
 
 	/**
+	 * Start
 	 * @param args
 	 */
-	public static void main(String[] args) {
-		
-		
-		GameScreen gameScreen = new GameScreen();
+	public static void main(String[] args) {		
+		new GameScreen();
 	}
 
 }

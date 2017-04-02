@@ -1,6 +1,3 @@
-/**
- * 
- */
 package graphics.listener;
 
 import java.awt.Point;
@@ -15,33 +12,40 @@ import graphics.GameScreen;
  *
  * Mar 14, 2017
  */
-public class RadarController implements MouseListener{
+public class RadarController implements MouseListener {
 
+	/**
+	 * Current Game
+	 */
 	private final Game game;
 
+	
+	
+	
+	
+	/**
+	 * Constructor
+	 * @param g : Game
+	 */
 	public RadarController(final Game g) {
 		game = g;
 	}
 
+	
+	
+	
+	
 	@Override
-	public void mouseClicked(MouseEvent e) {
-		
-	}
-
-	@Override
-	public void mouseEntered(MouseEvent e) {
-
-	}
+	public void mouseClicked(MouseEvent e) {  }
 
 	@Override
-	public void mouseExited(MouseEvent e) {
-
-	}
+	public void mouseEntered(MouseEvent e) {  }
 
 	@Override
-	public void mousePressed(MouseEvent e) {
+	public void mouseExited(MouseEvent e) {  }
 
-	}
+	@Override
+	public void mousePressed(MouseEvent e) {  }
 
 	@Override
 	public void mouseReleased(MouseEvent e) {

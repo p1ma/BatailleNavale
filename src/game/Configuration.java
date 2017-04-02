@@ -1,9 +1,4 @@
-/**
- * 
- */
 package game;
-
-import java.awt.Dimension;
 
 /**
  * @author JUNGES Pierre-Marie - M1 Informatique 2016/2017
@@ -12,18 +7,39 @@ import java.awt.Dimension;
  */
 public class Configuration {
 
+	/**
+	 * Chosen during the configuration of the party
+	 */
 	private Era era;
 	
-	/*
-	 *	Techniquement d'apres notre diagramme de sequence c'est faux 
+	/**
+	 * Width of the world
 	 */
 	public final static int WIDTH = 10;
+	/**
+	 * height of the world
+	 */
 	public final static int HEIGHT = 10;
 	
+	
+	
+	
+	
+	/**
+	 * Constructor
+	 */
 	public Configuration() {
 
 	}
 	
+	
+	
+	
+	
+	/**
+	 * Returns the Era of the party
+	 * @return Era
+	 */
 	public Era getEra() {
 		return era;
 	}

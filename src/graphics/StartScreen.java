@@ -13,10 +13,29 @@ import game.Game;
 
 public class StartScreen extends JPanel {
 
+	/**
+	 * Current Game
+	 */
 	private Game game;
-	private final Image background = TextureFactory.getInstance().getBattleshipBackground();;
-	private final Image title = TextureFactory.getInstance().getBattleshipTitle();;
+	
+	/**
+	 * Background of the app
+	 */
+	private final Image background = TextureFactory.getInstance().getBattleshipBackground();
+	
+	/**
+	 * Title of the app
+	 */
+	private final Image title = TextureFactory.getInstance().getBattleshipTitle();
 
+	
+	
+	
+	
+	/**
+	 * Constructor
+	 * @param g : Game
+	 */
 	public StartScreen(Game g) {
 		super();
 		game = g;
@@ -26,16 +45,19 @@ public class StartScreen extends JPanel {
 			this.game.setConfigPartyScreen();
 		});
 		
-		// je fais une bos parce que j'arrive pas a mettre le bouton ou je veux
 		this.add( Box.createRigidArea( new Dimension(0, this.title.getHeight(null)+100) ) );
 		this.add(buttonNewGame);
 
-		// SIZE
+		// Size
 		this.setPreferredSize(
 				new Dimension((Configuration.WIDTH * GameScreen.G_UNIT) *2 + GameScreen.G_UNIT, 
 						Configuration.HEIGHT * GameScreen.G_UNIT + GameScreen.G_UNIT));
 	}
 
+	
+	
+	
+	
 	@Override
 	public void paintComponent(Graphics g) {
 		super.paintComponent(g);

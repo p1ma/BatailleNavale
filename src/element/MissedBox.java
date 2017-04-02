@@ -13,11 +13,19 @@ import graphics.TextureFactory;
  *
  * Mar 13, 2017
  */
-public class MissedBox extends Box{
+public class MissedBox extends Box {
 
+	/**
+	 * Constructor
+	 * @param p : Point, position of MissedBox
+	 */
 	public MissedBox(Point p) {
 		super(p);
 	}
+	
+	
+	
+	
 	
 	@Override
 	public Image getImage() {

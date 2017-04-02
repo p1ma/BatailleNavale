@@ -1,14 +1,8 @@
-/**
- * 
- */
 package element;
 
 import java.awt.Image;
 import java.awt.Point;
 import java.awt.Rectangle;
-
-import game.Game;
-import graphics.GameScreen;
 
 /**
  * @author JUNGES Pierre-Marie - M1 Informatique 2016/2017
@@ -17,35 +11,38 @@ import graphics.GameScreen;
  */
 public abstract class Drawable {
 
-	//protected Point position;
-	//protected int width;
-	//protected int height;
+	/**
+	 * Position, width and height of Drawable
+	 */
 	protected Rectangle boundingBox;
-	protected double orientation;
+	
+	/**
+	 * 0 : horizontal orientation, 1 : vertical orientation
+	 */
+	protected int orientation;
 
+	
+	
+	
+	
 	/**
 	 * Constructor
-	 * @param p position 
-	 * @param w width
-	 * @param h height
+	 * @param p : Point, position of Drawable
+	 * @param w : int, width
+	 * @param h : int, height
 	 */
 	public Drawable(Point p, int w, int h) {
-		/*this.position = p;
-		this.width = w;
-		this.height = h;
-*/
-		
 		this.boundingBox = new Rectangle(p.x, p.y, w, h);
-		
-		this.orientation = 0.;
+		this.orientation = 0;
 	}
 
-	public abstract Image getImage();
-
-	/*
-	 * J'ai commencé le code de la rotation, 
-	 * je prefere le push tout de suite
-	 * mais 
+	
+	
+	
+	
+	/**
+	 * Changes the orientation of the Drawable by placing it at the point p
+	 * @param p : Point, new position
 	 */
 	public void rotate(Point p) {
 		int lastWidth = this.boundingBox.width, lastHeight = this.boundingBox.height;
@@ -55,13 +52,39 @@ public abstract class Drawable {
 		this.setPosition(p);
 	}
 	
-	public void setRotation() {
-		this.orientation = 1 - this.orientation;
+	/**
+	 * Return true if the point is in the bounding box
+	 * False otherwise
+	 * @param point : Point, position to be tested
+	 * @return boolean
+	 */
+	public boolean intersect(Point point) {
+		return (boundingBox.contains( point ));
 	}
 
 	/**
+	 * Return true if the Drawable is in the bounding box
+	 * False otherwise
+	 * @param d : Drawable, Drawable to be tested
+	 * @return boolean
+	 */
+	public boolean intersect(Drawable d) {
+		return (boundingBox.intersects( d.getBoundingBox() ));
+	}
+	
+	
+	
+	
+	
+	/**
+	 * Returns the image of the Drawable
+	 * @return Image
+	 */
+	public abstract Image getImage();
+	
+	/**
 	 * Returns x coordinate of the Drawable
-	 * @return x, and integer
+	 * @return int
 	 */
 	public int getX() {
 		return (int) this.boundingBox.x;
@@ -69,15 +92,16 @@ public abstract class Drawable {
 
 	/**
 	 * Returns y coordinate of the Drawable
-	 * @return y, and integer
+	 * @return int
 	 */
 	public int getY() {
 		return (int) this.boundingBox.y;
 	}
+	
 
 	/**
 	 * Returns the width of the Drawable
-	 * @return width, and integer
+	 * @return int
 	 */
 	public int getWidth() {
 		return this.boundingBox.width;
@@ -85,33 +109,49 @@ public abstract class Drawable {
 
 	/**
 	 * Returns the heigth of the Drawable
-	 * @return height, and integer
+	 * @return int
 	 */
 	public int getHeight() {
 		return this.boundingBox.height;
 	}
 
+	/**
+	 * Returns the bounding box of the Drawable
+	 * @return Rectangle
+	 */
 	public Rectangle getBoundingBox() {
 		return boundingBox;
 	}
 
+	/**
+	 * Returns the position of the Drawable
+	 * @return Point
+	 */
 	public Point getPosition() {
 		return this.boundingBox.getLocation();
 	}
 
-	public double getOrientation() {
+	/**
+	 * Returns the orientation of the Drawable
+	 * @return int
+	 */
+	public int getOrientation() {
 		return orientation;
 	}
-
-	public boolean intersect(Point point) {
-		return (boundingBox.contains( point ));
+	
+	/**
+	 * Changes the orientation of the Drawable
+	 */
+	public void setRotation() {
+		this.orientation = 1 - this.orientation;
 	}
 
-	public boolean intersect(Drawable d) {
-		return (boundingBox.intersects( d.getBoundingBox() ));
-	}
-
+	/**
+	 * Changes the position of the Drawable
+	 * @param point : Point, new position
+	 */
 	public void setPosition(Point point) {
 		boundingBox.setLocation(point);
 	}
+	
 }

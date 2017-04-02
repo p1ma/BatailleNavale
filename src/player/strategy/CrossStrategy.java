@@ -1,6 +1,3 @@
-/**
- * 
- */
 package player.strategy;
 
 import java.awt.Point;
@@ -30,23 +27,23 @@ public class CrossStrategy implements Strategy {
 			Box b = entry.getValue();
 
 			if (b instanceof HitBox) { 
-				// la case est touche et ya un bateau
+				// The box is hit and there is a ship
 				if ((l = this.getListNotFreeCases(radar, p)).size() != 4) {
-					// ya au - une case dispo autour de la case touche
+					// There is at least one box available around the affected box
 					if ((l = this.getListCasesHit(radar, l)).size() != 0) {
-						// ya un bout de bateau autour de p
-						// on tire a l'opose de cette case par rapport a p et ssi elle est libre
+						// There is a piece of ship around p
+						// We shoot opposite this box with compared to p and if it is free
 						for (Point point : l) {
 							int newX = (int) (p.getX() + p.getX() - point.getX());
 							int newY = (int) (p.getY() + p.getY() - point.getY());
 							Point point2;
 							if (!radar.containsKey(point2 = new Point(newX, newY))) {
-								// on peut tirer la
+								// We can shoot here
 								return point2;
 							}
 						}
 					} else {
-						// on tape une case aleatoire autour du bateau touche
+						// A random box is drawn around the affected ship
 						l = this.getListFreeCases(radar, p);
 						Random random = new Random();
 						return l.get(random.nextInt(l.size()));
@@ -55,15 +52,15 @@ public class CrossStrategy implements Strategy {
 			}
 		}
 
-		// sinon on tape en croix sur la map
+		// Otherwise we shoot in cross on the map
 		return this.getCrossCase(radar);
 	}
 	
 	/**
-	 * retourne une liste de Point etant possibles a cibler, le tout autour de p
-	 * @param radar
-	 * @param p
-	 * @return
+	 * Returns a list of points being possible to target, all around p
+	 * @param radar : Map<Point, Box>
+	 * @param p : Point
+	 * @return List<Point>
 	 */
 	private List<Point> getListFreeCases(Map<Point, Box> radar, Point point) {
 		List<Point> res = new ArrayList<Point>();
@@ -86,8 +83,8 @@ public class CrossStrategy implements Strategy {
 	}
 
 	/**
-	 * retourne un Point non touche sur la map pour au final taper en croix
-	 * @return
+	 * Returns a non-touch point on the map to finally shoot in cross
+	 * @return Point
 	 */
 	private Point getCrossCase(Map<Point, Box> radar) {
 		for (int x = 0; x < Configuration.WIDTH; x++) {
@@ -106,11 +103,11 @@ public class CrossStrategy implements Strategy {
 	}
 
 	/**
-	 * retourne une liste de Point correspondant aux coordonnees des cases ou un tire a touche
-	 * un bateau autour de p
-	 * @param radar
-	 * @param p
-	 * @return
+	 * Returns a Point list corresponding to the coordinates of the 
+	 * boxes where a shoot has touched a boat around p
+	 * @param radar : Map<Point, Box>
+	 * @param l : List<Point>
+	 * @return : List<Point>
 	 */
 	private List<Point> getListCasesHit(Map<Point, Box> radar, List<Point> l) {
 		List<Point> res = new ArrayList<Point>();
@@ -125,11 +122,11 @@ public class CrossStrategy implements Strategy {
 	}
 
 	/**
-	 * retourne une liste de Point
-	 * un Point correspond au coordonnees d'une case qui a deja ete touchee autour de p
-	 * @param radar
-	 * @param p
-	 * @return
+	 * Returns a list of points corresponding to the coordinates of a 
+	 * box that has already been touched around p
+	 * @param radar : Map<Point, Box>
+	 * @param p : Point
+	 * @return List<Point>
 	 */
 	private List<Point> getListNotFreeCases(Map<Point, Box> radar, Point point) {
 		List<Point> res = new ArrayList<Point>();

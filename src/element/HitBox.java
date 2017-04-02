@@ -1,6 +1,3 @@
-/**
- * 
- */
 package element;
 
 import java.awt.Image;
@@ -13,11 +10,19 @@ import graphics.TextureFactory;
  *
  * Mar 13, 2017
  */
-public class HitBox extends Box{
+public class HitBox extends Box {
 
+	/**
+	 * Constructor
+	 * @param p : Point, position of HitBox
+	 */
 	public HitBox(Point p) {
 		super(p);
 	}
+	
+	
+	
+	
 	
 	@Override
 	public Image getImage() {

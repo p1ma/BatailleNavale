@@ -1,6 +1,3 @@
-/**
- * 
- */
 package player;
 
 import java.awt.Point;
@@ -17,24 +14,49 @@ import player.strategy.Strategy;
  */
 public class Computer extends Player {
 
+	/**
+	 * Computer strategy 
+	 */
 	private Strategy strategy;
+
+	/**
+	 * Current Game
+	 */
 	private Game game;
-	
-	public Computer(Strategy strat) {
-		strategy = strat;
-	}
-	
-	public Computer(Game g) {
+
+
+
+
+
+	/**
+	 * Constructor
+	 * @param strat : Strategy
+	 * @param g : Game
+	 */
+	public Computer(Strategy strat, Game g) {
 		game = g;
-		strategy = new RandomStrategy();
-	}
-	
-	public void setStrategy(Strategy strat) {
 		strategy = strat;
 	}
-	
+
+
+
+
+
 	@Override
 	public void play(Ship s, Point p) {
+
+	}
+
+
+
+
+
+	/**
+	 * Set the computer strategy
+	 * @param strat : Strategy
+	 */
+	public void setStrategy(Strategy strat) {
+		strategy = strat;
 	}
 
 }

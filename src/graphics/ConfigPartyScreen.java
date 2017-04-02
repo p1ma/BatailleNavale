@@ -29,21 +29,37 @@ import graphics.listener.BoardController;
 
 public class ConfigPartyScreen extends JPanel {
 
+	/**
+	 * Current Game
+	 */
 	private Game game;
-	private final Image background = TextureFactory.getInstance().getBattleshipBackground();;
 
+	/**
+	 * Background of the app
+	 */
+	private final Image background = TextureFactory.getInstance().getBattleshipBackground();
+
+
+
+
+
+	/**
+	 * Constructor
+	 * @param g : Game
+	 * @param controller : BoardController
+	 */
 	public ConfigPartyScreen(Game g, BoardController controller) {
 		super();
 		game = g;
 
-		// LAYOUT
+		// Layout
 		this.setLayout(new FlowLayout(FlowLayout.LEFT, 0, 0));
 
 		this.initLeftPart();
 		this.add( Box.createRigidArea( new Dimension(GameScreen.G_UNIT, 0) ) );
 		this.initRightPart(controller);
 
-		// SIZE
+		// Size
 		this.setPreferredSize(
 				new Dimension((Configuration.WIDTH * GameScreen.G_UNIT) *2 + GameScreen.G_UNIT, 
 						Configuration.HEIGHT * GameScreen.G_UNIT + GameScreen.G_UNIT));
@@ -106,7 +122,7 @@ public class ConfigPartyScreen extends JPanel {
 
 	/**
 	 * part who contain the grid for positionning the ships
-	 * @param controller 
+	 * @param controller : BoardController
 	 */
 	private void initRightPart(BoardController controller) {
 		JPanel rightPanel = new rightPanel(game, controller);
@@ -114,15 +130,45 @@ public class ConfigPartyScreen extends JPanel {
 		this.add(rightPanel);
 	}
 
+	@Override
+	public void paintComponent(Graphics g) {
+		super.paintComponent(g);
+
+		g.drawImage(this.background, 
+				0, 0, 
+				(int)(this.background.getWidth(null)/1.5), (int)(this.background.getHeight(null)/2), 
+				null);
+	}
+
+
+
+
+	
 	private class rightPanel extends JPanel {
-		
+
+		/**
+		 * Current Game
+		 */
 		private Game game;
+
+		/**
+		 * Background of the board
+		 */
 		private final Image background = TextureFactory.getInstance().getBoardBackground();
-		
+
+
+
+
+
+		/**
+		 * Constructor
+		 * @param g : Game
+		 * @param controller : BoardController
+		 */
 		public rightPanel(Game g, BoardController controller) {
 			super();
 			game = g;
-			
+
 			List<Ship> ships = new LinkedList<Ship>();
 			Image img = null;
 			try {
@@ -136,16 +182,20 @@ public class ConfigPartyScreen extends JPanel {
 			ships.add(new Ship(new Point(0,2), 3, 1, img));
 			ships.add(new Ship(new Point(0,3), 3, 1, img));
 			ships.add(new Ship(new Point(0,4), 2, 1, img));
-			
-			this.game.setFleet(ships);
-			
+
+			this.game.setHumanFleet(ships);
+
 			this.addMouseListener(controller);
 			this.addMouseMotionListener(controller);
-			
+
 			// SIZE
 			this.setPreferredSize(
 					new Dimension(GameScreen.G_UNIT * game.getWidth(), GameScreen.G_UNIT * game.getHeight()));	
 		}
+
+		
+		
+		
 		
 		@Override
 		public void paintComponent(Graphics g) {
@@ -157,7 +207,11 @@ public class ConfigPartyScreen extends JPanel {
 			this.drawBoard(g);
 			this.drawShips(g);
 		}
-		
+
+		/**
+		 * Draws the game board
+		 * @param g : Graphics
+		 */
 		private void drawBoard(Graphics g) {
 			int lgr = game.getWidth() * GameScreen.G_UNIT;
 			int lrg = game.getHeight() * GameScreen.G_UNIT;
@@ -172,9 +226,13 @@ public class ConfigPartyScreen extends JPanel {
 				axe.y = axe.y + GameScreen.G_UNIT;
 			}
 		}
-		
+
+		/**
+		 * Draws the ships of the human
+		 * @param g : Graphics
+		 */
 		private void drawShips(Graphics g) {
-			List<Ship> fleet = game.getFleet();
+			List<Ship> fleet = game.getHumanFleet();
 			Graphics2D g2d = (Graphics2D)g;
 
 			for( Ship s : fleet ) {
@@ -186,7 +244,7 @@ public class ConfigPartyScreen extends JPanel {
 							s.getHeight() * GameScreen.G_UNIT,
 							this);
 				} else {
-					
+
 					BufferedImage bi = (BufferedImage) s.getImage();
 					AffineTransform tx = new AffineTransform();
 					tx.rotate(Math.toRadians(90), 
@@ -201,19 +259,10 @@ public class ConfigPartyScreen extends JPanel {
 							s.getWidth() * GameScreen.G_UNIT,
 							s.getHeight() * GameScreen.G_UNIT,
 							this);
-					
+
 				}
 			}
 		}
 	}
 
-	@Override
-	public void paintComponent(Graphics g) {
-		super.paintComponent(g);
-
-		g.drawImage(this.background, 
-				0, 0, 
-				(int)(this.background.getWidth(null)/1.5), (int)(this.background.getHeight(null)/2), 
-				null);
-	}
 }

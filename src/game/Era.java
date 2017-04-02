@@ -1,6 +1,3 @@
-/**
- * 
- */
 package game;
 
 import java.util.List;
@@ -14,18 +11,46 @@ import element.Ship;
  */
 public class Era {
 
+	/**
+	 * identifiant of the Era
+	 */
 	private String identifiant;
+	
+	/**
+	 * List of the corresponding Ships at the chosen Era
+	 */
 	private List<Ship> fleet;
 	
+	
+	
+	
+	
+	/**
+	 * Constructor
+	 * @param id : String
+	 * @param ships : List<Ship>
+	 */
 	public Era(String id, List<Ship> ships) {
 		identifiant = id;
 		fleet = ships;
 	}
 	
+	
+	
+	
+	
+	/**
+	 * Returns the list of Ships of the Era
+	 * @return List<Ship>
+	 */
 	public List<Ship> getFleet() {
 		return fleet;
 	}
 	
+	/**
+	 * Returns the identifiant of the Era
+	 * @return String
+	 */
 	public String getIdentifiant() {
 		return identifiant;
 	}
