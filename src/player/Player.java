@@ -31,12 +31,12 @@ public abstract class Player {
 	/**
 	 * Player's ships
 	 */
-	private Map<Point, Ship> fleet;
+	protected Map<Point, Ship> fleet;
 	
 	/**
 	 * Areas where the player had shoot
 	 */
-	private Map<Point, Box> radar;
+	protected Map<Point, Box> radar;
 
 	
 	

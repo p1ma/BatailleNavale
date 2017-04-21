@@ -54,7 +54,7 @@ public class RadarController implements MouseListener {
 		Point clicked = new Point(xClicked, yClicked);
 
 		if ( !game.checkRadar(clicked) ) {
-			game.shootAt(clicked, null);
+			game.startTurn(clicked);
 		} else {
 			System.err.println("(RDRCONTROLLER) ALREADY PLAYED");
 		}

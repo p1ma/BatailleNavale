@@ -9,6 +9,8 @@ import java.util.List;
 
 import javax.imageio.ImageIO;
 
+import element.HitBox;
+import element.MissedBox;
 import element.Ship;
 import game.Game;
 import player.strategy.RandomStrategy;
@@ -45,6 +47,9 @@ public class Computer extends Player {
 		game = g;
 		strategy = strat;
 		
+		// choix strategie a changer (mettre dans la config)
+		this.strategy = new RandomStrategy();
+		
 		// choix de base des bateaux pour le moment -> a mettre en alea apres
 		List<Ship> ships = new LinkedList<Ship>();
 		Image img = null;
@@ -70,6 +75,10 @@ public class Computer extends Player {
 	@Override
 	public void play(Ship s, Point p) {
 
+	}
+	
+	public Point chooseShootingArea() {
+		return this.strategy.execute( this.radar );
 	}
 
 

@@ -2,6 +2,8 @@ package player;
 
 import java.awt.Point;
 
+import element.HitBox;
+import element.MissedBox;
 import element.Ship;
 import game.Game;
 
@@ -16,11 +18,11 @@ public class Human extends Player {
 	 * Current Game
 	 */
 	private Game game;
-	
-	
-	
-	
-	
+
+
+
+
+
 	/**
 	 * Constructor
 	 * @param g : Game
@@ -28,13 +30,14 @@ public class Human extends Player {
 	public Human(Game g) {
 		game = g;
 	}
-	
-	
-	
-	
-	
+
+
+
+
+
 	@Override
 	public void play(Ship s, Point p) {
 		
 	}
+	
 }

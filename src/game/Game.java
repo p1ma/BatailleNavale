@@ -24,28 +24,28 @@ public class Game extends Observable {
 	 * Human player of the Game
 	 */
 	private Human human;
-	
+
 	/**
 	 * Computer player of the Game
 	 */
 	private Computer computer;
-	
+
 	/**
 	 * Configuration of the Game
 	 */
 	private Configuration configuration;
-	
+
 	/**
 	 * Player who must play
 	 *     human = 0
 	 *     computer = 1
 	 */
-	private int currentPlayer = (int) Math.round( Math.random() );
+	private int currentPlayer = 0;
 
-	
-	
-	
-	
+
+
+
+
 	/**
 	 * Constructor
 	 */
@@ -79,35 +79,57 @@ public class Game extends Observable {
 		// FIN TEST
 	}
 
-	
-	
-	
-	
+
+
+
+
 	/**
 	 * Called when a new party is started
 	 */
 	public void newParty() {
 
 	}
-	
+
 	/**
 	 * Launche the party
 	 */
-	public void startGame() {
-		// boucle de jeu
-		while (!this.isFinished()) {
-			this.setChanged();
-			this.notifyObservers("diplayPlayerTurn");
-			
-			if (this.currentPlayer == 0) {
-				throw new Error("human action");
-			} else {
-				throw new Error("computer action");
-			}
+	public void startTurn(Point p) {
+		if (this.isFinished()) {
+			throw new Error("Fin partie -> non codé");
 		}
-		System.out.println("2");
+
+		this.humanTurn(p);
+
+		// on affiche qui doit jouer
+		this.setChanged();
+		this.notifyObservers("diplayPlayerTurn");
+
+		this.computerTurn();
+
+		// on affiche qui doit jouer
+		this.setChanged();
+		this.notifyObservers("diplayPlayerTurn");
 	}
-	
+
+	public void humanTurn(Point p) {
+		this.shootAt(p, null, "human");
+
+		this.currentPlayer = 1 - this.currentPlayer;
+	}
+
+	public void computerTurn() {
+		Point p = this.computer.chooseShootingArea();
+		this.shootAt(p, null, "computer");
+
+		this.currentPlayer = 1 - this.currentPlayer;
+
+		try {
+			Thread.sleep(1000);
+		} catch (InterruptedException e) {
+			e.printStackTrace();
+		}
+	}
+
 	/**
 	 * Return true when the current party is over
 	 * False otherwise
@@ -126,13 +148,23 @@ public class Game extends Observable {
 	 * @param pos : Point
 	 * @param ship : Ship
 	 */
-	public void shootAt(Point pos, Ship ship) {
-		boolean touched = computer.isTouched(pos);
+	public void shootAt(Point pos, Ship ship, String player) {
+		if (player.equals("human")) {
+			boolean touched = computer.isTouched(pos);
 
-		if ( touched ) {
-			human.updateRadar(pos, new HitBox(pos));
+			if ( touched ) {
+				human.updateRadar(pos, new HitBox(pos));
+			} else {
+				human.updateRadar(pos, new MissedBox(pos));
+			}
 		} else {
-			human.updateRadar(pos, new MissedBox(pos));
+			boolean touched = human.isTouched(pos);
+
+			if ( touched ) {
+				computer.updateRadar(pos, new HitBox(pos));
+			} else {
+				computer.updateRadar(pos, new MissedBox(pos));
+			}
 		}
 
 		this.setChanged();
@@ -185,12 +217,6 @@ public class Game extends Observable {
 		ship.setPosition(lastPoint);
 		return false;
 	}
-
-	
-	
-	
-	
-	
 
 	public void rotate(Drawable element) {
 		// recherche la pos dispo la plus proche
@@ -245,10 +271,28 @@ public class Game extends Observable {
 		return res;
 	}
 
-	
-	
-	
-	
+	/**
+	 * Return true if one ship is touched
+	 * @param p : Point
+	 * @return boolean
+	 */
+	public boolean humanFleetIsTouched(Point p) {
+		return this.human.isTouched(p);
+	}
+
+	/**
+	 * Return true if one ship is touched
+	 * @param p : Point
+	 * @return boolean
+	 */
+	public boolean computerFleetIsTouched(Point p) {
+		return this.computer.isTouched(p);
+	}
+
+
+
+
+
 	/**
 	 * Returns the width of the Game
 	 * @return int
@@ -290,7 +334,7 @@ public class Game extends Observable {
 		result.addAll(computer.getRadar());
 		return result;
 	}
-	
+
 	/**
 	 * Returns the distance between the points p1 and p2
 	 * @param p1 : Point
@@ -300,14 +344,14 @@ public class Game extends Observable {
 	public double getDistance(Point p1, Point p2) {
 		return Math.sqrt(Math.pow((p2.y - p1.y),2) + Math.pow((p2.x - p1.x),2));
 	}
-	
+
 	public String getCurrentPlayer() {
 		if (this.currentPlayer == 0)
 			return "Human";
 		else 
 			return "Computer";
 	}
-	
+
 	/**
 	 * Replaces the list of human ship by the list l
 	 * @param l : List<Ship>
@@ -315,7 +359,7 @@ public class Game extends Observable {
 	public void setHumanFleet(List<Ship> l) {
 		this.human.setFleet(l);
 	}
-	
+
 	/**
 	 * Displays the game's welcome screen
 	 */
@@ -338,8 +382,10 @@ public class Game extends Observable {
 	public void setPartyScreen() {
 		this.setChanged();
 		this.notifyObservers("setPartyScreen");
-		
-		this.startGame();
+
+		// on affiche qui doit jouer
+		this.setChanged();
+		this.notifyObservers("diplayPlayerTurn");
 	}
 
 	/**
@@ -352,15 +398,6 @@ public class Game extends Observable {
 
 		this.setChanged();
 		this.notifyObservers("BOARD");
-	}
-
-	
-	
-	
-	
-	@Override
-	public void notifyObservers() {
-		super.notifyObservers();
 	}
 
 }

@@ -137,7 +137,7 @@ public class BoardScreen extends JPanel {
 	 */
 	private void drawRadar(Graphics g) {
 		List<Drawable> elements = game.getComputerRadar();
-
+		
 		Graphics2D g2d = (Graphics2D)g;
 		for( Drawable d : elements ) {
 			g2d.drawImage(d.getImage(), 
@@ -146,8 +146,6 @@ public class BoardScreen extends JPanel {
 					d.getHeight() * GameScreen.G_UNIT,
 					d.getWidth() * GameScreen.G_UNIT,
 					this);
-			System.out.println("X : " + d.getX() * GameScreen.G_UNIT);
-			System.out.println("Y : " + d.getY() * GameScreen.G_UNIT);
 		}
 	}
 	

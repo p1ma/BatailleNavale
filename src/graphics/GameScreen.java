@@ -1,6 +1,7 @@
 package graphics;
 
 import java.awt.Color;
+import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.util.Observable;
@@ -82,8 +83,8 @@ public class GameScreen extends JFrame implements Observer {
 
 		this.startScreen = new StartScreen(game);
 		this.configPartyScreen = new ConfigPartyScreen(game, controller);
-		this.radarScreen = new RadarScreen(game);
 		this.boardScreen = new BoardScreen(game);
+		this.radarScreen = new RadarScreen(game);
 
 		// to use keyListener
 		this.setFocusable(true);
@@ -125,9 +126,9 @@ public class GameScreen extends JFrame implements Observer {
 		// Layout
 		this.setLayout(new FlowLayout(FlowLayout.LEFT, 0, 0));
 
-		add(boardScreen);
-		add( Box.createRigidArea( new Dimension(G_UNIT, 0) ) );
-		add(radarScreen);
+		this.add(this.boardScreen);
+		this.add( Box.createRigidArea( new Dimension(G_UNIT, 0) ) );
+		this.add(this.radarScreen);
 		this.validate();
 	}
 
@@ -185,8 +186,8 @@ public class GameScreen extends JFrame implements Observer {
 			radarScreen.repaint();
 			break;
 		case "BOARD" :
-			boardScreen.repaint();
 			this.configPartyScreen.repaint();
+			this.boardScreen.repaint();
 			break;
 
 		case "setStartScreen" :
@@ -204,6 +205,7 @@ public class GameScreen extends JFrame implements Observer {
 			
 		case "diplayPlayerTurn" :
 			this.diplayPlayerTurn( ((Game) arg0).getCurrentPlayer() );
+			this.repaint();
 			break;
 		}	
 	}
