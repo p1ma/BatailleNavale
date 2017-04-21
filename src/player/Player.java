@@ -102,16 +102,30 @@ public abstract class Player {
 	public void updateRadar(Point pos, Box box) {
 		radar.put(pos, box);
 	}
-
+	
 	/**
-	 * ... a completer ...
-	 * @param ship : Ship
-	 * @param pos : Point
+	 * Return true when all oposent fleet are killed
+	 * False otherwise
+	 * @param oposentRadar : Collection<Box>
+	 * @return boolean
 	 */
-	public void setShipPosition(Ship ship, Point pos) {
-		for(int i = 0 ; i < ship.getHeight() ; i++) {
-			fleet.put(new Point((int)pos.getX() + i, (int)pos.getY()), ship);
+	public boolean allFleetKilled(Collection<Box> oposentRadar) {
+		// on regarde tous les bateaux
+		for (Map.Entry<Point, Ship> e : this.fleet.entrySet()) {
+			// on regarde si chaque points des bateaux sont contenus dans le radar
+			boolean find = false;
+			int i = 0;
+			for (Box b : oposentRadar) {
+				if (b.getPosition().equals(e.getKey()))
+					find = true;
+				if (find)
+					break;
+			}
+			// si un point n'est pas dedans on retourne false
+			if (!find)
+				return false;
 		}
+		return true;
 	}
 
 
@@ -140,6 +154,17 @@ public abstract class Player {
 		return radar.values();
 	}
 
+	/**
+	 * ... a completer ...
+	 * @param ship : Ship
+	 * @param pos : Point
+	 */
+	public void setShipPosition(Ship ship, Point pos) {
+		for(int i = 0 ; i < ship.getHeight() ; i++) {
+			fleet.put(new Point((int)pos.getX() + i, (int)pos.getY()), ship);
+		}
+	}
+	
 	/**
 	 * Changes the list of player's boats
 	 * @param l : List<Ship>

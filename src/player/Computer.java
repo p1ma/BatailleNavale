@@ -1,6 +1,13 @@
 package player;
 
+import java.awt.Image;
 import java.awt.Point;
+import java.io.File;
+import java.io.IOException;
+import java.util.LinkedList;
+import java.util.List;
+
+import javax.imageio.ImageIO;
 
 import element.Ship;
 import game.Game;
@@ -34,8 +41,26 @@ public class Computer extends Player {
 	 * @param g : Game
 	 */
 	public Computer(Strategy strat, Game g) {
+		super();
 		game = g;
 		strategy = strat;
+		
+		// choix de base des bateaux pour le moment -> a mettre en alea apres
+		List<Ship> ships = new LinkedList<Ship>();
+		Image img = null;
+		try {
+			img = ImageIO.read(new File("textures/ship.png"));
+		} catch (IOException e) {
+			System.err.println("Error loading image");
+			System.exit(0);
+		}
+		ships.add(new Ship(new Point(0,0), 5, 1, img));
+		ships.add(new Ship(new Point(0,1), 4, 1, img));
+		ships.add(new Ship(new Point(0,2), 3, 1, img));
+		ships.add(new Ship(new Point(0,3), 3, 1, img));
+		ships.add(new Ship(new Point(0,4), 2, 1, img));
+		
+		this.setFleet(ships);
 	}
 
 

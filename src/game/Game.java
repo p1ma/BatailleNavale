@@ -34,6 +34,13 @@ public class Game extends Observable {
 	 * Configuration of the Game
 	 */
 	private Configuration configuration;
+	
+	/**
+	 * Player who must play
+	 *     human = 0
+	 *     computer = 1
+	 */
+	private int currentPlayer = (int) Math.round( Math.random() );
 
 	
 	
@@ -81,6 +88,37 @@ public class Game extends Observable {
 	 */
 	public void newParty() {
 
+	}
+	
+	/**
+	 * Launche the party
+	 */
+	public void startGame() {
+		// boucle de jeu
+		while (!this.isFinished()) {
+			this.setChanged();
+			this.notifyObservers("diplayPlayerTurn");
+			
+			if (this.currentPlayer == 0) {
+				throw new Error("human action");
+			} else {
+				throw new Error("computer action");
+			}
+		}
+		System.out.println("2");
+	}
+	
+	/**
+	 * Return true when the current party is over
+	 * False otherwise
+	 * @return boolean
+	 */
+	public boolean isFinished() {
+		if (this.human.allFleetKilled( this.computer.getRadar() )
+				|| this.computer.allFleetKilled( this.human.getRadar() )) 
+			return true;
+		else 
+			return false;
 	}
 
 	/**
@@ -263,6 +301,13 @@ public class Game extends Observable {
 		return Math.sqrt(Math.pow((p2.y - p1.y),2) + Math.pow((p2.x - p1.x),2));
 	}
 	
+	public String getCurrentPlayer() {
+		if (this.currentPlayer == 0)
+			return "Human";
+		else 
+			return "Computer";
+	}
+	
 	/**
 	 * Replaces the list of human ship by the list l
 	 * @param l : List<Ship>
@@ -293,6 +338,8 @@ public class Game extends Observable {
 	public void setPartyScreen() {
 		this.setChanged();
 		this.notifyObservers("setPartyScreen");
+		
+		this.startGame();
 	}
 
 	/**

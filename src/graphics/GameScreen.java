@@ -8,6 +8,7 @@ import java.util.Observer;
 
 import javax.swing.Box;
 import javax.swing.JFrame;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
 import game.Configuration;
@@ -167,6 +168,14 @@ public class GameScreen extends JFrame implements Observer {
 		this.setLocationRelativeTo(null); // display window in the middle of the screen
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 	}
+	
+	/**
+	 * Display the player who must play
+	 * @param s
+	 */
+	private void diplayPlayerTurn(String s) {
+		JOptionPane.showMessageDialog(null, "Turn of the " + s, "Turn", JOptionPane.INFORMATION_MESSAGE);
+	}
 
 	@Override
 	public void update(Observable arg0, Object arg1) {
@@ -191,6 +200,10 @@ public class GameScreen extends JFrame implements Observer {
 		case "setPartyScreen" :
 			this.initPartyScreen();
 			this.repaint();
+			break;
+			
+		case "diplayPlayerTurn" :
+			this.diplayPlayerTurn( ((Game) arg0).getCurrentPlayer() );
 			break;
 		}	
 	}
