@@ -1,3 +1,6 @@
+/**
+ * 
+ */
 package graphics.listener;
 
 import java.awt.Point;
@@ -7,48 +10,53 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
 
-import element.Ship;
-import game.Game;
-import graphics.GameScreen;
+import element.GameElement;
+import game.GameIModel;
 
 /**
  * @author JUNGES Pierre-Marie - M1 Informatique 2016/2017
  *
  * Mar 14, 2017
  */
-public class BoardController implements MouseListener, MouseMotionListener, KeyListener {
+public class BoardController implements MouseListener, MouseMotionListener, KeyListener{
 
 	/**
-	 * Current Game
+	 * The GameIModel
 	 */
-	private final Game game;
-	
-	/**
-	 * Ship selected
-	 */
-	private Ship selected;
-	
-	/**
-	 * Key to rotate a ship
-	 */
-	private int rotateKey = KeyEvent.VK_R;
+	private final GameIModel game;
 
-	
-	
-	
 	/**
-	 * Constructor
-	 * @param g : Game
+	 * GameElement currently selected, default = null
 	 */
-	public BoardController(final Game g) {
+	private GameElement selected;
+
+	/**
+	 * Zoom factor
+	 */
+	private final int g_unit;
+
+	/**
+	 *  key 'r' used to rotate a ship
+	 */
+	private final int rotate = KeyEvent.VK_R;
+
+	/**
+	 *  key 'enter' used to validate ships positions
+	 */
+	private final int validate = KeyEvent.VK_ENTER;
+
+	/**
+	 * 
+	 * Constructs a BoardController with the given parameter(s)
+	 * @param g the Game
+	 * @param unit the zoom factor
+	 */
+	public BoardController(final GameIModel g, final int unit) {
 		game = g;
 		selected = null;
+		g_unit = unit;
 	}
 
-	
-	
-	
-	
 	/**
 	 * Used to move the Ship when the player
 	 * dragged his mouse, then check if the 
@@ -56,21 +64,22 @@ public class BoardController implements MouseListener, MouseMotionListener, KeyL
 	 * function checkCoordinates is called
 	 */
 	@Override
-	public void mouseDragged(MouseEvent e) {
+	public void mouseDragged(MouseEvent arg) {
+		Point scaledPoint = scalePoint( arg.getPoint() );
 		if ( selected != null) {
-			Point p = new Point(e.getX()/GameScreen.G_UNIT, e.getY()/GameScreen.G_UNIT);
-			if (!game.intersectOtherShips(selected, p)) {
-				game.setShipPosition(selected, p);
+			boolean correct = game.isPositionAvailable(selected, scaledPoint);
+			if ( correct ) {
+				game.setGameElementPosition(selected, scaledPoint);
 				checkCoordinates( selected );
 			}
-		}
+		} 
 	}
 
 	/**
 	 * In order to keep the Ship inside the BoardScreen
 	 * we have to check if the new coordinates corrects.
 	 */
-	private void checkCoordinates(Ship s) {
+	private void checkCoordinates(GameElement s) {
 		Point position = s.getPosition();
 
 		// checks if the x positions exceed (left border)
@@ -84,61 +93,92 @@ public class BoardController implements MouseListener, MouseMotionListener, KeyL
 		}
 
 		// checks if the x positions exceed (right border)
-		int exceedBy = game.getWidth() - (position.x + s.getWidth());
+		int exceedBy = (game.getHeight() - (position.x + s.getWidth()));
 		if ( exceedBy < 0) {
 			// + because exceedBy is negative at this moment
 			position.x += exceedBy;
 		}
 
 		// checks if the y positions exceed (bottom border)
-		exceedBy = game.getHeight() - (position.y + s.getHeight());
+		exceedBy = (game.getWidth() - (position.y + s.getHeight()));
 		if ( exceedBy < 0) {
 			// + because exceedBy is negative at this moment
 			position.y += exceedBy;
 		}
 
 		// then we re-update the new position
-		game.setShipPosition(selected, position);
+		game.setGameElementPosition(selected, position);
 	}
 
 	@Override
-	public void mouseMoved(MouseEvent arg0) {  }
+	public void mouseMoved(MouseEvent arg0) {
+		// see function mouseDragged
+	}
 
 	@Override
-	public void mouseClicked(MouseEvent e) {  }
+	public void mouseClicked(MouseEvent e) {
+		// see function mousePressed
+	}
 
 	@Override
-	public void mouseEntered(MouseEvent e) {  }
+	public void mouseEntered(MouseEvent e) {
+		// see function mousePressed
+	}
 
 	@Override
-	public void mouseExited(MouseEvent e) {  }
+	public void mouseExited(MouseEvent e) {
+		selected = null;
+	}
 
+	/**
+	 * Selects the GameElements located at the position
+	 * where the mouse was pressed
+	 */
 	@Override
 	public void mousePressed(MouseEvent e) {
-		int xClicked = (int)(e.getX() / GameScreen.G_UNIT);
-		int yClicked = (int)(e.getY() / GameScreen.G_UNIT);
-		Point clicked = new Point(xClicked, yClicked);
-
-		// We record the ship on which we keep the left click
-		selected = game.selectShip(clicked);
+		selected = game.selectGameElement( scalePoint(e.getPoint()) );
 	}
 
 	@Override
 	public void mouseReleased(MouseEvent e) {
-		// We release the ship
-		selected = null;
+		// see function mouseExited
 	}
 
+	/**
+	 * If the User (during the warmup)
+	 * clicks on r then it will rotates the selected GameElement
+	 * and if He clicks on ENTER then it confirms the GameElements positions
+	 * and launch the Game
+	 */
 	@Override
 	public void keyPressed(KeyEvent e) {
-		if ((selected != null) && (e.getKeyCode() == this.rotateKey))
-			game.rotate(selected);
+		int code = e.getKeyCode();
+
+		if ( selected != null ){
+			switch( code ) {
+			case rotate :
+				selected.rotate();
+				checkCoordinates(selected);
+				break;
+			case validate :
+				game.confirmGameElementsPosition();
+				break;
+			}
+		}	
 	}
 
 	@Override
-	public void keyReleased(KeyEvent e) {  }
+	public void keyReleased(KeyEvent e) {
+	}
 
 	@Override
-	public void keyTyped(KeyEvent e) {  }
+	public void keyTyped(KeyEvent e) {
+	}
 
+	private Point scalePoint(Point p) {
+		int xClicked = (int)(p.getX() / g_unit) ;
+		int yClicked = (int)(p.getY() / g_unit);
+
+		return new Point(xClicked, yClicked);
+	}
 }

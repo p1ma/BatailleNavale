@@ -1,0 +1,15 @@
+<!-- In order to check file's correctness please 
+type command : xmllint users.xml \-\-dtdvalid users.dtd \-\-noout
+
+after changes
+
+Plus, see users.dtd to see file's structure (useful)
+-->
+<!DOCTYPE Bibliographie SYSTEM "users.dtd" >
+<Users>
+	<User>
+		<pseudo>Amiral Pierre</pseudo>
+		<victory>100</victory>
+		<defeat>0</defeat>
+	</User>
+</Users>

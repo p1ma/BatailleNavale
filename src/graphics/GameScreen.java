@@ -1,7 +1,9 @@
+/**
+ * 
+ */
 package graphics;
 
 import java.awt.Color;
-import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.util.Observable;
@@ -12,9 +14,8 @@ import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
-import game.Configuration;
-import game.Game;
-import graphics.listener.BoardController;
+import game.GameAbstractModel;
+import graphics.menu.GameMenuBar;
 
 /**
  * @author JUNGES Pierre-Marie - M1 Informatique 2016/2017
@@ -24,189 +25,455 @@ import graphics.listener.BoardController;
 public class GameScreen extends JFrame implements Observer {
 
 	/**
-	 * Current Game
+	 * serialVersionUID used to 
 	 */
-	private Game game;
+	private static final long serialVersionUID = 1L;
 
 	/**
-	 * Start Screen
+	 * JFrame's WELCOME title (used by the StartScreen)
 	 */
-	private JPanel startScreen;
+	private final static String WELCOME = "Bienvenue";
 	
 	/**
-	 * Configuration Game Screen
+	 * JFrame's PARAMETERS title (used by the ParametersScreen)
 	 */
-	private JPanel configPartyScreen;
+	private final static String PARAMETERS = "Paramètres";
+
+	/**
+	 * Zoom factor
+	 */
+	private final int g_unit = 50;
+
+	/**
+	 * Model
+	 */
+	private GameAbstractModel game;
+
+	/**
+	 * This JPanel will be used as a welcome screen,
+	 * it will let the user chooses to load a Game or the start a new one.
+	 */
+	private JPanel starterScreen;
 	
 	/**
-	 * Board Screen (for a game)
+	 * When the user had chosen to start a new Game, 
+	 * the user will chose the parameters wanted
+	 */
+	private JPanel parametersScreen;
+	
+	/**
+	 * Right Screen, it will contain the Opponent's elements and
+	 * the user's tentatives
+	 */
+	private JPanel radarScreen;
+	
+	/**
+	 * Left Screen, it will contain the user's elements and
+	 * the computer's tentatives
 	 */
 	private JPanel boardScreen;
 	
 	/**
-	 * Radar Screen (for a game)
+	 * Top screen, it will draw the current score, the number of
+	 * missed and hit shots and it will also draw (in case) the winner
 	 */
-	private JPanel radarScreen;
+	private JPanel scoreScreen;
 
 	/**
-	 * Title of the window app
+	 * 
+	 * Constructs a GameScreen with the given parameter(s)
+	 * @param gameAbstract the Model and Observable
 	 */
-	private final static String TITLE = "Bataille Navale";
-	
-	/**
-	 * Size of the window
-	 */
-	private final Dimension dimension = 
-			new Dimension((Configuration.WIDTH * G_UNIT) *2 + G_UNIT, Configuration.HEIGHT * G_UNIT + G_UNIT);
+	public GameScreen(GameAbstractModel gameAbstract) {
+		super();
 
-	/**
-	 * Size unit
-	 */
-	public final static int G_UNIT = 50;
-
-	
-	
-	
-	
-	
-	/**
-	 * Constructor
-	 */
-	public GameScreen() {
-		super(TITLE);
-
-		game = new Game();
+		game = gameAbstract;
 		game.addObserver(this);
 
-		BoardController controller = new BoardController(game);
-		this.addKeyListener(controller);
+		this.setTitle( game.getGameName() );
+		setStarterScreen();
 
-		this.startScreen = new StartScreen(game);
-		this.configPartyScreen = new ConfigPartyScreen(game, controller);
-		this.boardScreen = new BoardScreen(game);
-		this.radarScreen = new RadarScreen(game);
-
-		// to use keyListener
-		this.setFocusable(true);
-
-		initGameScreen();
-
-		this.initStartScreen();
-		//this.initPartyScreen();
-
-		this.initGameScreen2();
-	}
-
-	/**
-	 * Show the start screen
-	 */
-	private void initStartScreen() {
-		this.removeAllContentScreen();
-
-		this.add(this.startScreen);
-		this.validate();
-	}
-
-	/**
-	 * Show the configuration game screen
-	 */
-	private void initConfigPartyScreen() {
-		this.removeAllContentScreen();
-
-		this.add(this.configPartyScreen);
-		this.validate();
-	}
-
-	/**
-	 * Show the game screen
-	 */
-	private void initPartyScreen() {
-		this.removeAllContentScreen();
-
-		// Layout
-		this.setLayout(new FlowLayout(FlowLayout.LEFT, 0, 0));
-
-		this.add(this.boardScreen);
-		this.add( Box.createRigidArea( new Dimension(G_UNIT, 0) ) );
-		this.add(this.radarScreen);
-		this.validate();
-	}
-
-	/**
-	 * Hidden all screens
-	 */
-	private void removeAllContentScreen() {
-		this.getContentPane().remove(this.startScreen);
-
-		this.getContentPane().remove(this.configPartyScreen);
-
-		this.getContentPane().remove(this.radarScreen);
-		this.getContentPane().remove(this.boardScreen);
-	}
-
-	/**
-	 * Initializes several attributes of the screen
-	 */
-	private void initGameScreen() {
-		// Size
-		this.setPreferredSize(dimension);
-
-		// Resizable
-		this.setResizable(false);
-
-		// Color
-		this.getContentPane().setBackground(Color.WHITE);
-	}
-
-	/**
-	 * Initializes several attributes of the screen
-	 * Needs to be called at the end of the display
-	 */
-	private void initGameScreen2() {
-		// Default operations
+		// DEFAULT OPERATIONS
 		this.pack();
 		this.setVisible(true);
 		this.setLocationRelativeTo(null); // display window in the middle of the screen
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 	}
-	
+
 	/**
-	 * Display the player who must play
-	 * @param s
+	 * Changes | Loads the starterScreen
 	 */
-	private void diplayPlayerTurn(String s) {
-		JOptionPane.showMessageDialog(null, "Turn of the " + s, "Turn", JOptionPane.INFORMATION_MESSAGE);
+	private void setStarterScreen() {
+		removeAll();
+		starterScreen = new StartScreen(game);
+
+		initStarterScreen();
+
+		add(starterScreen);
+		validate();
 	}
 
+	/**
+	 * Sets the properties of the starterScreen
+	 */
+	private void initStarterScreen() {
+		// TITLES
+		this.setTitle(WELCOME);
+
+		// SIZES
+		this.setMinimumSize( starterScreen.getMinimumSize() );
+		this.setPreferredSize( starterScreen.getPreferredSize() );
+		this.setMaximumSize( starterScreen.getMaximumSize() );
+
+		// RESIZABLE
+		setResizable(false);
+		starterScreen.setFocusable(false);
+		pack();
+	}
+
+	/**
+	 * Changes | Loads the parametersScreen
+	 */
+	private void setParametersScreen() {
+		// Removes JComponent
+		this.removeAll();
+		
+		this.setJMenuBar(null);
+
+		parametersScreen = new ParametersScreen(game);
+
+		initParametersScreen();
+
+		add(parametersScreen);
+		revalidate();
+	}
+
+	/**
+	 * Sets the properties of the parametersScreen
+	 */
+	private void initParametersScreen() {
+		// TITLES
+		this.setTitle(PARAMETERS);
+
+		// SIZES
+		this.setResizable(true);
+		this.setMinimumSize( parametersScreen.getMinimumSize() );
+		this.setPreferredSize( parametersScreen.getPreferredSize() );
+		this.setMaximumSize( parametersScreen.getMaximumSize() );
+
+		// RESIZABLE
+		this.setResizable(false);
+
+		// LAYOUT
+		this.setLayout(new FlowLayout(FlowLayout.LEFT, 0, 0));
+		pack();
+	}
+
+	/**
+	 * Sets the properties of the GameScreen, it will load
+	 * the radarScreen(right), boardScreen(left) and scoreScreen(top)
+	 */
+	private void setGameScreens() {
+		// Removes parameters screen if exists
+		this.removeAll();
+		radarScreen = new RadarScreen(game, 
+				g_unit);
+		boardScreen = new BoardScreen(game, 
+				g_unit);
+
+		initGameScreens();
+
+		scoreScreen = new ScoreScreen(game, 
+				getPreferredSize(), 
+				g_unit);
+		
+		add(scoreScreen);
+		add(boardScreen);
+		add( Box.createRigidArea( new Dimension(g_unit, 0) ) );
+		add(radarScreen);
+		validate();
+	}
+
+	/**
+	 * Sets the properties of the boardScreen, radarScreen, scoreScreen
+	 */
+	private void initGameScreens() {		
+		// TITLES
+		this.setTitle( game.getGameName() );
+
+		// SETS JMENU
+		setJMenuBar(new GameMenuBar(game) );
+
+		// SIZE
+		this.setResizable(true);
+		Dimension dimension = computeSizes();
+		this.setMinimumSize( dimension );
+		this.setPreferredSize( dimension );
+		this.setMaximumSize( dimension );
+		
+		// to use keyListener
+		if ( boardScreen.isFocusable() ) {
+			setFocusable(false);
+			boardScreen.setFocusable(true);
+		}
+
+		// RESIZABLE
+		this.setResizable(false);
+
+		// LAYOUT
+		this.setLayout(new FlowLayout(FlowLayout.CENTER, 0, 0));
+
+		// COLOR
+		this.getContentPane().setBackground(Color.WHITE);
+		pack();
+	}
+
+	/**
+	 * Updates the screen depending of the code(arg1) sent by 
+	 * the Model
+	 */
 	@Override
 	public void update(Observable arg0, Object arg1) {
 		String input = (String) arg1;
 		switch(input) {
-		case "RADAR" :
+		case GameAbstractModel.RADAR :
 			radarScreen.repaint();
+			scoreScreen.repaint();
 			break;
-		case "BOARD" :
-			this.configPartyScreen.repaint();
-			this.boardScreen.repaint();
+		case GameAbstractModel.BOARD :
+			boardScreen.repaint();
+			scoreScreen.repaint();
 			break;
-
-		case "setStartScreen" :
-			this.initStartScreen();
-			this.repaint();
+		case GameAbstractModel.WARMUP_OVER :
+			showWarmupOverMessage();
 			break;
-		case "setConfigPartyScreen" :
-			this.initConfigPartyScreen();
-			this.repaint();
+		case GameAbstractModel.WARMUP_PROBLEM :
+			showWarmupProblemMessage();
 			break;
-		case "setPartyScreen" :
-			this.initPartyScreen();
-			this.repaint();
+		case GameAbstractModel.YOUR_TURN :
+			showYourTurnMessage();
 			break;
-			
-		case "diplayPlayerTurn" :
-			this.diplayPlayerTurn( ((Game) arg0).getCurrentPlayer() );
-			this.repaint();
+		case GameAbstractModel.PARAMETERS :
+			setParametersScreen();
+			break;
+		case GameAbstractModel.WARMUP :
+			setGameScreens();
+			showWarmupBeginMessage();
+			break;
+		case GameAbstractModel.HUMAN_WIN :
+			showGameOverScreen(GameAbstractModel.HUMAN_WIN);
+			break;
+		case GameAbstractModel.COMPUTER_WIN :
+			showGameOverScreen(GameAbstractModel.COMPUTER_WIN);
+			break;
+		case GameAbstractModel.DRAW :
+			showGameOverScreen(GameAbstractModel.DRAW);
+			break;
+		case GameAbstractModel.EXIT :
+			exit();
+		case GameAbstractModel.REPLAY :
+			replay();
+			break;
+		case GameAbstractModel.LOAD_GAME :
+			loadGame();
 			break;
 		}	
+	}
+
+	/**
+	 * Displays a JOptionPane to alert the User that it is his turn
+	 */
+	private void showYourTurnMessage() {
+		this.setFocusable(true);
+		JOptionPane.showMessageDialog(this,
+				"À vous de jouer !",
+				"Changement de tour...",
+				JOptionPane.ERROR_MESSAGE);
+	}
+
+	/**
+	 * Displays a JOptionPane to alert the User that it is time for
+	 * him to move (or not) his fleet
+	 */
+	private void showWarmupBeginMessage() {
+		JOptionPane.showMessageDialog(this,
+				"Vous pouvez placer maintenant vos bateaux !\n" 
+						+"\tCliquez sur la bateau de votre choix,\n" 
+						+"puis faites glisser votre souris vers la position souhaitée.\n" 
+						+"Appuyez sur la touche r pour faire tourner le bateau\n"
+						+"Appuyer sur la touche entrée pour valider\n",
+				"Warmup !",
+				JOptionPane.INFORMATION_MESSAGE);
+	}
+	
+	/**
+	 * Displays a JOptionPane to alert the User that his fleets
+	 * has problems
+	 */
+	private void showWarmupProblemMessage() {
+		this.setFocusable(true);
+		JOptionPane.showMessageDialog(this,
+				"Vos bateaux sont mal placés.",
+				"Une erreur est survenue !",
+				JOptionPane.ERROR_MESSAGE);
+		boardScreen.setFocusable(true);
+	}
+
+	/**
+	 * Displays a JOptionPane to alert the User that the Game will soon
+	 * start
+	 */
+	private void showWarmupOverMessage() {
+		this.setFocusable(true);
+		JOptionPane.showMessageDialog(this,
+				"Vos bateaux sont bien placés,\n"
+						+ "le jeu peut donc commencer.",
+						"Warmup terminé !",
+						JOptionPane.PLAIN_MESSAGE);
+		boardScreen.setFocusable(true);
+	}
+
+	/**
+	 * Displays a JOptionPane to alert the User that the Game is over
+	 * (depending of the state) it will say the winner or it will advert that
+	 * there is no ammunition available
+	 */
+	private void showGameOverScreen(String state) {
+		this.setFocusable(true);
+		StringBuilder message = new StringBuilder("");
+		String title = "PARTIE TERMINÉE";
+
+		switch(state) {
+		case GameAbstractModel.HUMAN_WIN :
+			message.append("Vous avez gagné !");
+			break;
+		case GameAbstractModel.COMPUTER_WIN :
+			message.append("Vous avez perdu !");
+			break;
+		case GameAbstractModel.DRAW :
+			message.append("Vous n'avez plus de munition !");
+			break;
+		}
+
+		message.append("\n");
+		message.append("Voulez-vous rejouer ?");
+
+		Object[] options = {"Rejouer", "Quitter"};
+
+		// Displays Pop-up
+		int replayOrNot = JOptionPane.showOptionDialog(null,
+				message.toString(),
+				title,
+				JOptionPane.YES_NO_OPTION,
+				JOptionPane.QUESTION_MESSAGE,
+				null,
+				options,
+				options[0]
+				);
+
+		// we checks the user's entry
+		if ( replayOrNot != JOptionPane.CLOSED_OPTION ) {
+			boolean replay;
+			if ( replayOrNot == JOptionPane.YES_OPTION ) {
+				replay = true;
+			} else {
+				replay = false;
+			}
+
+			// Asks model 
+			game.setExitOrReplay( replay );
+		}
+	}
+
+	/**
+	 * Displays a JOptionPane to alert the User that the window will close.
+	 */
+	private void exit() {
+		JOptionPane.showMessageDialog(this,
+				"À bientôt !",
+				"Fermeture",
+				JOptionPane.INFORMATION_MESSAGE);
+		try {
+			Thread.sleep(500);
+		} catch (InterruptedException e) {
+			System.err.println(e.getMessage());
+		}
+		System.exit(1);
+	}
+
+	/**
+	 * Replays
+	 */
+	private void replay() {	
+		/* we remove BoardScreen and Radar
+		then ask the ParametersScreen to be seen.
+		 */
+		setParametersScreen();
+	}
+
+	/**
+	 * Uses to load a Game from the startScreen or directly when the Game
+	 * has already started
+	 */
+	private void loadGame() {
+		/*
+		 * We assume that we load a Game from the
+		 * StartScreen OR from JMenu
+		 */
+		this.removeAll();
+
+		radarScreen = new RadarScreen(game, 
+				g_unit);
+		boardScreen = new BoardScreen(game, 
+				g_unit);
+
+		initGameScreens();
+
+		scoreScreen = new ScoreScreen(game, 
+				getPreferredSize(), 
+				g_unit);
+
+		add(scoreScreen);
+		add(boardScreen);
+		add( Box.createRigidArea( new Dimension(g_unit, 0) ) );
+		add(radarScreen);
+		revalidate();
+	}
+
+	/**
+	 * Computes BoardScreen's and RadarScreen's and ScoreScreen's sizes
+	 */
+	private Dimension computeSizes() {
+		Dimension dBoard = boardScreen.getPreferredSize();
+		Dimension dRadar = radarScreen.getPreferredSize();
+		Dimension result = new Dimension(0,0);
+		result.setSize((dBoard.getWidth() + dRadar.getWidth() ) + g_unit,
+				dBoard.getHeight() + 2 * g_unit + getJMenuBar().getHeight() );
+
+		return result;
+	}
+
+	@Override
+	public void removeAll() {
+		if (starterScreen != null) {
+			remove(starterScreen);
+		}
+		
+		if (parametersScreen != null) {
+			remove(parametersScreen);
+		}
+		
+		if (boardScreen != null) {
+			remove(boardScreen);
+		}
+		
+		if (radarScreen != null) {
+			remove(radarScreen);
+		}
+		
+		if (scoreScreen != null) {
+			remove(scoreScreen);
+		}
+		validate();
 	}
 }

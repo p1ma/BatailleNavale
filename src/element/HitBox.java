@@ -1,32 +1,42 @@
+/**
+ * 
+ */
 package element;
 
-import java.awt.Image;
 import java.awt.Point;
 
-import graphics.TextureFactory;
+import game.GameIModel;
 
 /**
  * @author JUNGES Pierre-Marie - M1 Informatique 2016/2017
  *
  * Mar 13, 2017
  */
-public class HitBox extends Box {
+public class HitBox extends Box{
 
 	/**
-	 * Constructor
-	 * @param p : Point, position of HitBox
+	 * 
+	 * Constructs a HitBox with the given parameter(s)
+	 * @param p the Position
+	 * @param model the GameIModel (used to load the image)
 	 */
-	public HitBox(Point p) {
+	public HitBox(Point p, GameIModel model) {
 		super(p);
+		background = model.getGameTouchedImage();
 	}
-	
-	
-	
-	
-	
+
+	/**
+	 * Indicates if the this GameElement is useful
+	 * to the Strategy, like
+	 * a hitBox is useful (it let us know that there is a
+	 * Ship at the position)
+	 * @return true if the GameElement can be used to the IA
+	 */
 	@Override
-	public Image getImage() {
-		return TextureFactory.getInstance().getHitBoxImage();
+	public boolean isStrategicallyUseful() {
+		return true;
 	}
+	
+	
 
 }

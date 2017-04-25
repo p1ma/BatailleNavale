@@ -1,151 +1,128 @@
+/**
+ * 
+ */
 package player.strategy;
 
 import java.awt.Point;
-import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 import java.util.Random;
-import java.util.Map.Entry;
 
-import element.Box;
-import element.HitBox;
-import game.Configuration;
+import element.GameElement;
+import game.GameIModel;
 
 /**
  * @author JUNGES Pierre-Marie - M1 Informatique 2016/2017
  *
  * Mar 13, 2017
  */
-public class CrossStrategy implements Strategy {
+public class CrossStrategy implements IStrategy {
 
+	/**
+	 * Random 
+	 */
+	private final Random random = new Random();
+	
+	/**
+	 * Executes a CrossStrategy (MEDIUM level)
+	 * the shot will looks like X on the Screen
+	 * @param radar the Map where the IStrategy will search its infos
+	 * @param game the GameIModel
+	 * @return a best Point available
+	 */
 	@Override
-	public Point execute(Map<Point, Box> radar) {
-		List<Point> l;
-
-		for (Entry<Point, Box> entry : radar.entrySet()) {
-			Point p = entry.getKey();
-			Box b = entry.getValue();
-
-			if (b instanceof HitBox) { 
-				// The box is hit and there is a ship
-				if ((l = this.getListNotFreeCases(radar, p)).size() != 4) {
-					// There is at least one box available around the affected box
-					if ((l = this.getListCasesHit(radar, l)).size() != 0) {
-						// There is a piece of ship around p
-						// We shoot opposite this box with compared to p and if it is free
-						for (Point point : l) {
-							int newX = (int) (p.getX() + p.getX() - point.getX());
-							int newY = (int) (p.getY() + p.getY() - point.getY());
-							Point point2;
-							if (!radar.containsKey(point2 = new Point(newX, newY))) {
-								// We can shoot here
-								return point2;
-							}
-						}
-					} else {
-						// A random box is drawn around the affected ship
-						l = this.getListFreeCases(radar, p);
-						Random random = new Random();
-						return l.get(random.nextInt(l.size()));
-					}
+	public Point execute(Map<Point, GameElement> radar, GameIModel game) {
+		if (radar.size() == 0) {
+			// Random shot
+			int w = game.getWidth();
+			int h = game.getHeight();
+			
+			Point pos = null;
+			boolean exist = true;
+			
+			while (exist) {
+				pos = new Point(random.nextInt(w), 
+						random.nextInt(h));
+				if ( !radar.containsKey(pos) ) {
+					exist = false;
 				}
 			}
+			return pos;
+		} else {
+			List<GameElement> previousShot = new LinkedList<GameElement>(radar.values());
+			GameElement possibility = null;
+			Point res = null;
+			
+			for(int i = 0 ; i < previousShot.size() ; i++) {
+				possibility = previousShot.get( i );
+				List<Point> possible = hasEmptyPointNextToHim(radar, possibility, game);
+				if (possible.size() != 0) {
+					res = possible.get( random.nextInt(possible.size()) );
+					break;
+				}
+			}
+			return res;
 		}
-
-		// Otherwise we shoot in cross on the map
-		return this.getCrossCase(radar);
 	}
 	
 	/**
-	 * Returns a list of points being possible to target, all around p
-	 * @param radar : Map<Point, Box>
-	 * @param p : Point
-	 * @return List<Point>
+	 * Checks if around the GameElement ge there is
+	 * some Position available for a future shot
+	 * @param radar a Map used to verify if a Point exists or not
+	 * @param ge a GameElement
+	 * @param model the GameIModel
+	 * @return a list of possible Points availables
 	 */
-	private List<Point> getListFreeCases(Map<Point, Box> radar, Point point) {
-		List<Point> res = new ArrayList<Point>();
-		Point p;
-
-		if (!radar.containsKey(p = new Point((int)point.getX()-1, (int)point.getY()))) {
-			res.add(p);
-		}
-		if (!radar.containsKey(p = new Point((int)point.getX(), (int)point.getY()-1))) {
-			res.add(p);
-		}
-		if (!radar.containsKey(p = new Point((int)point.getX()+1, (int)point.getY()))) {
-			res.add(p);
-		}
-		if (!radar.containsKey(p = new Point((int)point.getX(), (int)point.getY()+1))) {
-			res.add(p);
-		}
-
-		return res;
-	}
-
-	/**
-	 * Returns a non-touch point on the map to finally shoot in cross
-	 * @return Point
-	 */
-	private Point getCrossCase(Map<Point, Box> radar) {
-		for (int x = 0; x < Configuration.WIDTH; x++) {
-			for (int y = 0; y < Configuration.HEIGHT; y++) {
-				if ((x%2 == 0 && y%2 == 0) || (x%2 == 1 && y%2 == 1)) {
-					Point p = new Point(x, y);
-
-					if (!radar.containsKey(p)) { 
-						return p;
-					}
-				}
+	private List<Point> hasEmptyPointNextToHim(Map<Point, GameElement> radar, GameElement ge, GameIModel model) {
+		Point p = new Point(ge.getPosition());
+		
+		/* 4 possibilities :
+		 *  corner up left, 
+		 *  corner up right,
+		 *  corner bottom left,
+		 *  corner bottom right
+		 */
+		Point[] possibilities = new Point[4];
+		possibilities[0] = new Point((int)p.getX() - 1,
+				(int)p.getY() - 1);
+		possibilities[1] = new Point((int)p.getX() + 1,
+				(int)p.getY() - 1);
+		possibilities[2] = new Point((int)p.getX() - 1,
+				(int)p.getY() + 1);
+		possibilities[3] = new Point((int)p.getX() + 1,
+				(int)p.getY() + 1);
+		
+		List<Point> res = new LinkedList<Point>();
+		for(Point point : possibilities) {
+			if ( isValid(point, model) &&
+					!radar.containsKey(point) ) {
+				res.add(point);
 			}
 		}
-
-		return null;
-	}
-
-	/**
-	 * Returns a Point list corresponding to the coordinates of the 
-	 * boxes where a shoot has touched a boat around p
-	 * @param radar : Map<Point, Box>
-	 * @param l : List<Point>
-	 * @return : List<Point>
-	 */
-	private List<Point> getListCasesHit(Map<Point, Box> radar, List<Point> l) {
-		List<Point> res = new ArrayList<Point>();
-
-		for (Point p : l) {
-			if (radar.get(p) instanceof HitBox) {
-				res.add(p);
-			}
-		}
-
 		return res;
 	}
-
+	
 	/**
-	 * Returns a list of points corresponding to the coordinates of a 
-	 * box that has already been touched around p
-	 * @param radar : Map<Point, Box>
-	 * @param p : Point
-	 * @return List<Point>
+	 * Checks if the Point p is correct according
+	 * to the GameIModel game
+	 * @param p the Point to check
+	 * @param game the GameIModel
+	 * @return true if the Point is correct.
 	 */
-	private List<Point> getListNotFreeCases(Map<Point, Box> radar, Point point) {
-		List<Point> res = new ArrayList<Point>();
-		Point p;
-
-		if (radar.containsKey(p = new Point((int)point.getX()-1, (int)point.getY()))) {
-			res.add(p);
+	private boolean isValid(Point p, GameIModel game) {
+		if ( p.getX() < 0 ) {
+			return false;
 		}
-		if (radar.containsKey(p = new Point((int)point.getX(), (int)point.getY()-1))) {
-			res.add(p);
+		if ( p.getY() < 0 ) {
+			return false;
 		}
-		if (radar.containsKey(p = new Point((int)point.getX()+1, (int)point.getY()))) {
-			res.add(p);
+		if ( p .getX() >= game.getWidth() ) {
+			return false;
 		}
-		if (radar.containsKey(p = new Point((int)point.getX(), (int)point.getY()+1))) {
-			res.add(p);
+		if ( p.getY() >= game.getHeight() ) {
+			return false;
 		}
-
-		return res;
+		return true;
 	}
-
 }

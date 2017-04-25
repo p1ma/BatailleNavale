@@ -1,0 +1,102 @@
+<!-- Version 1.0 du 20/10/2005 16h-->
+<!DOCTYPE Bibliographie SYSTEM "Game.dtd" >
+<BatailleNavale>
+	<!-- Exprimé en pourcentage -->
+	<Shots>
+		<MaxShot>75</MaxShot>
+		<MaxShot>50</MaxShot>
+		<MaxShot>25</MaxShot>
+	</Shots>
+	<Levels>
+	<!-- De la plus facile à la plus difficile -->
+		<Level>FACILE</Level>
+		<Level>NORMAL</Level>
+		<Level>DIFFICILE</Level>
+	</Levels>
+	<Dimensions>
+		<Dimension>10</Dimension>
+		<Dimension>15</Dimension>
+		<Dimension>20</Dimension>
+	</Dimensions>
+	<StartImage>textures/backgroundStartScreen.jpg</StartImage>
+	<TitleImage>textures/title.png</TitleImage>
+	<Eras>
+		<Era>
+			<Name>Moderne</Name>
+			<Background>textures/Moderne/ocean.jpg</Background>
+			<MissedImage>textures/Moderne/missedBox.png</MissedImage>
+			<TouchedImage>textures/Moderne/hitBox.png</TouchedImage>
+			<Ships>
+				<Ship>
+					<ShipName>Bateau 1</ShipName>
+					<Width>5</Width>
+					<Height>1</Height>
+					<Image>textures/Moderne/ship.png</Image>
+				</Ship>
+				<Ship>
+					<ShipName>Bateau 2</ShipName>
+					<Width>4</Width>
+					<Height>1</Height>
+					<Image>textures/Moderne/war.png</Image>
+				</Ship>
+				<Ship>
+					<ShipName>Bateau 3</ShipName>
+					<Width>5</Width>
+					<Height>1</Height>
+					<Image>textures/Moderne/ship.png</Image>
+				</Ship>
+				<Ship>
+					<ShipName>Bateau 4</ShipName>
+					<Width>3</Width>
+					<Height>1</Height>
+					<Image>textures/Moderne/war.png</Image>
+				</Ship>
+				<Ship>
+					<ShipName>Bateau 5</ShipName>
+					<Width>2</Width>
+					<Height>1</Height>
+					<Image>textures/Moderne/ship.png</Image>
+				</Ship>
+			</Ships>
+		</Era>
+		<Era>
+			<Name>XXI</Name>
+			<Background>textures/Moderne/ocean.jpg</Background>
+			<MissedImage>textures/Moderne/missedBox.png</MissedImage>
+			<TouchedImage>textures/Moderne/hitBox.png</TouchedImage>
+			<Ships>
+				<Ship>
+					<ShipName>Bateau 1</ShipName>
+					<Width>5</Width>
+					<Height>1</Height>
+					<Image>textures/Moderne/ship.png</Image>
+				</Ship>
+				<Ship>
+					<ShipName>Bateau 2</ShipName>
+					<Width>4</Width>
+					<Height>1</Height>
+					<Image>textures/Moderne/war.png</Image>
+				</Ship>
+				<Ship>
+					<ShipName>Bateau 3</ShipName>
+					<Width>5</Width>
+					<Height>1</Height>
+					<Image>textures/Moderne/ship.png</Image>
+				</Ship>
+				<Ship>
+					<ShipName>Bateau 4</ShipName>
+					<Width>3</Width>
+					<Height>1</Height>
+					<Image>textures/Moderne/war.png</Image>
+				</Ship>
+				<Ship>
+					<ShipName>Bateau 5</ShipName>
+					<Width>2</Width>
+					<Height>1</Height>
+					<Image>textures/Moderne/ship.png</Image>
+				</Ship>
+			</Ships>
+		</Era>
+	</Eras>
+
+</BatailleNavale>
