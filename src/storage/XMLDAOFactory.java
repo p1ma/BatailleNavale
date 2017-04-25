@@ -3,13 +3,12 @@
  */
 package storage;
 
-import game.GameIModel;
 import storage.config.BattleShipConfigXML;
 import storage.config.IConfigDAO;
-import storage.game.GameDAO;
 import storage.game.BattleShipGameXML;
-import storage.image.ImageDAO;
+import storage.game.GameDAO;
 import storage.image.BattleShipImageXML;
+import storage.image.ImageDAO;
 import storage.user.IUserDAO;
 import storage.user.UserXMLDAO;
 

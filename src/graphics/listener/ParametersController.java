@@ -133,9 +133,9 @@ public class ParametersController implements ActionListener {
 		 *	Sets the config 
 		 */
 		config.setDifficulty(levelsArray[selectedIndexLevel]);
-		config.setLimit(ammosArray[selectedIndexAmmo]);
 		config.setEra(erasArray[selectedIndexEra]);
 		config.setDimension(dimensionsArray[selectedIndexDimension]);
+		config.setLimit(ammosArray[selectedIndexAmmo]);
 		
 		/*
 		 * Affects the configuration to the Game

@@ -76,7 +76,7 @@ public class BattleShipConfiguration implements IConfiguration{
 		era = er;
 		dimension = dim;
 		difficulty = level;
-		ammunition = (int) (( dimension.getHeight() * dimension.getWidth() * ammu ) / 100);
+		ammunition = ammu;
 	}
 
 	/**
@@ -208,6 +208,10 @@ public class BattleShipConfiguration implements IConfiguration{
 	 */
 	@Override
 	public void setLimit(int limit) {
-		ammunition = limit;
+		if (dimension != null) {
+			ammunition = (int) (( dimension.getHeight() * dimension.getWidth() * limit ) / 100);
+		} else {
+			ammunition = limit;
+		}
 	}
 }
