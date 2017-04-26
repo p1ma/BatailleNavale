@@ -156,7 +156,7 @@ public class ScoreScreen extends JPanel {
 				x, 
 				y);
 
-		x += ((sentence.length() * font.getSize()) / 2);
+		x += ((sentence.length() * font.getSize()) / 2) + dLabel.width;
 
 		g2d.drawImage(missedImage, 
 				x, 

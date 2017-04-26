@@ -6,10 +6,11 @@ package graphics.menu;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+import javax.swing.ButtonGroup;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
-import javax.swing.KeyStroke;
+import javax.swing.JRadioButtonMenuItem;
 
 import game.GameIModel;
 import graphics.listener.LoadController;
@@ -138,13 +139,23 @@ public class GameMenuBar extends JMenuBar {
 		
 		// create sub-difficulties 
 		JMenuItem level = null;
+		
+		// to regroup all the JMenuItem level
+		ButtonGroup bg = new ButtonGroup();
+		String difficulty = game.getDifficulty();
 		for(int i = 0 ; i < levels.length ; i++) {
-			level = new JMenuItem(levels[i]);
+			level = new JRadioButtonMenuItem(levels[i]);
 			level.addActionListener(new LevelMenuListener(game, levels[i]));
 			difficulties.add(level);
+			bg.add(level);
+			
+			// we select the correct level
+			if (difficulty.equals(levels[i])) {
+				level.setSelected(true);
+			}
 		}
-		// creates Listener on difficulties
 		
+		// creates Listener on difficulties
 		options.add(difficulties);
 		
 		positions = new JMenu("Placement");
