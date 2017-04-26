@@ -9,7 +9,8 @@ Plus, see users.dtd to see file's structure (useful)
 <Users>
 	<User>
 		<pseudo>Amiral Pierre</pseudo>
-		<victory>100</victory>
-		<defeat>0</defeat>
+	</User>
+	<User>
+		<pseudo>Amiral Bob</pseudo>
 	</User>
 </Users>

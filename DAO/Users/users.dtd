@@ -1,7 +1,5 @@
 <!ELEMENT Users (User)*>
 
-<!ELEMENT User (pseudo, victory, defeat)>
+<!ELEMENT User (pseudo)>
 
 <!ELEMENT pseudo (#PCDATA)>
-<!ELEMENT victory (#PCDATA)>
-<!ELEMENT defeat (#PCDATA)>

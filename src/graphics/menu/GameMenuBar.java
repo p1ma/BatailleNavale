@@ -9,6 +9,7 @@ import java.awt.event.ActionListener;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
+import javax.swing.KeyStroke;
 
 import game.GameIModel;
 import graphics.listener.LoadController;
@@ -107,7 +108,7 @@ public class GameMenuBar extends JMenuBar {
 		
 		// Adds newG's listener
 		newG.addActionListener(new StartController(model, model.getUser()));
-		
+
 		// Adds exit's listener
 		exit.addActionListener(new ActionListener() {
 			@Override
@@ -142,7 +143,6 @@ public class GameMenuBar extends JMenuBar {
 			level.addActionListener(new LevelMenuListener(game, levels[i]));
 			difficulties.add(level);
 		}
-		
 		// creates Listener on difficulties
 		
 		options.add(difficulties);

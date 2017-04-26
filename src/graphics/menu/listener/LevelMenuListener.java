@@ -28,7 +28,7 @@ public class LevelMenuListener implements ActionListener {
 	 * the level, so the String representation,
 	 * of the JMenuItem attached to this Listener
 	 */
-	private final String level;
+	private final String level;	
 	
 	/**
 	 * 
@@ -40,7 +40,7 @@ public class LevelMenuListener implements ActionListener {
 		model = game;
 		level = lvl;
 	}
-	
+		
 	/**
 	 * If clicked then the model will change its
 	 * difficulty to the value linked to the attribute level
@@ -60,5 +60,4 @@ public class LevelMenuListener implements ActionListener {
 		// updates all
 		computer.setStrategy(strat);
 	}
-
 }
