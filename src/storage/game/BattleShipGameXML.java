@@ -492,7 +492,7 @@ public class BattleShipGameXML implements GameDAO{
 	private String formatName(GameIModel game) {
 		String nom = game.getGameName().replaceAll("\\s+","-");
 		String pseudo = game.getUser().getUserName().replaceAll("\\s+","-");
-		String date = game.getDate().replaceAll("\\s+","_");
+		String date = game.getDate().replaceAll("\\s+","_").replaceAll(":", "-");
 		return nom + "_" + pseudo + "_" + date;
 	}
 
