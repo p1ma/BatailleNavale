@@ -8,6 +8,7 @@ import java.awt.event.ActionListener;
 import java.io.File;
 
 import javax.swing.JComboBox;
+import javax.swing.JDialog;
 import javax.swing.JOptionPane;
 
 import game.GameIModel;
@@ -80,7 +81,7 @@ public class LoadController implements ActionListener {
 			int i = 0;
 			for(File file : files) {
 				String nameFile = file.getName();
-				filesList[i]= nameFile;
+				filesList[i]= nameFile.replaceAll("[-|_]+", " ");
 				i++;
 			}
 			String fileName = (String)JOptionPane.showInputDialog(
@@ -93,6 +94,15 @@ public class LoadController implements ActionListener {
 					filesList[0]);
 
 			if ((fileName != null) && (fileName.length() > 0)) {
+				int indexOf = 0;
+				for(i = 0 ; i < filesList.length ; i++) {
+					if(fileName.equals(filesList[i])) {
+						indexOf = i;
+						break;
+					}
+				}
+				fileName = files[indexOf].getName();
+				
 				// we load the Game
 				XMLDAOFactory.getInstance().getGameDAO().load(game, fileName);
 			}
