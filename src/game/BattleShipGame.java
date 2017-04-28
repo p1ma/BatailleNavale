@@ -101,7 +101,7 @@ public class BattleShipGame extends GameAbstractModel {
 				//notify(YOUR_TURN);
 				box = computer.touchedAt(pos);
 				human.updateRadar(pos, box);
-
+				
 				notify(RADAR);
 			} else {
 				// Computer's turn

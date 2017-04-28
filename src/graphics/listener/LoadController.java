@@ -8,7 +8,6 @@ import java.awt.event.ActionListener;
 import java.io.File;
 
 import javax.swing.JComboBox;
-import javax.swing.JDialog;
 import javax.swing.JOptionPane;
 
 import game.GameIModel;

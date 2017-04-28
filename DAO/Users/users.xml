@@ -8,9 +8,6 @@ Plus, see users.dtd to see file's structure (useful)
 <!DOCTYPE Bibliographie SYSTEM "users.dtd" >
 <Users>
 	<User>
-		<pseudo>Amiral Pierre</pseudo>
-	</User>
-	<User>
-		<pseudo>Amiral Bob</pseudo>
+		<pseudo>Capitaine Obvious</pseudo>
 	</User>
 </Users>
