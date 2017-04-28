@@ -80,8 +80,6 @@ public class LoadController implements ActionListener {
 			int i = 0;
 			for(File file : files) {
 				String nameFile = file.getName();
-				nameFile = nameFile.replaceAll("_", " ");
-				nameFile = nameFile.replaceAll("-", " ");
 				filesList[i]= nameFile;
 				i++;
 			}
