@@ -7,10 +7,6 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 import game.GameIModel;
-import game.parameter.IConfiguration;
-import player.Computer;
-import player.strategy.IStrategy;
-import player.strategy.StrategyFactory;
 
 /**
  * @author JUNGES Pierre-Marie - M1 Informatique 2016/2017
@@ -47,17 +43,7 @@ public class LevelMenuListener implements ActionListener {
 	 */
 	@Override
 	public void actionPerformed(ActionEvent arg0) {
-		// updates config
-		IConfiguration config = model.getConfig();
-		config.setDifficulty(level);
-		
-		// gets Computer
-		Computer computer = model.getComputer();
-		
-		// get Strategy corresponding to the selected level
-		IStrategy strat = StrategyFactory.getInstance().getStrategy(level);
-		
-		// updates all
-		computer.setStrategy(strat);
+		// changes difficulty
+		model.setDifficulty(level);
 	}
 }

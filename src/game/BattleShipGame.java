@@ -488,4 +488,22 @@ public class BattleShipGame extends GameAbstractModel {
 		int shots = human.getHitShot() + human.getMissedShot();
 		return (configuration.getLimit() - shots);
 	}
+
+
+	/**
+	 * Sets the game difficulty
+	 * @param strat the name of the wished IStrategy
+	 */
+	@Override
+	public void setDifficulty(String strat) {
+		// updates config
+		IConfiguration config = getConfig();
+		config.setDifficulty(strat);
+		
+		// get Strategy corresponding to the selected level
+		IStrategy strategy = StrategyFactory.getInstance().getStrategy(strat);
+		
+		// updates all with a copy constructor
+		computer = new Computer(computer, this, strategy);
+	}
 }

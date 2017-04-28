@@ -43,6 +43,19 @@ public class Computer extends BattleShipPlayer {
 	}
 
 	/**
+	 * Constructs a Computer with the given parameter(s)
+	 * @param computer the IPlayer to copy
+	 * @param strategy the wished IStrategy
+	 */
+	public Computer(IPlayer computer, GameIModel g, IStrategy strat) {
+		super(computer.getName(), g);
+		
+		strategy = strat;
+		putBoardElements(computer.getBoardElements());
+		setRadarElements(computer.getRadarElements());
+	}
+
+	/**
 	 * Returns the GameIModel
 	 * @return the GameIModel
 	 */

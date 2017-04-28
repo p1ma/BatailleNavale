@@ -11,7 +11,6 @@ import java.util.List;
 import element.GameElement;
 import game.parameter.Era;
 import game.parameter.IConfiguration;
-import player.Computer;
 import player.IPlayer;
 import user.IUser;
 
@@ -152,10 +151,10 @@ public interface GameIModel {
 	public IPlayer getHuman();
 	
 	/**
-	 * Returns the Computer computer
+	 * Returns the IPlayer computer
 	 * @return the Computer
 	 */
-	public Computer getComputer();
+	public IPlayer getComputer();
 	
 	/**
 	 * Returns the IUser who owns the current
@@ -369,4 +368,10 @@ public interface GameIModel {
 	 * @param titlePath the path to the Image
 	 */
 	public void setStartImage(String startPath);
+
+	/**
+	 * Sets the game difficulty
+	 * @param strat the name of the wished IStrategy
+	 */
+	public void setDifficulty(String strat);
 }

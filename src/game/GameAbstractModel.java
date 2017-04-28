@@ -15,7 +15,6 @@ import javax.imageio.ImageIO;
 
 import game.parameter.Era;
 import game.parameter.IConfiguration;
-import player.Computer;
 import player.Human;
 import player.IPlayer;
 import user.IUser;
@@ -72,7 +71,7 @@ public abstract class GameAbstractModel extends Observable implements GameIModel
 	/**
 	 * A Game's Computer player
 	 */
-	protected Computer computer;
+	protected IPlayer computer;
 	
 	/**
 	 * State attribute
@@ -147,7 +146,7 @@ public abstract class GameAbstractModel extends Observable implements GameIModel
 	 * @return the Computer
 	 */
 	@Override
-	public Computer getComputer() {
+	public IPlayer getComputer() {
 		return computer;
 	}
 	
