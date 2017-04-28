@@ -302,7 +302,7 @@ public class GameScreen extends JFrame implements Observer {
 						+"puis faites glisser votre souris vers la position souhaitée.\n" 
 						+"Appuyez sur la touche r pour faire tourner le bateau\n"
 						+"Appuyer sur la touche entrée pour valider\n",
-				"Warmup !",
+				"Echauffement !",
 				JOptionPane.INFORMATION_MESSAGE);
 	}
 	
@@ -328,7 +328,7 @@ public class GameScreen extends JFrame implements Observer {
 		JOptionPane.showMessageDialog(this,
 				"Vos bateaux sont bien placés,\n"
 						+ "le jeu peut donc commencer.",
-						"Warmup terminé !",
+						"Échauffement terminé !",
 						JOptionPane.PLAIN_MESSAGE);
 		boardScreen.setFocusable(true);
 	}

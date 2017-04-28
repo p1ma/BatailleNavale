@@ -461,8 +461,9 @@ public class BattleShipGameXML implements GameDAO{
 	 * Returns all the games of the IUser user
 	 */
 	public File[] listGame(GameIModel game, IUser user) {
-		final String gameName = game.getGameName();
-		final String userName = user.getUserName();
+		final String gameName = game.getGameName().replaceAll("\\s+","-");
+		
+		final String userName = user.getUserName().replaceAll("\\s+","-");
 		
 		File dir = new File(path);
 		
@@ -489,7 +490,10 @@ public class BattleShipGameXML implements GameDAO{
 	}
 
 	private String formatName(GameIModel game) {
-		return game.getGameName() + " " + game.getUser() + " " + game.getDate();
+		String nom = game.getGameName().replaceAll("\\s+","-");
+		String pseudo = game.getUser().getUserName().replaceAll("\\s+","-");
+		String date = game.getDate().replaceAll("\\s+","_");
+		return nom + "_" + pseudo + "_" + date;
 	}
 
 }

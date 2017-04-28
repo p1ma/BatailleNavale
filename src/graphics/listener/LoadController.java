@@ -79,6 +79,7 @@ public class LoadController implements ActionListener {
 			String[] filesList = new String[files.length];
 			int i = 0;
 			for(File file : files) {
+				String nameFile = file.getName();
 				filesList[i]= file.getName();
 				i++;
 			}
