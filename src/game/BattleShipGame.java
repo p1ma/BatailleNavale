@@ -388,13 +388,11 @@ public class BattleShipGame extends GameAbstractModel {
 	 */
 	@Override
 	public IPlayer getWinner() {
-		if ( hasBegun() ) {
-			if (!computer.isAlive() ) {
-				return human;
-			} 
+		if (!computer.isAlive() ) {
+			return human;
+		} 
 		if (!human.isAlive()){
 			return computer;
-		}
 		}
 		return null;
 	}

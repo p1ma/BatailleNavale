@@ -3,16 +3,24 @@
  */
 package game;
 
+import static org.hamcrest.CoreMatchers.instanceOf;
+import static org.junit.Assert.assertThat;
 import static org.junit.Assert.assertTrue;
 
+import java.util.LinkedList;
+
 import org.junit.Before;
+import org.junit.BeforeClass;
 import org.junit.Test;
 
+import element.Ship;
 import game.parameter.BattleShipConfiguration;
 import game.parameter.IConfiguration;
 import player.Computer;
 import player.Human;
 import player.IPlayer;
+import storage.XMLDAOFactory;
+import storage.config.IConfigDAO;
 
 /**
  * @author JUNGES Pierre-Marie - M1 Informatique 2016/2017
@@ -23,6 +31,17 @@ public class BattleShipGameTest {
 
 	private GameIModel game;
 	private IConfiguration ref;
+	private static IConfiguration config;
+
+	@BeforeClass
+	public static void setUpClass() throws Exception {
+		IConfigDAO cfg = XMLDAOFactory.getInstance().getConfigDAO();
+		config = new BattleShipConfiguration(
+				cfg.getAllDimensions()[0],
+				cfg.getAllEras()[0],
+				cfg.getAllLevels()[0],
+				cfg.getAllAmmunitons()[0]);
+	}
 	
 	/**
 	 * @throws java.lang.Exception
@@ -46,9 +65,21 @@ public class BattleShipGameTest {
 	}
 	
 	@Test
-	public void getWinner() {
+	public void getWinnerHuman() {
 		IPlayer winner = game.getWinner();
-		assertTrue(winner == null);
+		// per default the Human is the winner
+		assertThat(winner, instanceOf(Human.class) );
+	}
+	
+	@Test
+	public void getWinnerComputer() {
+		game.setGameConfiguration(config);
+		IPlayer human = game.getHuman();
+		human.setBoardElements(new LinkedList<Ship>()); // empty list
+		
+		IPlayer winner = game.getWinner();
+		// since the Human has no fleet the winner should be the Computer
+		assertThat(winner, instanceOf(Computer.class) );
 	}
 
 	@Test
