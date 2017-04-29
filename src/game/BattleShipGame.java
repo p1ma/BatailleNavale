@@ -101,7 +101,7 @@ public class BattleShipGame extends GameAbstractModel {
 				//notify(YOUR_TURN);
 				box = computer.touchedAt(pos);
 				human.updateRadar(pos, box);
-				
+
 				notify(RADAR);
 			} else {
 				// Computer's turn
@@ -219,7 +219,7 @@ public class BattleShipGame extends GameAbstractModel {
 		}
 		human.setHitShot(wS);
 		human.setMissedShot(oRadar.size() - wS);
-		
+
 		state = State.PLAYING;	
 		notify(LOAD_GAME);
 	}
@@ -388,11 +388,13 @@ public class BattleShipGame extends GameAbstractModel {
 	 */
 	@Override
 	public IPlayer getWinner() {
-		if (!computer.isAlive() ) {
-			return human;
-		} 
+		if ( hasBegun() ) {
+			if (!computer.isAlive() ) {
+				return human;
+			} 
 		if (!human.isAlive()){
 			return computer;
+		}
 		}
 		return null;
 	}
@@ -499,10 +501,10 @@ public class BattleShipGame extends GameAbstractModel {
 		// updates config
 		IConfiguration config = getConfig();
 		config.setDifficulty(strat);
-		
+
 		// get Strategy corresponding to the selected level
 		IStrategy strategy = StrategyFactory.getInstance().getStrategy(strat);
-		
+
 		// updates all with a copy constructor
 		computer = new Computer(computer, this, strategy);
 	}

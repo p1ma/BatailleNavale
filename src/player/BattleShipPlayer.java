@@ -58,7 +58,7 @@ public abstract class BattleShipPlayer implements IPlayer{
 	/**
 	 * 
 	 * Constructs a BattleShipPlayer with the given parameter(s)
-	 * @param id the IPlayer's name
+	 * @param id tHithe IPlayer's name
 	 * @param model the GameIModel associate
 	 */
 	public BattleShipPlayer(String id, GameIModel model) {

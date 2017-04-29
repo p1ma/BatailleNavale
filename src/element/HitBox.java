@@ -26,6 +26,15 @@ public class HitBox extends Box{
 	}
 
 	/**
+	 * Constructor used for JUnit tests
+	 */
+	public HitBox(Point p) {
+		super(p);
+		
+		background = null;
+	}
+	
+	/**
 	 * Indicates if the this GameElement is useful
 	 * to the Strategy, like
 	 * a hitBox is useful (it let us know that there is a
