@@ -29,7 +29,7 @@ public class CrossStrategy implements IStrategy {
 	 * the shot will looks like X on the Screen
 	 * @param radar the Map where the IStrategy will search its infos
 	 * @param game the GameIModel
-	 * @return a best Point available
+	 * @return the best Point available
 	 */
 	@Override
 	public Point execute(Map<Point, GameElement> radar, GameIModel game) {
@@ -56,25 +56,43 @@ public class CrossStrategy implements IStrategy {
 			
 			for(int i = 0 ; i < previousShot.size() ; i++) {
 				possibility = previousShot.get( i );
-				List<Point> possible = hasEmptyPointNextToHim(radar, possibility, game);
+				List<Point> possible = hasEmptyCrossPointNextToHim(radar, possibility, game);
 				if (possible.size() != 0) {
 					res = possible.get( random.nextInt(possible.size()) );
 					break;
 				}
 			}
+			
+			/*
+			 * If res is null (possible), we loop again but we choose Point Up, Down, Left, Right
+			 * not corners anymore. 
+			 */
+			if (res == null) {
+				for(int i = 0 ; i < previousShot.size() ; i++) {
+					possibility = previousShot.get( i );
+					List<Point> possible = hasEmptyPointNextToHim(radar, possibility, game);
+					if (possible.size() != 0) {
+						res = possible.get( random.nextInt(possible.size()) );
+						break;
+					}
+				}
+			}
+			
 			return res;
 		}
 	}
 	
 	/**
 	 * Checks if around the GameElement ge there is
-	 * some Position available for a future shot
+	 * some Position available for a future shot.
+	 * Around the GameElement ge means corner top left, corner top right,
+	 * corner bottom left, corner bottom right.
 	 * @param radar a Map used to verify if a Point exists or not
 	 * @param ge a GameElement
 	 * @param model the GameIModel
 	 * @return a list of possible Points availables
 	 */
-	private List<Point> hasEmptyPointNextToHim(Map<Point, GameElement> radar, GameElement ge, GameIModel model) {
+	private List<Point> hasEmptyCrossPointNextToHim(Map<Point, GameElement> radar, GameElement ge, GameIModel model) {
 		Point p = new Point(ge.getPosition());
 		
 		/* 4 possibilities :
@@ -91,6 +109,45 @@ public class CrossStrategy implements IStrategy {
 		possibilities[2] = new Point((int)p.getX() - 1,
 				(int)p.getY() + 1);
 		possibilities[3] = new Point((int)p.getX() + 1,
+				(int)p.getY() + 1);
+		
+		List<Point> res = new LinkedList<Point>();
+		for(Point point : possibilities) {
+			if ( isValid(point, model) &&
+					!radar.containsKey(point) ) {
+				res.add(point);
+			}
+		}
+		return res;
+	}
+	
+	/**
+	 * Checks if around the GameElement ge there is
+	 * some Position available for a future shot
+	 * Around the GameElement ge means top left, top right,
+	 * bottom left, bottom right.
+	 * @param radar a Map used to verify if a Point exists or not
+	 * @param ge a GameElement
+	 * @param model the GameIModel
+	 * @return a list of possible Points availables
+	 */
+	private List<Point> hasEmptyPointNextToHim(Map<Point, GameElement> radar, GameElement ge, GameIModel model) {
+		Point p = new Point(ge.getPosition());
+		
+		/* 4 possibilities :
+		 *  corner up left, 
+		 *  corner up right,
+		 *  corner bottom left,
+		 *  corner bottom right
+		 */
+		Point[] possibilities = new Point[4];
+		possibilities[0] = new Point((int)p.getX(),
+				(int)p.getY() - 1);
+		possibilities[1] = new Point((int)p.getX() + 1,
+				(int)p.getY());
+		possibilities[2] = new Point((int)p.getX() - 1,
+				(int)p.getY());
+		possibilities[3] = new Point((int)p.getX(),
 				(int)p.getY() + 1);
 		
 		List<Point> res = new LinkedList<Point>();
