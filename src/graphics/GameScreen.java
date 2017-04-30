@@ -42,7 +42,7 @@ public class GameScreen extends JFrame implements Observer {
 	/**
 	 * Zoom factor
 	 */
-	private final int g_unit = 50;
+	private final int g_unit = 30;
 
 	/**
 	 * Model
