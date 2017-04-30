@@ -44,7 +44,7 @@ public class RadarScreen extends CommonScreen {
 	/**
 	 * Returns the GameElements to draw
 	 */
-	public List<GameElement>elementsToDraw(GameIModel game) {
+	public List<GameElement> elementsToDraw(GameIModel game) {
 		return game.getOpponentElements();
 	}
 }

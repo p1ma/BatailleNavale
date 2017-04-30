@@ -13,9 +13,8 @@ import java.util.Random;
 import java.util.Set;
 
 import element.GameElement;
-import element.HitBox;
-import element.MissedBox;
 import element.Ship;
+import element.SunkBox;
 import game.GameIModel;
 
 /**
@@ -204,14 +203,16 @@ public abstract class BattleShipPlayer implements IPlayer{
 	 * @return a Box
 	 */
 	@Override
-	public GameElement touchedAt(Point p) {
+	public Ship touchedAt(Point p) {
 		if ( isTouched(p) ) {
+		    Ship ship = fleet.get(p);
+		    ship.hit();
 			fleet.remove(p);
 			winningShot++;
-			return new HitBox(p, game);
+			return ship;//return new HitBox(p, game);
 		} else {
 			losingShot++;
-			return new MissedBox(p, game);
+			return null;//return new MissedBox(p, game);
 		}
 	}
 
@@ -223,6 +224,34 @@ public abstract class BattleShipPlayer implements IPlayer{
 	@Override
 	public void updateRadar(Point pos, GameElement box) {
 		radar.put(pos, box);
+	}
+	
+	/**
+     * Adds to the IPlayer's radar the SunkBox at the positions of the sunk ship
+     * @param ship sunk ship
+     */
+	@Override
+	public void updateRadar(Ship ship) {
+	    if (!ship.isSunk()) {
+	        return;
+	    }
+	    
+	    Point pos = new Point(ship.getPosition());
+	    int dx, dy;
+	    int size = Math.max(ship.getWidth(), ship.getHeight());
+	    
+	    if (ship.getOrientation() == 0) {
+	        dx = 1;
+	        dy = 0;
+	    } else {
+	        dx = 0;
+	        dy = 1;
+	    }
+	    
+	    for (int i = 0; i < size; i++) {
+	       radar.put(new Point(pos), new SunkBox(pos, game));
+	       pos.translate(dx, dy);
+	    }  
 	}
 
 	/**

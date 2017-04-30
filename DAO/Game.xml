@@ -26,6 +26,7 @@
 			<Background>textures/Moderne/ocean.jpg</Background>
 			<MissedImage>textures/Moderne/missedBox.png</MissedImage>
 			<TouchedImage>textures/Moderne/hitBox.png</TouchedImage>
+            <SunkImage>textures/Moderne/sunkBox.png</SunkImage>
 			<Ships>
 				<Ship>
 					<ShipName>Bateau 1</ShipName>
@@ -64,6 +65,7 @@
 			<Background>textures/Moderne/ocean.jpg</Background>
 			<MissedImage>textures/Moderne/missedBox.png</MissedImage>
 			<TouchedImage>textures/Moderne/hitBox.png</TouchedImage>
+            <SunkImage>textures/Moderne/sunkBox.png</SunkImage>
 			<Ships>
 				<Ship>
 					<ShipName>Bateau 1</ShipName>

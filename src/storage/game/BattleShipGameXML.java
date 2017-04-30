@@ -36,6 +36,7 @@ import element.GameElement;
 import element.HitBox;
 import element.MissedBox;
 import element.Ship;
+import element.SunkBox;
 import game.GameIModel;
 import game.parameter.BattleShipConfiguration;
 import game.parameter.Era;
@@ -124,6 +125,10 @@ public class BattleShipGameXML implements GameDAO{
 			Element touchedXML = doc.createElement("TouchedImage");
 			touchedXML.appendChild(doc.createTextNode(game.getEra().getTouchedPath()));
 			eraXML.appendChild(touchedXML);
+			
+			Element sunkXML = doc.createElement("SunkImage");
+            sunkXML.appendChild(doc.createTextNode(game.getEra().getSunkPath()));
+            eraXML.appendChild(sunkXML);
 
 			Element shipsXML = doc.createElement("Ships");
 			Era era = game.getEra();
@@ -175,11 +180,18 @@ public class BattleShipGameXML implements GameDAO{
 					posY.appendChild(doc.createTextNode((int)p.getY() + ""));
 
 					Element missedOrHit = doc.createElement("Type");
-					boolean mOH = ge.isStrategicallyUseful();
-					if ( mOH ) {
-						missedOrHit.appendChild(doc.createTextNode("HIT"));
-					} else {
-						missedOrHit.appendChild(doc.createTextNode("MISSED"));
+					switch (ge.getType()) {
+					case HIT:
+					    missedOrHit.appendChild(doc.createTextNode("HIT"));
+					    break;
+					case MISSED:
+					    missedOrHit.appendChild(doc.createTextNode("MISSED"));
+					    break;
+					case SUNK:
+					    missedOrHit.appendChild(doc.createTextNode("SUNK"));
+					    break;
+					default:
+					    break;
 					}
 
 					Box.appendChild(posX);
@@ -369,9 +381,10 @@ public class BattleShipGameXML implements GameDAO{
 				
 				String backgroundPath = element.getElementsByTagName("Background").item(0).getTextContent();
 				String touchedPath = element.getElementsByTagName("TouchedImage").item(0).getTextContent();
-				String missedPath = element.getElementsByTagName("MissedImage").item(0).getTextContent();			
+				String missedPath = element.getElementsByTagName("MissedImage").item(0).getTextContent();
+				String sunkPath = element.getElementsByTagName("SunkImage").item(0).getTextContent();
 
-				era.loadImage(backgroundPath, touchedPath, missedPath);
+				era.loadImage(backgroundPath, touchedPath, missedPath, sunkPath);
 				
 				// Set Era's id
 				era.setIdentifiant(eraName);
@@ -438,8 +451,10 @@ public class BattleShipGameXML implements GameDAO{
 						y =  Integer.parseInt( el.getElementsByTagName("PosY").item(0).getTextContent() );
 						if ( type.equals("HIT") ) {
 							box = new HitBox(new Point(x,y), game);
-						} else {
+						} else if ( type.equals("MISSED") ) {
 							box = new MissedBox(new Point(x,y), game);
+						} else {
+						    box = new SunkBox(new Point(x, y), game);
 						}
 						radar.add(box);
 					}

@@ -428,6 +428,16 @@ public abstract class GameAbstractModel extends Observable implements GameIModel
 	public BufferedImage getGameTouchedImage() {
 		return configuration.getGameTouchedImage();
 	}
+	
+	/**
+     * Returns the GameIModel sunk Image,
+     * used by the SunkBox
+     * @return the sunk Image
+     */
+	@Override
+	public BufferedImage getGameSunkImage() {
+	    return configuration.getGameSunkImage();
+	};
 
 	/**
 	 * Returns the IConfiguration of the Game 

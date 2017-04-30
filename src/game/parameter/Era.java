@@ -35,17 +35,24 @@ public class Era {
 	
 	/**
 	 * Path to the touchedImage
-	 * because some Eras can have
-	 * different touched's Image
+	 * because Eras can have
+	 * different touched Image
 	 */
 	private String touchedPath;
 	
 	/**
 	 * Path to the missedImage
-	 * because some Eras can have
-	 * different missed's Image
+	 * because Eras can have
+	 * different missed Image
 	 */
 	private String missedPath;
+	
+	/**
+     * Path to the sunkImage
+     * because Eras can have
+     * different sunk Image
+     */
+    private String sunkPath;
 	
 	/**
 	 * Background Image
@@ -61,6 +68,11 @@ public class Era {
 	 * Missed Image (see MissedBox)
 	 */
 	private BufferedImage missed;
+	
+	/**
+	 * Sunk Image (see SunkBox)
+	 */
+	private BufferedImage sunk;
 
 	/**
 	 * The List of Ships
@@ -95,11 +107,12 @@ public class Era {
 	 * @param touchedP The touched Image to load
 	 * @param missedP The missed Image to load
 	 */
-	public void loadImage(String backgroundP, String touchedP, String missedP) {
+	public void loadImage(String backgroundP, String touchedP, String missedP, String sunkP) {
 		try {
 			backgroundPath = backgroundP;
 			touchedPath = touchedP;
 			missedPath = missedP;
+			sunkPath = sunkP;
 			
 			File url = new File(backgroundPath);
 			background = ImageIO.read(url);
@@ -109,6 +122,9 @@ public class Era {
 
 			url = new File(missedPath);
 			missed = ImageIO.read(url);
+			
+			url = new File(sunkPath);
+            sunk = ImageIO.read(url);
 		} catch (IOException e) {
 			System.err.println("ERREUR LOAD IMAGE ERA!");
 			System.exit(1);
@@ -185,6 +201,14 @@ public class Era {
 	}
 	
 	/**
+     * Returns just Era's sunk image path
+     * @return the path to the sunk image
+     */
+    public String getSunkPath() {
+        return sunkPath;
+    }
+	
+	/**
 	 * Returns the background Image
 	 * @return the background Image
 	 */
@@ -206,5 +230,13 @@ public class Era {
 	 */
 	public BufferedImage getHitImage() {
 		return touched;
+	}
+	
+	/**
+     * Returns the sunk Image (see SunkBox)
+     * @return the sunk Image
+     */
+	public BufferedImage getSunkImage() {
+	    return sunk;
 	}
 }

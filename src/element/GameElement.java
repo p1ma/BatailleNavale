@@ -14,6 +14,10 @@ import java.awt.image.BufferedImage;
  */
 public abstract class GameElement {
 
+    public enum ElementType {MISSED, HIT, SUNK, SHIP};
+
+    private ElementType type;
+    
 	/**
 	 * BoundingBox, used to locate
 	 * and get the widht et height of this
@@ -33,10 +37,11 @@ public abstract class GameElement {
 	 * @param w width
 	 * @param h height
 	 */
-	public GameElement(Point p, int w, int h) {
+	public GameElement(Point p, int w, int h, ElementType t) {
 		this.boundingBox = new Rectangle(w, h);
 		this.boundingBox.setLocation(p);
 		this.orientation = 0;
+		this.type = t;
 	}
 
 	/**
@@ -46,10 +51,11 @@ public abstract class GameElement {
 	 * @param h height
 	 * @param o orientation
 	 */
-	public GameElement(Point p, int w, int h, int o) {
+	public GameElement(Point p, int w, int h, int o, ElementType t) {
 		this.boundingBox = new Rectangle(w, h);
 		this.boundingBox.setLocation(p);
 		this.orientation = o;
+		this.type = t;
 	}
 
 	/**
@@ -82,6 +88,10 @@ public abstract class GameElement {
 		boundingBox.setSize(getHeight(), getWidth());
 		rotateImage();
 	}
+	
+	public ElementType getType() {
+        return type;
+    }
 	
 	/**
 	 * Returns x coordinate of the GameElement

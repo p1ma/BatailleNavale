@@ -22,7 +22,7 @@ public class MissedBox extends Box{
 	 * @param model the GameIModel (used to load the image)
 	 */
 	public MissedBox(Point p, GameIModel model) {
-		super(p);
+		super(p, ElementType.MISSED);
 		background = model.getGameMissedImage();
 	}
 

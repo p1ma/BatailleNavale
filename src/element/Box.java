@@ -12,7 +12,7 @@ import java.awt.image.BufferedImage;
  * Mar 13, 2017
  */
 public abstract class Box extends GameElement{
-
+ 
 	/**
 	 * Width of the BOX
 	 */
@@ -34,8 +34,8 @@ public abstract class Box extends GameElement{
 	 * @param w the width
 	 * @param h the height
 	 */
-	public Box(Point p) {
-		super(p, WIDTH, HEIGHT);
+	public Box(Point p, ElementType t) {
+		super(p, WIDTH, HEIGHT, t);
 	}
 	
 	/**

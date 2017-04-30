@@ -80,7 +80,8 @@ public class ParametersScreen extends JPanel {
 	 * Constructs a ParametersScreen with the given parameter(s)
 	 * @param g the Game
 	 */
-	public ParametersScreen(final GameIModel g) {
+	@SuppressWarnings("unchecked")
+    public ParametersScreen(final GameIModel g) {
 		super();
 		game = g;
 		
@@ -138,10 +139,10 @@ public class ParametersScreen extends JPanel {
 		// adds ammunitions' items
 		params[3] = new JComboBox<String>();
 		for(int i = 0 ; i < ammunitionsArray.length ; i++) {
-			params[3].addItem(" " + ammunitionsArray[i] + "% du nombre de case total");
+			params[3].addItem(" " + ammunitionsArray[i] + "% du nombre de cases total");
 		}
 		// adds ammunitions' description
-		descriptions[3] = new JLabel("Nombre de munition maximum : ");
+		descriptions[3] = new JLabel("Nombre de munitions maximum : ");
 		
 		// Adds button
 		confirm = new JButton("Confirmer");

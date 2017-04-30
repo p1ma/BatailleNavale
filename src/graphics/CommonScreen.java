@@ -89,11 +89,11 @@ public abstract class CommonScreen extends JPanel{
 	}
 	
 	/**
-	 * Used to get the corrects GameElements to draw
+	 * Used to get the correct GameElements to draw
 	 * @param game the Game
 	 * @return List of GameElements
 	 */
-	public abstract List<GameElement>elementsToDraw(GameIModel game);
+	public abstract List<GameElement> elementsToDraw(GameIModel game);
 	
 	/**
 	 * Draws the GameElements in g

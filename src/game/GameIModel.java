@@ -85,6 +85,13 @@ public interface GameIModel {
 	public BufferedImage getGameTouchedImage();
 	
 	/**
+     * Returns the GameIModel sunk Image,
+     * used by the SunkBox
+     * @return the sunk Image
+     */
+	public BufferedImage getGameSunkImage();
+	
+	/**
 	 * Returns the Game's width
 	 * @return the width
 	 */

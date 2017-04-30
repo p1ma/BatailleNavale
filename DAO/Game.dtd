@@ -1,4 +1,4 @@
-<!-- In order to check file's correctness please 
+<!-- In order to check file's correctness please
 type command : xmllint Game.xml \-\-dtdvalid Game.dtd \-\-noout
 
 after changes
@@ -13,7 +13,7 @@ Plus, see Game.dtd to see file's structure (useful)
 <!ELEMENT Levels (Level+)>
 <!ELEMENT Dimensions (Dimension+)>
 <!ELEMENT Eras (Era+)>
-<!ELEMENT Era (Name, Background, MissedImage, TouchedImage, Ships)>
+<!ELEMENT Era (Name, Background, MissedImage, TouchedImage, SunkImage, Ships)>
 <!ELEMENT Ships (Ship+)>
 <!ELEMENT Ship (ShipName, Width, Height, Image)>
 
@@ -26,6 +26,7 @@ Plus, see Game.dtd to see file's structure (useful)
 <!ELEMENT Background (#PCDATA)>
 <!ELEMENT MissedImage (#PCDATA)>
 <!ELEMENT TouchedImage (#PCDATA)>
+<!ELEMENT SunkImage (#PCDATA)>
 <!ELEMENT ShipName (#PCDATA)>
 <!ELEMENT Width (#PCDATA)>
 <!ELEMENT Height (#PCDATA)>

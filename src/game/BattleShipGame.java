@@ -10,6 +10,8 @@ import java.util.LinkedList;
 import java.util.List;
 
 import element.GameElement;
+import element.HitBox;
+import element.MissedBox;
 import element.Ship;
 import game.parameter.BattleShipConfiguration;
 import game.parameter.IConfiguration;
@@ -85,6 +87,25 @@ public class BattleShipGame extends GameAbstractModel {
 
 		notify(message);	
 	}
+	
+	/**
+	 * Updates player radar according to other player chosen position
+	 * @param player 
+	 * @param pos chosen position
+	 * @param ship null if no ship is hit
+	 */
+	private void updatePlayerRadar(IPlayer player, Point pos, Ship ship) {
+	    if (ship == null) {
+	        player.updateRadar(pos, new MissedBox(pos, this));
+	        return;
+	    }
+	    
+	    if (ship.isSunk()) {
+	        player.updateRadar(ship);
+	    } else {
+	        player.updateRadar(pos, new HitBox(pos, this));
+	    }
+	}
 
 	/**
 	 * Action called by the user's mouse click at the
@@ -95,18 +116,18 @@ public class BattleShipGame extends GameAbstractModel {
 
 		// while the two players have their fleet then they play
 		if ( !isGameOver() ) {
-			GameElement box = null;
+			Ship ship = null;
 			// if it is the Human's turn then ...
 			if ( isPlayerTurn() ) {
 				//notify(YOUR_TURN);
-				box = computer.touchedAt(pos);
-				human.updateRadar(pos, box);
+				ship = computer.touchedAt(pos);
+				updatePlayerRadar(human, pos, ship);
 
 				notify(RADAR);
 			} else {
 				// Computer's turn
-				box = human.touchedAt(pos);
-				computer.updateRadar(pos, box);
+				ship = human.touchedAt(pos);
+				updatePlayerRadar(computer, pos, ship);
 
 				notify(BOARD);
 			}
@@ -253,7 +274,7 @@ public class BattleShipGame extends GameAbstractModel {
 
 	/**
 	 * Returns the closest available position when the
-	 * rotation render an incorrect position.
+	 * rotation renders an incorrect position.
 	 * @return the closest position available
 	 */
 	private Point getClosestPosition(GameElement ge) {

@@ -111,4 +111,11 @@ public interface IConfiguration {
 	 * @return the Game's touched Image
 	 */
 	public BufferedImage getGameTouchedImage();
+	
+	/**
+     * Returns the Game's sunk Image
+     * used by the sunkBox
+     * @return the Game's sunk Image
+     */
+	public BufferedImage getGameSunkImage();
 }

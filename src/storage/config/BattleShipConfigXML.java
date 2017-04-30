@@ -69,8 +69,9 @@ public class BattleShipConfigXML implements IConfigDAO {
 			String background = element.getElementsByTagName("Background").item(0).getTextContent();
 			String touched = element.getElementsByTagName("TouchedImage").item(0).getTextContent();
 			String missed = element.getElementsByTagName("MissedImage").item(0).getTextContent();
+			String sunk = element.getElementsByTagName("SunkImage").item(0).getTextContent();
 
-			era.loadImage(background, touched, missed);
+			era.loadImage(background, touched, missed, sunk);
 
 			// Instanciates Ships
 			NodeList ships = element.getElementsByTagName("Ship");

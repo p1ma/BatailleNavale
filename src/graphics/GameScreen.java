@@ -43,6 +43,12 @@ public class GameScreen extends JFrame implements Observer {
 	 * Zoom factor
 	 */
 	private final int g_unit = 30;
+	
+	/**
+	 * Margins for portability reasons
+	 */
+	private final int W_MARGIN = 10;
+	private final int H_MARGIN = 5;
 
 	/**
 	 * Model
@@ -299,10 +305,10 @@ public class GameScreen extends JFrame implements Observer {
 		JOptionPane.showMessageDialog(this,
 				"Vous pouvez placer maintenant vos bateaux !\n" 
 						+"\tCliquez sur la bateau de votre choix,\n" 
-						+"puis faites glisser votre souris vers la position souhaitée.\n" 
-						+"Appuyez sur la touche r pour faire tourner le bateau\n"
-						+"Appuyer sur la touche entrée pour valider\n",
-				"Echauffement !",
+						+"puis faites glisser votre souris vers la position souhaitée.\n\n" 
+						+"Appuyez sur la touche [R] pour faire tourner le bateau\n"
+						+"Appuyez sur la touche [Entrée] pour valider\n",
+				"Échauffement !",
 				JOptionPane.INFORMATION_MESSAGE);
 	}
 	
@@ -447,8 +453,8 @@ public class GameScreen extends JFrame implements Observer {
 		Dimension dBoard = boardScreen.getPreferredSize();
 		Dimension dRadar = radarScreen.getPreferredSize();
 		Dimension result = new Dimension(0,0);
-		result.setSize((dBoard.getWidth() + dRadar.getWidth() ) + g_unit,
-				dBoard.getHeight() + 2 * g_unit + getJMenuBar().getHeight() );
+		result.setSize((dBoard.getWidth() + dRadar.getWidth() ) + g_unit + W_MARGIN,
+				dBoard.getHeight() + 2 * g_unit + getJMenuBar().getHeight() + H_MARGIN);
 
 		return result;
 	}

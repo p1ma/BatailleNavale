@@ -192,6 +192,16 @@ public class BattleShipConfiguration implements IConfiguration{
 	public BufferedImage getGameTouchedImage() {
 		return era.getHitImage();
 	}
+	
+	/**
+     * Returns the Game's sunk Image
+     * used by the SunkBox
+     * @return the Game's sunk Image
+     */
+    @Override
+    public BufferedImage getGameSunkImage() {
+        return era.getSunkImage();
+    }
 
 	/**
 	 * Returns the ammunition available

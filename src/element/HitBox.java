@@ -21,7 +21,7 @@ public class HitBox extends Box{
 	 * @param model the GameIModel (used to load the image)
 	 */
 	public HitBox(Point p, GameIModel model) {
-		super(p);
+		super(p, ElementType.HIT);
 		background = model.getGameTouchedImage();
 	}
 
@@ -29,7 +29,7 @@ public class HitBox extends Box{
 	 * Constructor used for JUnit tests
 	 */
 	public HitBox(Point p) {
-		super(p);
+		super(p, ElementType.HIT);
 		
 		background = null;
 	}

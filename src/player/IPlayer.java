@@ -98,6 +98,12 @@ public interface IPlayer {
 	public void updateRadar(Point pos, GameElement box);
 	
 	/**
+     * Adds to the IPlayer's radar the SunkBox at the positions of the sunk ship
+     * @param ship sunk ship
+     */
+	public void updateRadar(Ship ship);
+	
+	/**
 	 * Sets the number of succesful shots at shot
 	 * @param shot the number of hit shot
 	 */
@@ -127,7 +133,7 @@ public interface IPlayer {
 	 * @param p the position to check
 	 * @return a Box
 	 */
-	public GameElement touchedAt(Point p);
+	public Ship touchedAt(Point p);
 	
 	/**
 	 * Returns the GameElements placed in the BoardScreen

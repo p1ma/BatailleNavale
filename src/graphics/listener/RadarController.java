@@ -71,7 +71,7 @@ public class RadarController implements MouseListener{
 	}
 
 	private Point scalePoint(Point p) {
-		int xClicked = (int)(p.getX() / g_unit) ;
+		int xClicked = (int)(p.getX() / g_unit);
 		int yClicked = (int)(p.getY() / g_unit);
 
 		return new Point(xClicked, yClicked);

@@ -34,6 +34,11 @@ public class Ship extends GameElement{
 	 * Image's path
 	 */
 	private final String path;
+	
+	/**
+	 * Health points
+	 */
+	private int health;
 
 	/**
 	 * Constructor of Ship with the given parameter(s)
@@ -43,10 +48,11 @@ public class Ship extends GameElement{
 	 * @param img path to the Image
 	 */
 	public Ship(String id, Point p, int w, int h, String img) {
-		super(p, w, h);
+		super(p, w, h, ElementType.SHIP);
 		identifiant = id;
 		image = new BufferedImage[2];
 		path = img;
+		health = Math.max(w, h);
 		loadImage(img);
 	}	
 	
@@ -61,10 +67,11 @@ public class Ship extends GameElement{
 	 * @param img path to the Image
 	 */
 	public Ship(String id, Point p, int w, int h, int o, String img) {
-		super(p, w, h, o);
+		super(p, w, h, o, ElementType.SHIP);
 		identifiant = id;
 		image = new BufferedImage[2];
 		path = img;
+		health = Math.max(w, h);
 		loadImage(img);
 		
 		if (o != 0) {
@@ -82,8 +89,10 @@ public class Ship extends GameElement{
 		super(s.getPosition(),
 				s.getWidth(),
 				s.getHeight(),
-				s.getOrientation());
+				s.getOrientation(),
+				ElementType.SHIP);
 		path = s.getPath();
+		health = s.getHealth();
 		image = new BufferedImage[2];
 		image[0] = s.getImage();
 		
@@ -154,6 +163,23 @@ public class Ship extends GameElement{
 	 */
 	public String getPath() {
 		return path;
+	}
+	
+	public int getHealth() {
+	    return health;
+	}
+	
+	public boolean isSunk() {
+	    return health == 0;
+	}
+	
+	/**
+	 * Hits a ship which loses health
+	 */
+	public void hit() {
+	    if (health > 0) {
+	        health--;
+	    }
 	}
 	
 	/**
