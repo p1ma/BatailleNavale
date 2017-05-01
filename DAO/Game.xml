@@ -32,70 +32,70 @@
 					<ShipName>Bateau 1</ShipName>
 					<Width>5</Width>
 					<Height>1</Height>
-					<Image>textures/Moderne/ship.png</Image>
+					<Image>textures/Moderne/5cases.png</Image>
 				</Ship>
 				<Ship>
 					<ShipName>Bateau 2</ShipName>
 					<Width>4</Width>
 					<Height>1</Height>
-					<Image>textures/Moderne/war.png</Image>
+					<Image>textures/Moderne/4cases.png</Image>
 				</Ship>
 				<Ship>
 					<ShipName>Bateau 3</ShipName>
-					<Width>5</Width>
+					<Width>3</Width>
 					<Height>1</Height>
-					<Image>textures/Moderne/ship.png</Image>
+					<Image>textures/Moderne/3cases_1.png</Image>
 				</Ship>
 				<Ship>
 					<ShipName>Bateau 4</ShipName>
 					<Width>3</Width>
 					<Height>1</Height>
-					<Image>textures/Moderne/war.png</Image>
+					<Image>textures/Moderne/3cases_2.png</Image>
 				</Ship>
 				<Ship>
 					<ShipName>Bateau 5</ShipName>
 					<Width>2</Width>
 					<Height>1</Height>
-					<Image>textures/Moderne/ship.png</Image>
+					<Image>textures/Moderne/2cases.png</Image>
 				</Ship>
 			</Ships>
 		</Era>
 		<Era>
-			<Name>XXI</Name>
-			<Background>textures/Moderne/ocean.jpg</Background>
-			<MissedImage>textures/Moderne/missedBox.png</MissedImage>
-			<TouchedImage>textures/Moderne/hitBox.png</TouchedImage>
-            <SunkImage>textures/Moderne/sunkBox.png</SunkImage>
+			<Name>XVI siecle</Name>
+			<Background>textures/XVI/ocean.jpg</Background>
+			<MissedImage>textures/XVI/missedBox.png</MissedImage>
+			<TouchedImage>textures/XVI/hitBox.png</TouchedImage>
+            <SunkImage>textures/XVI/sunkBox.png</SunkImage>
 			<Ships>
 				<Ship>
 					<ShipName>Bateau 1</ShipName>
 					<Width>5</Width>
 					<Height>1</Height>
-					<Image>textures/Moderne/ship.png</Image>
+					<Image>textures/XVI/5cases.png</Image>
 				</Ship>
 				<Ship>
 					<ShipName>Bateau 2</ShipName>
 					<Width>4</Width>
 					<Height>1</Height>
-					<Image>textures/Moderne/war.png</Image>
+					<Image>textures/XVI/4cases.png</Image>
 				</Ship>
 				<Ship>
 					<ShipName>Bateau 3</ShipName>
-					<Width>5</Width>
+					<Width>3</Width>
 					<Height>1</Height>
-					<Image>textures/Moderne/ship.png</Image>
+					<Image>textures/XVI/3cases_1.png</Image>
 				</Ship>
 				<Ship>
 					<ShipName>Bateau 4</ShipName>
 					<Width>3</Width>
 					<Height>1</Height>
-					<Image>textures/Moderne/war.png</Image>
+					<Image>textures/XVI/3cases_2.png</Image>
 				</Ship>
 				<Ship>
 					<ShipName>Bateau 5</ShipName>
 					<Width>2</Width>
 					<Height>1</Height>
-					<Image>textures/Moderne/ship.png</Image>
+					<Image>textures/XVI/2cases.png</Image>
 				</Ship>
 			</Ships>
 		</Era>
