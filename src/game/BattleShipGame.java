@@ -89,7 +89,7 @@ public class BattleShipGame extends GameAbstractModel {
 	}
 	
 	/**
-	 * Updates player radar according to other player chosen position
+	 * Updates player's radar according to other player's chosen hit position
 	 * @param player 
 	 * @param pos chosen position
 	 * @param ship null if no ship is hit

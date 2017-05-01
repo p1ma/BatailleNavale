@@ -61,7 +61,7 @@
 			</Ships>
 		</Era>
 		<Era>
-			<Name>XVI siecle</Name>
+			<Name>XVI siècle</Name>
 			<Background>textures/XVI/ocean.jpg</Background>
 			<MissedImage>textures/XVI/missedBox.png</MissedImage>
 			<TouchedImage>textures/XVI/hitBox.png</TouchedImage>

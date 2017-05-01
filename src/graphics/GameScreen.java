@@ -42,13 +42,13 @@ public class GameScreen extends JFrame implements Observer {
 	/**
 	 * Zoom factor
 	 */
-	private final int g_unit = 30;
+	private final int g_unit = 38;
 	
 	/**
 	 * Margins for portability reasons
 	 */
 	private final int W_MARGIN = 10;
-	private final int H_MARGIN = 5;
+	private final int H_MARGIN = 2;
 
 	/**
 	 * Model
@@ -151,6 +151,8 @@ public class GameScreen extends JFrame implements Observer {
 		initParametersScreen();
 
 		add(parametersScreen);
+		
+		setLocationRelativeTo(null); // center frame
 		revalidate();
 	}
 
@@ -181,7 +183,7 @@ public class GameScreen extends JFrame implements Observer {
 	 */
 	private void setGameScreens() {
 		// Removes parameters screen if exists
-		this.removeAll();
+		removeAll();
 		radarScreen = new RadarScreen(game, 
 				g_unit);
 		boardScreen = new BoardScreen(game, 
@@ -197,6 +199,8 @@ public class GameScreen extends JFrame implements Observer {
 		add(boardScreen);
 		add( Box.createRigidArea( new Dimension(g_unit, 0) ) );
 		add(radarScreen);
+		
+		setLocationRelativeTo(null); // center frame
 		validate();
 	}
 
@@ -281,7 +285,7 @@ public class GameScreen extends JFrame implements Observer {
 			replay();
 			break;
 		case GameAbstractModel.LOAD_GAME :
-			loadGame();
+			setGameScreens();
 			break;
 		}	
 	}
@@ -415,35 +419,6 @@ public class GameScreen extends JFrame implements Observer {
 		then ask the ParametersScreen to be seen.
 		 */
 		setParametersScreen();
-	}
-
-	/**
-	 * Uses to load a Game from the startScreen or directly when the Game
-	 * has already started
-	 */
-	private void loadGame() {
-		/*
-		 * We assume that we load a Game from the
-		 * StartScreen OR from JMenu
-		 */
-		this.removeAll();
-
-		radarScreen = new RadarScreen(game, 
-				g_unit);
-		boardScreen = new BoardScreen(game, 
-				g_unit);
-
-		initGameScreens();
-
-		scoreScreen = new ScoreScreen(game, 
-				getPreferredSize(), 
-				g_unit);
-
-		add(scoreScreen);
-		add(boardScreen);
-		add( Box.createRigidArea( new Dimension(g_unit, 0) ) );
-		add(radarScreen);
-		revalidate();
 	}
 
 	/**
