@@ -27,6 +27,6 @@ public class SunkBox extends Box{
      */
     @Override
     public boolean isStrategicallyUseful() {
-        return false;
+        return true;
     }
 }
