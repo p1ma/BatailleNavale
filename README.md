@@ -10,5 +10,5 @@ Pour compiler :
 `$ ant`  
 Pour nettoyer le build :  
 `$ ant clean`  
-Pour éxécuter :  
+Pour exécuter :  
 `$ ant Launcher`
