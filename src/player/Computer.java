@@ -53,6 +53,10 @@ public class Computer extends BattleShipPlayer {
 		strategy = strat;
 		putBoardElements(computer.getBoardElements());
 		setRadarElements(computer.getRadarElements());
+		
+		// updates shots
+		setHitShot(computer.getHitShot());
+		setMissedShot(computer.getMissedShot());
 	}
 
 	/**
