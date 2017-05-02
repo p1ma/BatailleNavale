@@ -7,8 +7,8 @@ Ce PDF contient les diagrammes de classes, ainsi que les diagrammes de séquence
 De plus, nous y avons décrit le fonctionnement de chacun des packages avec leur diagramme de classes associé.
 
 Pour compiler :  
-`ant`  
+`$ ant`  
 Pour nettoyer le build :  
-`and clean`
+`$ and clean`  
 Pour éxécuter :  
-`ant Launcher`
+`$ ant Launcher`
