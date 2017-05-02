@@ -67,8 +67,8 @@ public class BattleShipGame extends GameAbstractModel {
 			f++;
 			s = f + 1;
 		}
-		state = (intersect == true) ?  State.WARMUP : State.PLAYING ;
-
+		state = (intersect == true) ?  State.WARMUP : State.PLAYING;
+		
 		// initialize the Date
 		setDate(Calendar.getInstance().getTime());
 
@@ -97,10 +97,7 @@ public class BattleShipGame extends GameAbstractModel {
 	private void updatePlayerRadar(IPlayer player, Point pos, Ship ship) {
 	    if (ship == null) {
 	        player.updateRadar(pos, new MissedBox(pos, this));
-	        return;
-	    }
-	    
-	    if (ship.isSunk()) {
+	    } else if (ship.isSunk()) {
 	        player.updateRadar(ship);
 	    } else {
 	        player.updateRadar(pos, new HitBox(pos, this));

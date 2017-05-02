@@ -140,7 +140,7 @@ public class ParametersController implements ActionListener {
 		/*
 		 * Affects the configuration to the Game
 		 */
-		game.setGameConfiguration ( config );
+		game.setGameConfiguration( config );
 		
 	}
 }
