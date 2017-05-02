@@ -21,7 +21,7 @@ public class ShipTest {
 	private String id = "NOM";
 	private Point p = new Point(0,0);
 	private int w = 1, h = 5, o = 0;
-	private String img = "textures/Moderne/ship.png";
+	private String img = "textures/Moderne/2cases.png";
 	/**
 	 * @throws java.lang.Exception
 	 */

@@ -41,9 +41,9 @@ public class BattleShipConfigTest {
 		 * so modify when news eras are added.
 		 */
 		String moderne = "Moderne";
-		String xxi = "XXI";
+		String xvi = "XVI siècle";
 		assert(moderne.equals(eras[0].toString()));
-		assert(xxi.equals(eras[1].toString()));	
+		assert(xvi.equals(eras[1].toString()));	
 
 		int nbShip = eras[0].getFleet().size();
 		assertTrue(nbShip == 5);

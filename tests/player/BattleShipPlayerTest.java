@@ -16,8 +16,6 @@ import org.junit.BeforeClass;
 import org.junit.Test;
 
 import element.GameElement;
-import element.HitBox;
-import element.MissedBox;
 import element.Ship;
 import game.BattleShipGame;
 import game.GameIModel;
@@ -66,7 +64,7 @@ public class BattleShipPlayerTest {
 		int x = 5, y = 5;
 		Point p = new Point(x, y);
 		int w = 1, h = 5, o = 0;
-		String img = "textures/Moderne/ship.png";
+		String img = "textures/Moderne/2cases.png";
 		fleet.add(new Ship(id, p, w, h, o, img));
 	}
 
@@ -196,11 +194,11 @@ public class BattleShipPlayerTest {
 		Point p = new Point(elem.getPosition());
 		GameElement ge = human.touchedAt(p);
 
-		assertThat(ge, instanceOf(HitBox.class) );
+		assertThat(ge, instanceOf(Ship.class) );
 
 		ge = computer.touchedAt(p);
 
-		assertThat(ge, instanceOf(HitBox.class) );
+		assertThat(ge, instanceOf(Ship.class) );
 	}
 
 	@Test
@@ -214,11 +212,11 @@ public class BattleShipPlayerTest {
 		p.translate(-25, -25);
 		GameElement ge = human.touchedAt(p);
 
-		assertThat(ge, instanceOf(MissedBox.class) );
+		assertTrue(ge == null );
 
 		ge = computer.touchedAt(p);
 
-		assertThat(ge, instanceOf(MissedBox.class) );
+		assertTrue(ge == null );
 	}
 
 	@Test
