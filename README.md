@@ -9,6 +9,6 @@ De plus, nous y avons décrit le fonctionnement de chacun des packages avec leur
 Pour compiler :  
 `$ ant`  
 Pour nettoyer le build :  
-`$ and clean`  
+`$ ant clean`  
 Pour éxécuter :  
 `$ ant Launcher`
