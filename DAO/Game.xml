@@ -1,4 +1,4 @@
-<!-- Version 1.0 du 20/10/2005 16h-->
+﻿<!-- Version 1.0 du 20/10/2005 16h-->
 <!DOCTYPE Bibliographie SYSTEM "Game.dtd" >
 <BatailleNavale>
 	<!-- Exprimé en pourcentage -->
@@ -12,6 +12,7 @@
 		<Level>FACILE</Level>
 		<Level>NORMAL</Level>
 		<Level>DIFFICILE</Level>
+    <Level>NOUVELLE</Level>
 	</Levels>
 	<Dimensions>
 		<Dimension>10</Dimension>

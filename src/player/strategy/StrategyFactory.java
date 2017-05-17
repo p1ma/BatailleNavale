@@ -52,7 +52,11 @@ public class StrategyFactory {
 			if (level.equals(levels[1])) {
 				return new CrossStrategy();
 			} else {
-				return new MemoryStrategy();
+				if(level.equals(levels[2])) {
+					return new MemoryStrategy();
+				} else {
+					return new CleverStrategy();
+				}
 			}
 		}
 	}
